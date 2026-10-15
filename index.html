@@ -192,6 +192,10 @@ label.btn.pick{border-width:1.5px}
 .dd li:hover,.dd li.act{background:var(--band)}
 .dd .none{cursor:default;color:var(--muted)}
 .grp li{flex-wrap:wrap}
+.grp li.tap{cursor:pointer;transition:background .15s ease}
+.grp li.tap:hover,.grp li.tap:focus-visible{background:color-mix(in srgb,var(--teal) 10%,transparent);outline:none}
+.grp li.busy{opacity:.55}
+.chev{margin-left:auto;color:var(--muted);font-size:1.4rem;line-height:1}
 .av{overflow:hidden}
 .av img{width:100%;height:100%;object-fit:cover}
 .det{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px 16px;padding:10px 0 4px 46px;font-size:.88rem}
@@ -385,6 +389,7 @@ footer small{opacity:.8;font-size:.85rem}
       <label class="sr" for="fc">Class</label>
       <select id="fc"><option value="">All classes</option><option>PLUS ONE</option><option>PLUS TWO</option><option>DEGREE 1</option></select>
     </div>
+    <p class="note">Tap a student to see full details. Login is needed.</p>
     <div id="list" class="list"></div>
     <p class="note" id="dbnote" hidden></p>
   </div>
@@ -634,7 +639,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       var list=by[k].filter(function(r){return !q||[r.name,r.roll].some(function(v){return String(v||'').toLowerCase().indexOf(q)>-1})}).sort(sortRows);
       if(!list.length) return;
       html+='<div class="grp"><h3>'+esc(k)+' <small>'+list.length+' student'+(list.length>1?'s':'')+'</small></h3><ul>'+
-        list.map(function(r){return '<li><div class="av">'+esc(initials(r.name))+'</div><div class="who"><b>'+esc(r.name)+'</b><span>Roll '+(esc(r.roll)||'—')+'</span></div></li>'}).join('')+'</ul></div>';
+        list.map(function(r){return '<li class="tap" tabindex="0" role="button" data-k="'+esc(pub.indexOf(r))+'"><div class="av">'+esc(initials(r.name))+'</div><div class="who"><b>'+esc(r.name)+'</b><span>Roll '+(esc(r.roll)||'—')+'</span></div><span class="chev" aria-hidden="true">›</span></li>'}).join('')+'</ul></div>';
     });
     $('list').innerHTML=html||('<div class="emptyl">'+(pub.length?'No student matches your search.':'No students in the register yet.')+'</div>');
   }
@@ -644,6 +649,19 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       .catch(function(){if(!pub.length){pubState='error';renderPublic()}});
   }
   $('q').addEventListener('input',renderPublic); $('fc').addEventListener('change',renderPublic);
+  function openPublic(li){
+    var p=pub[+li.dataset.k]; if(!p) return;
+    needLogin(function(){
+      var find=function(){return rows.find(function(r){return r.cls===p.cls&&r.name===p.name&&String(r.roll)===String(p.roll)})};
+      var hit=find(); if(hit){openView(hit);return}
+      li.classList.add('busy');
+      call({action:'list'}).then(function(j){rows=j.students||[];adminState='ok';renderAdmin();var h=find();if(h)openView(h);})
+        .catch(function(err){$('list').insertAdjacentHTML('afterbegin','<div class="emptyl">'+esc(errText(err))+'</div>')})
+        .then(function(){li.classList.remove('busy')});
+    });
+  }
+  $('list').addEventListener('click',function(e){var li=e.target.closest('li.tap');if(li)openPublic(li)});
+  $('list').addEventListener('keydown',function(e){if(e.key==='Enter'){var li=e.target.closest('li.tap');if(li)openPublic(li)}});
   tabs.forEach(function(b){if(b.dataset.view==='students')b.addEventListener('click',loadPublic)});
   renderPublic();
 
