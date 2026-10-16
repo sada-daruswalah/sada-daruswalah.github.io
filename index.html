@@ -264,6 +264,15 @@ a.ucard:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 
 .modal{background:color-mix(in srgb,#0d1428 35%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .modal .card,.modal .lbox,.modal .vbox{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--line)}
+
+.vact{flex-wrap:nowrap;align-items:center}
+.vact .sw{flex:1;min-width:150px;position:relative;height:46px;margin-right:4px;border-radius:0 38px 10px 0;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
+.vact .sw[hidden]{display:none}
+.vact .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:40px;color:#121212;font-family:var(--body);font-size:17px;font-weight:700;pointer-events:none}
+.vact .swk{position:absolute;left:0;top:-6px;width:58px;height:58px;border-radius:10px 50px 10px 50px;background:linear-gradient(135deg,#ec0c8c,#ff5e62);box-shadow:0 6px 16px rgba(236,12,140,.35);cursor:grab;touch-action:none;z-index:1}
+.vact .swk.grab{cursor:grabbing}
+.vact .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.vact .btn{flex:none}
 footer{background:var(--navy);color:var(--bg);padding-block:36px}
 footer .in{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center}
 footer .fb{display:flex;align-items:center;gap:12px}
@@ -503,7 +512,7 @@ footer small{opacity:.8;font-size:.85rem}
   <div class="card vbox" role="dialog" aria-modal="true" aria-labelledby="vName">
     <div class="vtop"><div class="vpic" id="vPic"></div><div><h3 id="vName"></h3><p class="note" id="vSub"></p></div></div>
     <div class="vgrid" id="vGrid"></div>
-    <div class="row"><button type="button" class="btn" id="vEdit">Edit</button><button type="button" class="btn solid" id="vClose">Close</button></div>
+    <div class="row vact"><div class="sw" id="vDel" hidden><span class="swt">Delete</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to delete this student"></div></div><button type="button" class="btn" id="vEdit">Edit</button><button type="button" class="btn solid" id="vClose">Close</button></div>
   </div>
 </div>
 
@@ -1027,7 +1036,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     $('alist').innerHTML=list.length?list.map(function(r){
       return '<div class="arow"><div class="av">'+esc(initials(r.name))+'</div>'+
         '<div class="who"><b>'+esc(r.name)+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+'</span></div>'+
-        '<div class="acts"><button type="button" data-act="view" data-id="'+esc(r.uid)+'">View</button><button type="button" data-act="edit" data-id="'+esc(r.uid)+'">Edit</button><button type="button" class="d" data-act="del" data-id="'+esc(r.uid)+'">Delete</button></div></div>';
+        '<div class="acts"><button type="button" data-act="view" data-id="'+esc(r.uid)+'">View</button></div></div>';
     }).join(''):'<div class="emptyl">'+(rows.length?'No student matches your search.':'No students yet. Tap <b>+ Add new student</b> to enter the first one.')+'</div>';
   }
   $('aq').addEventListener('input',renderAdmin);
@@ -1041,8 +1050,9 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   /* view */
   var viewing=null, deleting=null;
-  function openView(r){
+  function openView(r,admin){
     viewing=r.uid;
+    $('vEdit').hidden=!admin; $('vDel').hidden=!admin; if(admin) slideReset();
     $('vPic').innerHTML=esc(initials(r.name));
     getPhoto(r.uid).then(function(p){if(viewing===r.uid&&p)$('vPic').innerHTML='<img alt="Photo of '+esc(r.name)+'" src="'+esc(p)+'">'}).catch(function(){});
     $('vName').textContent=r.name||'';
@@ -1054,6 +1064,25 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   }
   function closeView(){$('viewBox').hidden=true;viewing=null}
   $('vClose').addEventListener('click',closeView);
+  /* slide-to-delete inside the view box (admin only) */
+  var sw=$('vDel'), swk=sw.querySelector('.swk'), swt=sw.querySelector('.swt'), sx=0, sStart=0, sDrag=false, sBusy=false;
+  function sMax(){return sw.clientWidth-swk.offsetWidth}
+  function sPut(v){sx=Math.max(0,Math.min(v,sMax()));swk.style.transform='translateX('+sx+'px)';swt.style.opacity=String(1-sx/Math.max(1,sMax())*0.9)}
+  function slideReset(){sBusy=false;swt.textContent='Delete';swk.style.transition='';swt.style.transition='';sPut(0)}
+  function sBack(){swk.style.transition='transform .3s ease';swt.style.transition='opacity .3s ease';sPut(0);setTimeout(function(){swk.style.transition='';swt.style.transition=''},320)}
+  function sGo(){
+    var id=viewing, r=byId(id); if(!id){sBack();return}
+    if(!confirm('Delete '+((r&&r.name)||'this student')+'?\nThis student will be removed from the register and the Google Sheet. This cannot be undone.')){sBack();return}
+    sBusy=true; swt.textContent='Deleting…'; swt.style.opacity='1';
+    call({action:'delete',uid:id}).then(function(){
+      rows=rows.filter(function(x){return x.uid!==id}); delete photoCache[id]; pub=[]; renderAdmin(); if(editingId===id) closeForm(); closeView();
+    }).catch(function(err){sBusy=false;swt.textContent='Delete';sBack();alert('Could not delete: '+errText(err))});
+  }
+  swk.addEventListener('pointerdown',function(e){if(sBusy)return;sDrag=true;sStart=e.clientX-sx;swk.setPointerCapture(e.pointerId);swk.classList.add('grab')});
+  swk.addEventListener('pointermove',function(e){if(sDrag)sPut(e.clientX-sStart)});
+  function sEnd(){if(!sDrag)return;sDrag=false;swk.classList.remove('grab');if(sx>=sMax()*0.85){sPut(sMax());sGo()}else sBack()}
+  swk.addEventListener('pointerup',sEnd); swk.addEventListener('pointercancel',sEnd);
+  swk.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!sBusy){e.preventDefault();sPut(sMax());sGo()}});
   $('vEdit').addEventListener('click',function(){var id=viewing,r=byId(id)||pub.find(function(x){return x.uid===id});closeView();if(!r)return;needLogin(function(){show('admin');$('adminList').hidden=false;loadAdmin();openForm(r)})});
 
   /* delete */
@@ -1071,7 +1100,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   $('alist').addEventListener('click',function(e){
     var b=e.target.closest('button[data-act]'); if(!b) return; var r=byId(b.dataset.id); if(!r) return;
-    if(b.dataset.act==='view') openView(r); else if(b.dataset.act==='edit') openForm(r); else openDel(r);
+    if(b.dataset.act==='view') openView(r,true);
   });
 
   /* form */
