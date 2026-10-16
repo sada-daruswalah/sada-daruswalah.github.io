@@ -261,6 +261,9 @@ a.ucard:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .back{all:unset;cursor:pointer;align-self:flex-start;font-family:var(--body);font-weight:700;font-size:.9rem;color:var(--teal);padding:8px 14px;border-radius:999px;border:1.5px solid var(--glass-line);background:var(--glass)}
 .back:hover{border-color:var(--teal)}
 .back:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
+.modal{background:color-mix(in srgb,#0d1428 35%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.modal .card,.modal .lbox,.modal .vbox{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--line)}
 footer{background:var(--navy);color:var(--bg);padding-block:36px}
 footer .in{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center}
 footer .fb{display:flex;align-items:center;gap:12px}
@@ -409,7 +412,7 @@ footer small{opacity:.8;font-size:.85rem}
       <label class="sr" for="fc">Class</label>
       <select id="fc"><option value="">All classes</option><option>PLUS ONE</option><option>PLUS TWO</option><option>DEGREE 1</option></select>
     </div>
-    <p class="note">Tap a student to see full details. Login is needed.</p>
+    <p class="note">Tap a student to see full details.</p>
     <div id="list" class="list"></div>
     <p class="note" id="dbnote" hidden></p>
   </div>
@@ -528,6 +531,7 @@ footer small{opacity:.8;font-size:.85rem}
 
 <!-- ===== Hikma: SADA assistant ===== -->
 <style>
+.hkw[hidden]{display:none!important}
 .hkw{--hk-ink:var(--ink,var(--text));--hk-fab-bottom:90px}
 .hkw .hk{display:inline-block;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQBAMAAAB8P++eAAAAMFBMVEUdekgdekgdekgdekgdekgdekgdekgdekgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2YzldAAAAEHRSTlMA/dFvsI5QLwAAAAAAAAAADy0h5QAABdVJREFUeNqNl9+PG1cVxz93ftlJd7P3Npu20JCdVdTQQMqO6Q8lIOSJ1KJWqK230PJDpTHh5wsiFVD+Bt5W4gke2rxQXhAsqC9IRDgPlEW01ZDSZFvUZKI2G2eTrq/xrj2z4/HwMGvHSex058XjozPfe+4533vO98Ktj+2xvedFOcJojrBd6bZvNRojvtVp9VarGGGSZHo7iC7Y24nR6UEvuh3iz/OfZAsVKPgjHa/tAcDD8OgAFL4QjI6xO30C0EzWSAHnk0FhZIxCZ2d+uFRIqRfsLMK5V2NujNl19lt6GMQ+Hl/Ut0tPV6ZMwiLyOwGQjXR0USDmCMHmg0WQYxF3zUMogE3W4JEPxjq6L38XMg8soPyXcewqKQ8Mpe6CeaV8sNTdIxG9PF0y+dmXawINEI9EFDmirZRSXo44tB0LeBB46Nd998QLMAMVAkjNS6eAN3M+KgCx78xUefGZqdeuCkmmZ229ak2W7/u9BmjkJTyoAZr3RB8+V6/RKdhUl46eJd0bXXwrArA3ckQxCEVkiDUUDRTIQQ2nwnzXFgihJJbMkJlngW8j0MJFSGReIiOn6lNr51dIVjxc3BSCDDBfCFi70PgQgj7NjtTrmvTI1dZlezXjif/ONSLHD9eWSuttyIpWu59wjzZQ6xFLY90Lu7Vur4wJYQJ4+eEwAH5FFxDsh+69J0NPiHS2BsfxgBB/wPDeDn60hKRzTymMH3830sXkHCK+wGoHs0BwvdYui+ALWlJwmk41mwRrDimghzNEirfp8H1tuD1padhchMwlNMiew+PIcEtRfQa9rScBmGk2t86BWBumWb8IQXoMC9PH1P3z0hvmo+PDY40qwB8wqt2Q8wBO42sSY6i1mUqp3cAJLKXcuyzvmReV8ikAJaWU10+PuQvI7q+zRG8H0bp4NouXWSYFswM076+DCYW9EUbLaXVs97ED4e6k86V/NjY/UZ/4pvaXPT2jNP/rADCv1J1QUo8qpZRyOa7UpxFKKaWeVbthVqndYFIKYKZOw76MNX+OOHsfNn7yDux5JDzPC0u0CmT7PjKNCKaWQRQwm+8jjv3LAQ697tDORAQhWVykfdgwbkwXef50uvU3HJzrbgWaVbAhVetkfzIA8btdUBYaKmBKsGsGr3jwGnwLSeLCVOyBFWswQhSvwj6wVjFhxSGbii5Ylw7qNhwSZwp86jOlkBBj5cjKN0oBfHspn31KqaOqAr+gpJQ0nRPVklL7KYCt7twqjQEkLQisRfgl74Dcn+r1AJ4khsTPoDw4XL3k7ij7emDIvYfqxMlGOFOH/xzWh8Of/i0SM7UhPgoJZgrw0BvWROuB4NG/AngB/XG35TjbJ6Ro7sqJe3FArWtDfLS03d6PqFAxt/iqXRtbis8fc9PKkOMD7IzfcFm0ZFYGw4d1V3gJ4tRCwD+GBlLM4wExpM1G3e71/n3H0+fC7FwxyiLMQhoNEC3ESWhhaYm5Kj0hXgWR+cxBCpWB44+xgJSrhHwVN8h6HAf+SAC41AZL76hPaji62kEY08W4fWC9/d4+3eGJS224UjQ7fcQAHwhSSszVXD8JN+m2sgO4XcDKGSgAeyLXEcbnAqQu/3mKub9PmCnW3jDXFzPBza0ZoFHYybEFdcPQ1fnS14VT2c9jWcDDXr8uM7ZiDAHMAy3mFvENEvDBFEmT8vdkX2YI4Aek5s4FhJwJMOTafA3jIzVXw5qcCnnpFA/ym1EjzlFKKVTlphE3NDSreV6/wvzD7OFmIWddfw0AMmrWyxwN8kbojJEKLvYkfBZOw2nvNtostCeAWt4NLlbGO05PkM8Kh2k4/dQYEbdDXwbnzeLhkF7x4dIy4XiBhHnF4ixUkK/IG9XljY7m8xgkFGqc5NLYzXiYzy8QS/xNTNjcGCuQrGsLgORsBRPYXPHikY7TV7fyntQ4CBC/7t1ODDt35GrjY8Xwphwtum81NYsfI4aHTNXt3RVm92zzUiFGXSpGLI1VGWH8P435EByyCL5QAAAAAElFTkSuQmCC) center/contain no-repeat;vertical-align:middle}
 .hkw .hkfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--hk-fab-bottom) + env(safe-area-inset-bottom,0px));
@@ -573,6 +577,8 @@ footer small{opacity:.8;font-size:.85rem}
 .hkw .tmt td.no{width:22px;color:var(--rose);font-weight:700;font-variant-numeric:tabular-nums}
 .hkw .tmt td.nm{font-weight:700}
 .hkw .tmt .dash{opacity:.5;font-weight:400}
+.hkw .tmdl{margin-top:12px;width:100%;border:0;border-radius:999px;padding:10px 14px;font:700 14px var(--body,system-ui,sans-serif);background:var(--teal);color:var(--bg);cursor:pointer}
+.hkw .tmdl:disabled{opacity:.7;cursor:default}
 @media (prefers-reduced-motion:reduce){.hkw .hkfab{transition:none}}
 </style>
 <div class="hkw">
@@ -608,29 +614,149 @@ footer small{opacity:.8;font-size:.85rem}
   /* ---- Talents Meet weekly schedule ---- */
   var TM_ON=false;
   var TM_GROUPS=[
-    {name:'Plus Two &amp; Degree',report1:'ASJAD FARHAN',list:['IBRAHIM .A','MUHAMMED NAEEM','ADIL ROSHAN','MUHAMMED BISHR','MUHAMMED SHAMMAS','MUHAMMED MINHAJ','MUHAMMED FARHAN','MUHAMMED SHAFI','NAJIH ABDULLAH','MUHAMMED SAHAL','AL AMEEN','SHAHDAN AHMED','HADI AMAN','SINAN KASARAGOD','SINAN KALARANTHIRI','ASJAD FARHAN','MUHAMMED RIDWAN','MUHAMMED AYMAN']},
-    {name:'Plus One',report1:'',list:['MUHAMMED NADHISH','MUHAMMAD C K','MUHAMMED JUNAID','SINAN NARIKKUNI','ADNAN K','SINAN PK KALARANTHIRI','AMJAD AC','MUHAMMED RAMZAN','MUHAMMED P','MUHAMMED HASAN SALIH','MUHAMMAD JINSHAD','MUHAMMED AMIN','MUHAMMED NAFIH','MUHAMMED ADIL','MUHAMMAD SUHAIL','MUHAMMAD JALAL','MUHAMMAD SHAHIN','MUHAMMAD RISAL','ANAS ELAMARAM']}
+    {name:'Plus Two &amp; Degree',plain:'PLUS TWO & DEGREE',cat:'S1',report1:'ASJAD FARHAN',list:['IBRAHIM .A','MUHAMMED NAEEM','ADIL ROSHAN','MUHAMMED BISHR','MUHAMMED SHAMMAS','MUHAMMED MINHAJ','MUHAMMED FARHAN','MUHAMMED SHAFI','NAJIH ABDULLAH','MUHAMMED SAHAL','AL AMEEN','SHAHDAN AHMED','HADI AMAN','SINAN KASARAGOD','SINAN KALARANTHIRI','ASJAD FARHAN','MUHAMMED RIDWAN','MUHAMMED AYMAN']},
+    {name:'Plus One',plain:'PLUS ONE',cat:'S2',report1:'',list:['MUHAMMED NADHISH','MUHAMMAD C K','MUHAMMED JUNAID','SINAN NARIKKUNI','ADNAN K','SINAN PK KALARANTHIRI','AMJAD AC','MUHAMMED RAMZAN','MUHAMMED P','MUHAMMED HASAN SALIH','MUHAMMAD JINSHAD','MUHAMMED AMIN','MUHAMMED NAFIH','MUHAMMAD SUHAIL','MUHAMMAD SHAHIN','MUHAMMAD RISAL','ANAS ELAMARAM']}
   ];
   /* slot = rotating position; 'none' = nobody; 'report' = previous presidency */
   var TM_PROGS=[['*','Supplication',0],['1',"Qira'at",1],['2','Welcome',2],['3','Presidency',0],['4','Inauguration','none'],['5','Dissertation',3],['6','Sermon',4],
     ['7','Malayalam Speech 1',5],['8','Malayalam Speech 2',6],['9','English Speech 1',7],['10','English Speech 2',8],['11','Arabic Speech',9],['12','Urdu Speech',10],
-    ['13','Song 1',11],['14','Song 2',12],['15','Song 3',13],['16','Zero Hour','none'],['17','Report','report'],['18','Criticism','none'],['19','Vote of Thanks',14]];
+    ['13','Song 1',11],['14','Song 2',12],['15','Song 3',13],['★','Special Program','special'],['16','Zero Hour','none'],['17','Report','report'],['18','Criticism','none'],['19','Vote of Thanks',14]];
   var TM_SLOTS=15;
   function tmPerson(list,day,slot){
     var N=list.length; if(!N||slot>=N) return '';
     return list[(slot+day-1)%N];
   }
+  var TM_MIN={'Supplication':3,"Qira'at":2,'Welcome':5,'Presidency':5,'Inauguration':5,'Dissertation':3,'Sermon':10,'Malayalam Speech 1':5,'Malayalam Speech 2':5,
+    'English Speech 1':3,'English Speech 2':3,'Arabic Speech':3,'Urdu Speech':3,'Song 1':4,'Song 2':4,'Song 3':4,'Zero Hour':5,'Report':3,'Criticism':10,'Vote of Thanks':1};
+  function tmData(day){
+    return TM_GROUPS.map(function(g){
+      var out={name:g.name,plain:g.plain,cat:g.cat,rows:[],empty:!g.list.length};
+      if(out.empty) return out;
+      var rep=day===1?g.report1:tmPerson(g.list,day-1,0), busy={};
+      if(rep) busy[rep]=1;
+      TM_PROGS.forEach(function(p){if(typeof p[2]==='number'){var x=tmPerson(g.list,day,p[2]);if(x)busy[x]=1}});
+      var spare=g.list.filter(function(n){return !busy[n]});
+      out.rows=TM_PROGS.map(function(p){
+        var who=p[2]==='none'?[]:p[2]==='report'?(rep?[rep]:[]):p[2]==='special'?spare:[tmPerson(g.list,day,p[2])];
+        return {no:p[0],label:p[1],who:who.filter(Boolean),min:TM_MIN[p[1]]||''};
+      });
+      return out;
+    });
+  }
   function tmSchedule(day){
     var h='<b>Weekly Talent Meet · Meet '+day+'</b>';
-    TM_GROUPS.forEach(function(g){
-      h+='<div class="tmg"><div class="tmh">'+g.name+'</div>';
-      if(!g.list.length){h+='<div class="tmn">Student list not added yet.</div></div>';return}
-      h+='<table class="tmt"><tbody>'+TM_PROGS.map(function(p){
-        var who=p[2]==='none'?'':p[2]==='report'?(day===1?g.report1:tmPerson(g.list,day-1,0)):tmPerson(g.list,day,p[2]);
-        return '<tr><td class="no">'+p[0]+'</td><td>'+p[1]+'</td><td class="nm">'+(who?e(who):'<span class="dash">—</span>')+'</td></tr>';
+    tmData(day).forEach(function(g){
+      h+='<div class="tmg"><div class="tmh">'+g.name+' · '+g.cat+'</div>';
+      if(g.empty){h+='<div class="tmn">Student list not added yet.</div></div>';return}
+      h+='<table class="tmt"><tbody>'+g.rows.map(function(r){
+        return '<tr><td class="no">'+r.no+'</td><td>'+r.label+'</td><td class="nm">'+(r.who.length?r.who.map(e).join('<br>'):'<span class="dash">—</span>')+'</td></tr>';
       }).join('')+'</tbody></table></div>';
     });
+    h+='<button type="button" class="tmdl" data-meet="'+day+'">⬇ Download PDF (4 pages)</button>';
     return h;
+  }
+
+  /* ---- PDF of the programme sheets ---- */
+  var jsPdfP=null;
+  function loadJsPdf(){
+    if(window.jspdf) return Promise.resolve(window.jspdf);
+    if(jsPdfP) return jsPdfP;
+    jsPdfP=new Promise(function(res,rej){
+      var sc=document.createElement('script');
+      sc.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      sc.onload=function(){window.jspdf?res(window.jspdf):rej(new Error('PDF tool did not load'))};
+      sc.onerror=function(){jsPdfP=null;rej(new Error('PDF tool did not load'))};
+      document.head.appendChild(sc);
+    });
+    return jsPdfP;
+  }
+  function tmPdf(day){
+    return loadJsPdf().then(function(lib){
+      var doc=new lib.jsPDF({unit:'mm',format:'a4'});
+      var NAVY=[31,45,80],ROSE=[194,24,91],BG=[211,229,244],CREAM=[250,246,232],CREAMLINE=[214,204,160];
+      function fill(c){doc.setFillColor(c[0],c[1],c[2])}
+      function ink(c){doc.setTextColor(c[0],c[1],c[2])}
+      function stroke(c){doc.setDrawColor(c[0],c[1],c[2])}
+      function shape(color,start,curves,close){
+        var segs=[],x=start[0],y=start[1];
+        curves.forEach(function(c){
+          if(c.length===2){segs.push([c[0]-x,c[1]-y]);x=c[0];y=c[1]}
+          else{segs.push([c[0]-x,c[1]-y,c[2]-x,c[3]-y,c[4]-x,c[5]-y]);x=c[4];y=c[5]}
+        });
+        fill(color);doc.lines(segs,start[0],start[1],[1,1],'F',true);
+      }
+      function frame(){
+        fill([255,255,255]);doc.rect(0,0,210,297,'F');
+        fill(BG);doc.rect(5.5,5.5,199,286,'F');
+      }
+      function border(){stroke([60,70,95]);doc.setLineWidth(0.3);doc.rect(10.5,10.5,189,276,'S')}
+      function arrow(x1,y1,x2,y2){
+        stroke([60,70,95]);doc.setLineWidth(0.3);doc.line(x1,y1,x2,y2);
+        fill([60,70,95]);var d=x2>x1?1:-1;doc.triangle(x2,y2,x2-2.4*d,y2-1.3,x2-2.4*d,y2+1.3,'F');
+      }
+      function fitText(t,x,y,maxW,size){
+        doc.setFontSize(size);while(doc.getTextWidth(t)>maxW&&size>7){size-=0.5;doc.setFontSize(size)}
+        doc.text(t,x,y);
+      }
+      function rowsOn(rows,y0,step,lineX,labelSize){
+        rows.forEach(function(r,i){
+          var y=y0+i*step;
+          doc.setFont('times','bold');doc.setFontSize(labelSize);
+          var lab=r.label.toUpperCase(), no=(r.no==='*'||r.no==='★')?'* ':r.no+'. ';
+          var wl=doc.getTextWidth(lab), wn=doc.getTextWidth(no);
+          ink(NAVY);doc.text(lab,lineX-5,y,{align:'right'});
+          ink(r.no==='*'?NAVY:ROSE);doc.text(no.trim(),lineX-5-wl-wn-0.8,y);
+          ink(NAVY);doc.setFont('times','normal');doc.setFontSize(12);doc.text(':',lineX+3,y);
+          doc.setFont('times','bold');
+          var who=r.who.length?r.who.join(', '):'';
+          if(who) fitText(who,lineX+7,y,180-(lineX+7)-18,12);
+          doc.setFontSize(11);if(r.min!=='') doc.text(r.min+' MIN',182,y,{align:'right'});
+          stroke([60,70,95]);doc.setLineWidth(0.25);doc.line(lineX,y+5,182,y+5);
+        });
+      }
+      tmData(day).forEach(function(g,gi){
+        if(g.empty) return;
+        var p1=g.rows.slice(0,7), p2=g.rows.slice(7);
+        /* ---------- page 1 ---------- */
+        if(gi>0) doc.addPage();
+        frame();
+        shape([181,215,241],[5.5,5.5],[[204.5,5.5],[204.5,108],[170,95,150,80,128,79],[108,78,95,96,72,104],[50,112,25,96,5.5,94]]);
+        shape([62,147,219],[5.5,5.5],[[204.5,5.5],[204.5,88],[175,74,150,60,125,62],[100,64,95,88,72,92],[45,96,25,82,5.5,80]]);
+        shape([106,172,229],[5.5,5.5],[[204.5,5.5],[204.5,40],[170,28,140,26,110,36],[85,44,50,46,5.5,38]]);
+        border();
+        ink(NAVY);doc.setFont('times','bold');doc.setFontSize(9);doc.text('Sl No :  '+day,14,17);
+        fill([236,239,243]);doc.rect(45,25,120,11,'F');
+        fill(NAVY);doc.rect(45,25,3,11,'F');doc.rect(162,25,3,11,'F');
+        ink(NAVY);doc.setFont('times','normal');doc.setFontSize(22);doc.text('WEEKLY TALENT MEET',105,33,{align:'center'});
+        fill(NAVY);doc.rect(81.5,37.5,47,6.5,'F');
+        ink([255,255,255]);doc.setFontSize(11.5);doc.text('Do Your Best And Beyond',105,42.1,{align:'center'});
+        ink([36,62,110]);doc.setFontSize(10);doc.setCharSpace(0.9);doc.text('SNEC • DARUSWALAH ISLAMIC ACADEMY',105,53,{align:'center'});doc.setCharSpace(0);
+        ink(ROSE);doc.setFont('times','bold');doc.setFontSize(12);doc.text('CATEGORY :',18,67.4);
+        [['S1',46,20],['S2',70,20],['GNR',94,28]].forEach(function(c){
+          var on=c[0]===g.cat;
+          fill(on?NAVY:[255,255,255]);stroke([160,180,200]);doc.setLineWidth(0.3);doc.roundedRect(c[1],62.5,c[2],7.5,1,1,'FD');
+          ink(on?[255,255,255]:NAVY);doc.setFont('times',on?'bold':'normal');doc.setFontSize(12);doc.text(c[0],c[1]+c[2]/2,67.6,{align:'center'});
+        });
+        ink(ROSE);doc.setFont('times','bold');doc.text('DATE :',128,67.4);
+        fill([255,255,255]);doc.roundedRect(144,62,38,8.5,1,1,'FD');
+        ink(NAVY);doc.setFontSize(9);doc.setFont('times','normal');doc.text(g.plain,182,75.5,{align:'right'});
+        ink(NAVY);doc.setFont('times','bold');doc.setFontSize(13);doc.text('THEME :',25,105);
+        fill(CREAM);stroke(CREAMLINE);doc.roundedRect(46,95,136,17,2.5,2.5,'FD');
+        arrow(66,124,17,124);stroke([60,70,95]);doc.line(66,124,66,266);arrow(66,266,123,266);
+        rowsOn(p1,135,13,66,13);
+        fill(CREAM);stroke(CREAMLINE);doc.roundedRect(70,229,112,25,2.5,2.5,'FD');
+        /* ---------- page 2 ---------- */
+        doc.addPage();
+        frame();
+        shape([122,182,232],[5.5,5.5],[[204.5,5.5],[204.5,73],[180,62,150,42,128,47],[108,52,95,82,72,80],[50,78,25,64,5.5,66]]);
+        shape([168,207,240],[5.5,5.5],[[204.5,5.5],[204.5,33],[170,22,140,20,110,30],[85,37,50,40,5.5,33]]);
+        border();
+        ink(NAVY);doc.setFont('times','normal');doc.setFontSize(9);doc.text('Sl No :  '+day+'   ·   '+g.cat+' · '+g.plain,14,17);
+        arrow(74,22,17,22);stroke([60,70,95]);doc.line(74,22,74,232);arrow(74,232,140,232);
+        rowsOn(p2,33,14.2,74,11.5);
+      });
+      doc.save('Talent-Meet-'+day+'.pdf');
+    });
   }
   function has(q,words){return words.some(function(w){return q.indexOf(w)>-1})}
   var CLS=['PLUS ONE','PLUS TWO','DEGREE 1'];
@@ -690,11 +816,23 @@ footer small{opacity:.8;font-size:.85rem}
   }
   var CHIPS=['What is SADA?','Who is the chairman?','Class unions','How many students?'];
   g('hkChips').innerHTML=CHIPS.map(function(c){return '<button type="button">'+c+'</button>'}).join('');
+  chat.addEventListener('click',function(ev){
+    var b=ev.target.closest('.tmdl'); if(!b||b.disabled) return;
+    var t=b.textContent; b.disabled=true; b.textContent='Preparing PDF…';
+    tmPdf(+b.dataset.meet).then(function(){b.textContent='✔ Downloaded'}).catch(function(err){b.textContent='Could not make the PDF. Check the internet and tap again.';b.disabled=false})
+      .then(function(){setTimeout(function(){if(b.textContent==='✔ Downloaded'){b.textContent=t;b.disabled=false}},3000)});
+  });
   g('hkChips').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)ask(b.textContent)});
   g('hkForm').addEventListener('submit',function(ev){ev.preventDefault();ask()});
   add('Assalamu alaikum! I am <b>Hikma</b> 😊 Ask me anything about <b>SADA</b> — our Chairman, goals, wings, class unions, students, Talents Meet or the library.','ai');
   function toggle(open){if(open===undefined)open=!panel.classList.contains('show');panel.classList.toggle('show',open);fab.classList.toggle('open',open);if(open){chat.scrollTop=chat.scrollHeight;inp.focus()}}
   fab.addEventListener('click',function(){toggle()});
+  if(TM_ON){
+    var appEl=document.getElementById('app'), wrap=fab.closest('.hkw');
+    var sync=function(){var on=!!(appEl&&appEl.classList.contains('on'));wrap.hidden=!on;if(!on&&panel.classList.contains('show'))toggle(false)};
+    if(appEl){new MutationObserver(sync).observe(appEl,{attributes:true,attributeFilter:['class']})}
+    sync();
+  }
   g('hkX').addEventListener('click',function(){toggle(false);fab.focus()});
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&panel.classList.contains('show'))toggle(false)});
 })();
@@ -862,15 +1000,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   }
   $('q').addEventListener('input',renderPublic); $('fc').addEventListener('change',renderPublic);
   function openPublic(li){
-    var p=pub[+li.dataset.k]; if(!p) return;
-    needLogin(function(){
-      var find=function(){return rows.find(function(r){return r.cls===p.cls&&r.name===p.name&&String(r.roll)===String(p.roll)})};
-      var hit=find(); if(hit){openView(hit);return}
-      li.classList.add('busy');
-      call({action:'list'}).then(function(j){rows=j.students||[];adminState='ok';renderAdmin();var h=find();if(h)openView(h);})
-        .catch(function(err){$('list').insertAdjacentHTML('afterbegin','<div class="emptyl">'+esc(errText(err))+'</div>')})
-        .then(function(){li.classList.remove('busy')});
-    });
+    var p=pub[+li.dataset.k]; if(p) openView(p);
   }
   $('list').addEventListener('click',function(e){var li=e.target.closest('li.tap');if(li)openPublic(li)});
   $('list').addEventListener('keydown',function(e){if(e.key==='Enter'){var li=e.target.closest('li.tap');if(li)openPublic(li)}});
@@ -906,7 +1036,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   function getPhoto(uid){
     if(photoCache[uid]) return Promise.resolve(photoCache[uid]);
-    return call({action:'photo',uid:uid}).then(function(j){if(j.photo)photoCache[uid]=j.photo;return j.photo||''});
+    return fetch(API+'?photo='+encodeURIComponent(uid)).then(function(r){return r.json()}).then(function(j){if(j.photo)photoCache[uid]=j.photo;return j.photo||''});
   }
 
   /* view */
@@ -924,7 +1054,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   }
   function closeView(){$('viewBox').hidden=true;viewing=null}
   $('vClose').addEventListener('click',closeView);
-  $('vEdit').addEventListener('click',function(){var r=byId(viewing);closeView();if(r)openForm(r)});
+  $('vEdit').addEventListener('click',function(){var id=viewing,r=byId(id)||pub.find(function(x){return x.uid===id});closeView();if(!r)return;needLogin(function(){show('admin');$('adminList').hidden=false;loadAdmin();openForm(r)})});
 
   /* delete */
   function openDel(r){deleting=r.uid;$('dText').textContent=r.name+' ('+(r.cls||'')+', Roll '+(r.roll||'—')+') will be removed from the register and the Google Sheet. This cannot be undone.';$('dErr').textContent='';$('dYes').disabled=false;$('dYes').textContent='Delete';$('delBox').hidden=false;$('dNo').focus()}
