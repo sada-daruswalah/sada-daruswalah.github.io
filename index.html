@@ -565,6 +565,14 @@ footer small{opacity:.8;font-size:.85rem}
 .hkw .hkask input{flex:1;min-width:0;padding:10px 14px;font:15px var(--body,system-ui,sans-serif);border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 45%,transparent);color:var(--hk-ink)}
 .hkw .hkask input:focus{outline:none;border-color:var(--teal)}
 .hkw .hkask button{border:0;border-radius:999px;padding:10px 16px;font:700 14px var(--body,system-ui,sans-serif);background:var(--teal);color:var(--bg);cursor:pointer}
+.hkw .tmg{margin-top:10px}
+.hkw .tmh{font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.hkw .tmn{font-size:13px;opacity:.8}
+.hkw .tmt{width:100%;border-collapse:collapse;font-size:13px}
+.hkw .tmt td{padding:4px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.hkw .tmt td.no{width:22px;color:var(--rose);font-weight:700;font-variant-numeric:tabular-nums}
+.hkw .tmt td.nm{font-weight:700}
+.hkw .tmt .dash{opacity:.5;font-weight:400}
 @media (prefers-reduced-motion:reduce){.hkw .hkfab{transition:none}}
 </style>
 <div class="hkw">
@@ -596,6 +604,34 @@ footer small{opacity:.8;font-size:.85rem}
     else chat.appendChild(b);
     chat.scrollTop=chat.scrollHeight;return b;
   }
+
+  /* ---- Talents Meet weekly schedule ---- */
+  var TM_ON=false;
+  var TM_GROUPS=[
+    {name:'Plus Two &amp; Degree',report1:'ASJAD FARHAN',list:['IBRAHIM .A','MUHAMMED NAEEM','ADIL ROSHAN','MUHAMMED BISHR','MUHAMMED SHAMMAS','MUHAMMED MINHAJ','MUHAMMED FARHAN','MUHAMMED SHAFI','NAJIH ABDULLAH','MUHAMMED SAHAL','AL AMEEN','SHAHDAN AHMED','HADI AMAN','SINAN KASARAGOD','SINAN KALARANTHIRI','ASJAD FARHAN','MUHAMMED RIDWAN','MUHAMMED AYMAN']},
+    {name:'Plus One',report1:'',list:['MUHAMMED NADHISH','MUHAMMAD C K','MUHAMMED JUNAID','SINAN NARIKKUNI','ADNAN K','SINAN PK KALARANTHIRI','AMJAD AC','MUHAMMED RAMZAN','MUHAMMED P','MUHAMMED HASAN SALIH','MUHAMMAD JINSHAD','MUHAMMED AMIN','MUHAMMED NAFIH','MUHAMMED ADIL','MUHAMMAD SUHAIL','MUHAMMAD JALAL','MUHAMMAD SHAHIN','MUHAMMAD RISAL','ANAS ELAMARAM']}
+  ];
+  /* slot = rotating position; 'none' = nobody; 'report' = previous presidency */
+  var TM_PROGS=[['*','Supplication',0],['1',"Qira'at",1],['2','Welcome',2],['3','Presidency',0],['4','Inauguration','none'],['5','Dissertation',3],['6','Sermon',4],
+    ['7','Malayalam Speech 1',5],['8','Malayalam Speech 2',6],['9','English Speech 1',7],['10','English Speech 2',8],['11','Arabic Speech',9],['12','Urdu Speech',10],
+    ['13','Song 1',11],['14','Song 2',12],['15','Song 3',13],['16','Zero Hour','none'],['17','Report','report'],['18','Criticism','none'],['19','Vote of Thanks',14]];
+  var TM_SLOTS=15;
+  function tmPerson(list,day,slot){
+    var N=list.length; if(!N||slot>=N) return '';
+    return list[(slot+day-1)%N];
+  }
+  function tmSchedule(day){
+    var h='<b>Weekly Talent Meet · Meet '+day+'</b>';
+    TM_GROUPS.forEach(function(g){
+      h+='<div class="tmg"><div class="tmh">'+g.name+'</div>';
+      if(!g.list.length){h+='<div class="tmn">Student list not added yet.</div></div>';return}
+      h+='<table class="tmt"><tbody>'+TM_PROGS.map(function(p){
+        var who=p[2]==='none'?'':p[2]==='report'?(day===1?g.report1:tmPerson(g.list,day-1,0)):tmPerson(g.list,day,p[2]);
+        return '<tr><td class="no">'+p[0]+'</td><td>'+p[1]+'</td><td class="nm">'+(who?e(who):'<span class="dash">—</span>')+'</td></tr>';
+      }).join('')+'</tbody></table></div>';
+    });
+    return h;
+  }
   function has(q,words){return words.some(function(w){return q.indexOf(w)>-1})}
   var CLS=['PLUS ONE','PLUS TWO','DEGREE 1'];
   function countReply(q){
@@ -615,6 +651,8 @@ footer small{opacity:.8;font-size:.85rem}
     });
   }
   function answer(raw){
+    var tmm=raw.match(/talents?\s*meet\s*@\s*(\d{1,3})/i);
+    if(tmm&&+tmm[1]>0) return TM_ON?tmSchedule(+tmm[1]):'The weekly programme list is available on the '+link(TM,'Talents Meet')+' website. Ask Hikma there.';
     var q=' '+raw.toLowerCase().trim()+' ';
     if(has(q,[' hi ',' hello',' hai ',' salam','assalam','salaam',' hey '])) return 'Wa alaikum assalam! 😊 I am <b>Hikma</b>, the SADA assistant. Ask me about SADA, our Chairman, goals, wings, students, Talents Meet or the library.';
     if(has(q,['thank','thanks','nanni','jazak'])) return 'You are welcome! Ask me anything else about SADA. 😊';
@@ -633,6 +671,7 @@ footer small{opacity:.8;font-size:.85rem}
     if(has(q,['finance','fee','money','account','fund','panam','cash'])) return 'Ha! The <b>FINANCE</b> button on the website is shy and runs away when you touch it 😄 Finance records are not public yet.';
     if(has(q,['password','username','login','log in','sign in'])) return 'Login details are given only to SADA admins and office bearers. Please ask the Chairman or the Academy office.';
     if(has(q,['add student','register','join','admission','new member','enroll','enrol'])) return 'Admins add students on the SADA website: tap <b>OTHER → Add Students</b> and log in. There you can also View, Edit and Delete students. '+link(SITE,'Open SADA website');
+    if(TM_ON&&has(q,['schedule','duty','who is presenting','programme list','program list'])) return 'Type <b>Talents meet@</b> with the meet number to see who presents what. For example: <b>Talents meet@1</b>';
     if(has(q,['talent','evaluat','result','mark','score','valuation'])) return '<b>Talents Meet</b> is where staff evaluate student programmes (Qira\'th, speeches, songs and more) and students check their results. '+link(TM,'Open Talents Meet');
     if(has(q,['library','book','read'])) return 'The <b>Daruswalah Digital Library</b> lets students see their book history, and librarians issue and return books by scanning barcodes. '+link(LIB,'Open Digital Library');
     if(has(q,['website','link','site','url','portal'])) return 'The official SADA website is '+link(SITE,'sada-daruswalah.github.io')+'.';
