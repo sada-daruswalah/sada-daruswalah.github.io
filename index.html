@@ -266,13 +266,18 @@ a.ucard:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .modal .card,.modal .lbox,.modal .vbox{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--line)}
 
 .vact{flex-wrap:nowrap;align-items:center}
-.vact .sw{flex:1;min-width:150px;position:relative;height:46px;margin-right:4px;border-radius:23px 38px 10px 23px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
+.vact .sw{flex:1;min-width:150px;position:relative;height:46px;margin-right:4px;border-radius:10px 38px 10px 38px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
 .vact .sw[hidden]{display:none}
 .vact .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:40px;color:#121212;font-family:var(--body);font-size:17px;font-weight:700;pointer-events:none}
 .vact .swk{position:absolute;left:0;top:-6px;width:58px;height:58px;border-radius:10px 50px 10px 50px;background:linear-gradient(135deg,#ec0c8c,#ff5e62);box-shadow:0 6px 16px rgba(236,12,140,.35);cursor:grab;touch-action:none;z-index:1}
 .vact .swk.grab{cursor:grabbing}
 .vact .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .vact .btn{flex:none}
+
+.sw.sv{position:relative;height:56px;margin:14px 0 4px;border-radius:12px 44px 12px 44px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
+.sw.sv .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:56px;color:#121212;font-family:var(--body);font-size:22px;font-weight:700;pointer-events:none}
+.sw.sv .swk{position:absolute;left:0;top:-7px;width:76px;height:70px;border-radius:12px 64px 12px 64px;background:linear-gradient(135deg,#0f9b5f,#3ddc84);box-shadow:0 6px 16px rgba(15,155,95,.35);cursor:grab;touch-action:none;z-index:1}
+.sw.sv .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 footer{background:var(--navy);color:var(--bg);padding-block:36px}
 footer .in{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center}
 footer .fb{display:flex;align-items:center;gap:12px}
@@ -503,7 +508,8 @@ footer small{opacity:.8;font-size:.85rem}
         <div class="f combo"><label for="fLac">Constituency *</label><input id="fLac" placeholder="Type to search 140 constituencies" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="lacList"><ul id="lacList" class="dd" role="listbox" hidden></ul></div>
       </div>
       <p class="note">All fields marked * are required.</p>
-      <div class="row"><button type="submit" class="btn solid" id="saveBtn">Save student</button><span class="msg" id="msg" role="status"></span></div>
+      <div class="sw sv" id="saveSw" role="group" aria-label="Slide right to save"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save"></div></div>
+      <div class="row"><button type="submit" class="btn solid" id="saveBtn" hidden>Save student</button><span class="msg" id="msg" role="status"></span></div>
     </form>
   </div>
 </main>
@@ -1125,6 +1131,20 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   var digits=function(id){var el=$(id);el.addEventListener('input',function(){var v=el.value.replace(/\D/g,'');if(v!==el.value)el.value=v})};
   ['fUid','fRoll','fPhone'].forEach(digits);
+  /* slide-to-save */
+  (function(){
+    var sw=$('saveSw'),k=sw.querySelector('.swk'),tx=sw.querySelector('.swt'),x=0,st=0,drag=false,busy=false;
+    function mx(){return sw.clientWidth-k.offsetWidth}
+    function put(v){x=Math.max(0,Math.min(v,mx()));k.style.transform='translateX('+x+'px)';tx.style.opacity=String(1-x/Math.max(1,mx())*0.9)}
+    function back(){k.style.transition='transform .3s ease';tx.style.transition='opacity .3s ease';put(0);setTimeout(function(){k.style.transition='';tx.style.transition=''},320)}
+    function wait(){if($('saveBtn').disabled){tx.textContent='Saving…';tx.style.opacity='1';setTimeout(wait,200)}else{busy=false;tx.textContent='Save';back()}}
+    function go(){if(busy)return;busy=true;$('addForm').requestSubmit();setTimeout(wait,60)}
+    k.addEventListener('pointerdown',function(e){if(busy)return;drag=true;st=e.clientX-x;k.setPointerCapture(e.pointerId)});
+    k.addEventListener('pointermove',function(e){if(drag)put(e.clientX-st)});
+    function end(){if(!drag)return;drag=false;if(x>=mx()*0.85){put(mx());go()}else back()}
+    k.addEventListener('pointerup',end);k.addEventListener('pointercancel',end);
+    k.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!busy){e.preventDefault();put(mx());go()}});
+  })();
   $('addForm').addEventListener('input',function(e){if(e.target.classList)e.target.classList.remove('bad')});
   $('addForm').addEventListener('change',function(e){if(e.target.classList)e.target.classList.remove('bad')});
   $('addForm').addEventListener('submit',function(e){
