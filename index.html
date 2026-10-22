@@ -286,9 +286,14 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .adminbtn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:var(--body);font-weight:700;font-size:.9rem;color:var(--bg);background:var(--navy);padding:9px 16px;border-radius:999px}
 .adminbtn svg{width:17px;height:17px}
 .adminbtn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
-.esec{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
-.esec h3{letter-spacing:.08em}
-.esec .note{margin-top:-6px}
+.esec{display:flex;flex-direction:column;gap:12px;padding:0;overflow:hidden}
+.ehead{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 20px;width:100%}
+.ehead:focus-visible{outline:3px solid var(--teal);outline-offset:-3px}
+.ehead .txt b{letter-spacing:.08em}
+.ehead .chev{margin-left:auto;font-size:1.6rem;color:var(--teal);transition:transform .2s}
+.esec.open .chev{transform:rotate(90deg)}
+.ebody{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.esearch{margin:0}
 .mlist{display:flex;flex-direction:column;gap:8px;width:100%}
 .mem{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 .mem:hover,.mem:focus-visible{border-color:var(--teal)}
@@ -327,7 +332,7 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .xamt.in{color:#1f8a54}.xamt.out{color:var(--rose)}
 .xrow .del{font-size:.8rem}
 .pend{font-size:.7rem;color:var(--warn,#9a6b00);font-weight:700}
-.obchip{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:30;background:#e0b04b;color:#1b1300;font-weight:700;font-size:12px;padding:6px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.2);font-family:var(--body)}
+.obchip{display:none!important;position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:30;background:#e0b04b;color:#1b1300;font-weight:700;font-size:12px;padding:6px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.2);font-family:var(--body)}
 .obchip.ok{background:#1f8a54;color:#fff}
 .sw.sv{position:relative;height:56px;margin:14px 0 4px;border-radius:12px 44px 12px 44px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
 .sw.sv .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:56px;color:#121212;font-family:var(--body);font-size:22px;font-weight:700;pointer-events:none}
@@ -523,17 +528,17 @@ footer small{opacity:.8;font-size:.85rem}
   <div class="in">
     <div class="etop"><button type="button" class="adminbtn" id="openAdminPanel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Admin</button><button type="button" class="back" id="entriesBack">← Other</button></div>
     <div class="vhead"><div><span class="eyebrow">Special Entries</span><h2>Member logins</h2></div></div>
-    <div class="card esec">
-      <h3>SADA ENTRY</h3><p class="note">Tap your name to log in.</p>
-      <div id="sadaList" class="mlist"><div class="emptyl">Loading…</div></div>
+    <div class="card esec" data-sec="sada">
+      <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14.6c2.6.2 4.4 1.9 5 5"/></svg></div><div class="txt"><b>SADA ENTRY</b><span id="cnt-sada">Office bearers</span></div><span class="chev" aria-hidden="true">›</span></button>
+      <div class="ebody" hidden><div class="mlist" id="list-sada"><div class="emptyl">Loading…</div></div></div>
     </div>
-    <div class="card esec">
-      <h3>STAFF ENTRY</h3><p class="note">For teachers and evaluators.</p>
-      <button type="button" class="btn solid" data-entry="staff">Staff login</button>
+    <div class="card esec" data-sec="staff">
+      <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 13l2.5 2.5 4.5-5"/></svg></div><div class="txt"><b>STAFF ENTRY</b><span id="cnt-staff">Teachers and evaluators</span></div><span class="chev" aria-hidden="true">›</span></button>
+      <div class="ebody" hidden><div class="mlist" id="list-staff"><div class="emptyl">Loading…</div></div></div>
     </div>
-    <div class="card esec">
-      <h3>STUDENT ENTRY</h3><p class="note">For students of the academy.</p>
-      <button type="button" class="btn solid" data-entry="student">Student login</button>
+    <div class="card esec" data-sec="student">
+      <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c3 2 7 2 10 0v-4.5"/></svg></div><div class="txt"><b>STUDENT ENTRY</b><span id="cnt-student">Students of the academy</span></div><span class="chev" aria-hidden="true">›</span></button>
+      <div class="ebody" hidden><input type="search" class="esearch" id="stuQ" placeholder="Search your name or roll no" autocomplete="off"><div class="mlist" id="list-student"><div class="emptyl">Loading…</div></div></div>
     </div>
   </div>
 </main>
@@ -705,6 +710,7 @@ footer small{opacity:.8;font-size:.85rem}
 .hkw .hkdots i{width:7px;height:7px;border-radius:50%;background:var(--teal);opacity:.35;animation:hkd 1s infinite}
 .hkw .hkdots i:nth-child(2){animation-delay:.15s}.hkw .hkdots i:nth-child(3){animation-delay:.3s}
 @keyframes hkd{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.hkw .hkwhy{margin-top:8px;font-size:11px;opacity:.6}
 .hkw .tmg{margin-top:10px}
 .hkw .tmh{font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
 .hkw .tmn{font-size:13px;opacity:.8}
@@ -968,7 +974,8 @@ footer small{opacity:.8;font-size:.85rem}
     var w=add('<span class="hkdots"><i></i><i></i><i></i></span>','ai');
     var local=/talents?\s*meet\s*@\s*\d/i.test(text);
     var done=function(html,raw){w.innerHTML=html;HIST.push({who:'me',text:text});HIST.push({who:'ai',text:raw||w.textContent});chat.scrollTop=chat.scrollHeight;busy=false};
-    var fallback=function(){return Promise.resolve().then(function(){return answer(text)}).then(function(r){done(r)})
+    var why=function(err){if(!err)return '';var m=String(err.message||err);var s=/NO_KEY/.test(m)?'AI key is not set yet':/BUSY/.test(m)?'AI is busy, try again in a minute':/AI_FAILED/.test(m)?'Gemini did not answer — check the key':/Wrong username|Unknown action|Bad request/.test(m)?'SADA code is not updated yet (Deploy → New version)':'could not reach the AI';return '<div class="hkwhy">('+s+')</div>'};
+    var fallback=function(err){return Promise.resolve().then(function(){return answer(text)}).then(function(r){done(r+why(err))})
       .catch(function(){w.innerHTML='Sorry, I could not reach the internet just now. Please try again. 🙏';busy=false})};
     if(local){fallback();return}
     aiAnswer(text).then(function(t){done(md(t),t)}).catch(fallback);
@@ -1036,12 +1043,12 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   }
   var loginMode={type:'admin'};
   var TYPE_NAME={admin:'Admin',sada:'SADA member',staff:'Staff',student:'Student',library:'Library'};
-  function fits(me,mode){if(!me||!mode)return false;if(mode.type==='sada')return me.type==='sada'&&me.id===mode.id;return me.type===mode.type}
+  function fits(me,mode){if(!me||!mode)return false;return me.type===mode.type&&(!mode.id||me.id===mode.id)}
   function needLogin(mode,then){
     var c=getCred(); if(c&&fits(c.me,mode)){then();return}
     pending=then; loginMode=mode; $('lerr').textContent=''; $('lu').value=''; $('lp').value='';
-    $('lTitle').textContent=mode.type==='sada'?mode.name:mode.type==='admin'?'Admin login':TYPE_NAME[mode.type]+' login';
-    $('lNote').textContent=mode.type==='sada'?(mode.title||'SADA member')+' · enter your username and password':'Enter the username and password to continue.';
+    $('lTitle').textContent=mode.name||(mode.type==='admin'?'Admin login':TYPE_NAME[mode.type]+' login');
+    $('lNote').textContent=mode.type==='student'?((mode.title?mode.title+' · ':'')+'Username: SNEC UID · Password: date of birth (DDMMYYYY)'):mode.name?((mode.title||TYPE_NAME[mode.type])+' · enter your username and password'):'Enter the username and password to continue.';
     $('login').hidden=false; setTimeout(function(){$('lu').focus()},30);
   }
   tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.view)})});
@@ -1051,15 +1058,15 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     if(!u||!p){$('lerr').textContent='Enter the username and password.';return}
     btn.disabled=true; $('lerr').textContent=''; btn.textContent='Checking…';
     call({action:'login'},{u:u,p:p}).then(function(j){
-        if(!fits(j.me,loginMode)){$('lerr').textContent='This username is not for '+(loginMode.type==='sada'?loginMode.name:TYPE_NAME[loginMode.type]+' login')+'.';return}
+        if(!fits(j.me,loginMode)){$('lerr').textContent='This username is not for '+(loginMode.name||TYPE_NAME[loginMode.type]+' login')+'.';return}
         setCred({u:u,p:p,me:j.me}); $('login').hidden=true; var f=pending; pending=null; f&&f();
       })
       .catch(function(err){$('lerr').textContent=/Wrong/.test(err.message)?'Wrong username or password. Please try again.':errText(err)})
       .then(function(){btn.disabled=false;btn.textContent='Login'});
   });
   $('lcancel').addEventListener('click',function(){$('login').hidden=true;pending=null});
-  $('logout2').addEventListener('click',function(){setCred(null);rows=[];accs=null;photoCache={};$('addForm').hidden=true;$('adminList').hidden=true;show('entries')});
-  $('backOther').addEventListener('click',function(){show('entries')});
+  $('logout2').addEventListener('click',function(){setCred(null);rows=[];accs=null;photoCache={};$('addForm').hidden=true;$('adminList').hidden=true;showEntries()});
+  $('backOther').addEventListener('click',function(){showEntries()});
 
   /* district + constituency: searchable lists */
   var ALL=[],n=0; DISTRICTS.forEach(function(d){LAC[d].forEach(function(c){n++;ALL.push({no:n,name:c,dist:d})})});
@@ -1189,7 +1196,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     $('acount').textContent=rows.length+' student'+(rows.length===1?'':'s')+' in the register';
     $('alist').innerHTML=list.length?list.map(function(r){
       return '<div class="arow"><div class="av">'+esc(initials(r.name))+'</div>'+
-        '<div class="who"><b>'+esc(r.name)+(r.pending?' <span class="pend">sending…</span>':'')+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+'</span></div>'+
+        '<div class="who"><b>'+esc(r.name)+''+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+'</span></div>'+
         '<div class="acts"><button type="button" data-act="view" data-id="'+esc(r.uid)+'">View</button></div></div>';
     }).join(''):'<div class="emptyl">'+(rows.length?'No student matches your search.':'No students yet. Tap <b>+ Add new student</b> to enter the first one.')+'</div>';
   }
@@ -1376,24 +1383,35 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function note(el,text,bad){el.textContent=text;el.classList.toggle('err',!!bad)}
 
   /* ---------- SPECIAL ENTRIES ---------- */
-  var members=[]; try{members=JSON.parse(localStorage.getItem('sada_members')||'[]')}catch(e){}
+  var ppl={members:[],staff:[],students:[]}; try{ppl=Object.assign(ppl,JSON.parse(localStorage.getItem('sada_people')||'{}'))}catch(e){}
+  var SECS={sada:'members',staff:'staff',student:'students'}, pplLoaded=false;
+  function memBtn(type,m){return '<button type="button" class="mem" data-type="'+type+'" data-id="'+esc(m.id)+'"><div class="av">'+esc(initials(m.name))+'</div><div><b>'+esc(m.name)+'</b><span>'+esc(m.title||TYPE_NAME[type])+'</span></div><span class="go" aria-hidden="true">→</span></button>'}
   function renderMembers(){
-    $('sadaList').innerHTML=members.length?members.map(function(m){return '<button type="button" class="mem" data-id="'+esc(m.id)+'"><div class="av">'+esc(initials(m.name))+'</div><div><b>'+esc(m.name)+'</b><span>'+esc(m.title||'Member')+'</span></div><span class="go" aria-hidden="true">→</span></button>'}).join(''):'<div class="emptyl">Loading…</div>';
+    Object.keys(SECS).forEach(function(type){
+      var list=ppl[SECS[type]]||[], box=$('list-'+type);
+      $('cnt-'+type).textContent=list.length?list.length+(type==='sada'?' office bearer':type==='staff'?' staff member':' student')+(list.length===1?'':'s'):({sada:'Office bearers',staff:'Teachers and evaluators',student:'Students of the academy'})[type];
+      if(type==='student'){var q=$('stuQ').value.trim().toLowerCase();list=list.filter(function(m){return !q||(m.name+' '+(m.title||'')).toLowerCase().indexOf(q)>-1})}
+      box.innerHTML=list.length?list.map(function(m){return memBtn(type,m)}).join(''):'<div class="emptyl">'+(pplLoaded?(type==='student'&&$('stuQ').value?'No student matches.':'Nobody added yet.'):'Loading…')+'</div>';
+    });
   }
   function loadMembers(){
     renderMembers();
-    fetch(API+'?members=1').then(function(r){return r.json()}).then(function(j){if(!j.ok)return;members=j.members||[];try{localStorage.setItem('sada_members',JSON.stringify(members))}catch(e){}renderMembers()})
-      .catch(function(){if(!members.length)$('sadaList').innerHTML='<div class="emptyl">Could not load. Check the internet connection.</div>'});
+    fetch(API+'?members=1').then(function(r){return r.json()}).then(function(j){if(!j.ok)return;ppl={members:j.members||[],staff:j.staff||[],students:j.students||[]};pplLoaded=true;try{localStorage.setItem('sada_people',JSON.stringify(ppl))}catch(e){}renderMembers()})
+      .catch(function(){pplLoaded=true;renderMembers()});
   }
-  $('openEntries').addEventListener('click',function(){show('entries');loadMembers()});
+  function showEntries(){show('entries');loadMembers()}
+  $('openEntries').addEventListener('click',showEntries);
   $('entriesBack').addEventListener('click',function(){show('other')});
-  $('sadaList').addEventListener('click',function(e){var b=e.target.closest('.mem');if(!b)return;var m=members.find(function(x){return x.id===b.dataset.id});if(m)needLogin({type:'sada',id:m.id,name:m.name,title:m.title},openMe)});
-  document.querySelectorAll('[data-entry]').forEach(function(b){b.addEventListener('click',function(){needLogin({type:b.dataset.entry},openMe)})});
+  [].forEach.call(document.querySelectorAll('.esec'),function(sec){
+    sec.querySelector('.ehead').addEventListener('click',function(){var open=!sec.classList.contains('open');sec.classList.toggle('open',open);sec.querySelector('.ebody').hidden=!open;this.setAttribute('aria-expanded',String(open))});
+  });
+  $('stuQ').addEventListener('input',renderMembers);
+  $('v-entries').addEventListener('click',function(e){var b=e.target.closest('.mem');if(!b)return;var type=b.dataset.type,m=(ppl[SECS[type]]||[]).find(function(x){return x.id===b.dataset.id});if(m)needLogin({type:type,id:m.id,name:m.name,title:m.title},openMe)});
   $('openAdminPanel').addEventListener('click',function(){needLogin({type:'admin'},openAdmin)});
 
   /* ---------- member page ---------- */
   function openMe(){
-    var c=getCred(), me=c&&c.me; if(!me){show('entries');return}
+    var c=getCred(), me=c&&c.me; if(!me){showEntries();return}
     show('me');
     $('meAv').textContent=initials(me.name); $('meName').textContent=me.name;
     $('meType').textContent=TYPE_NAME[me.type]||''; $('meTitle').textContent=me.title||'';
@@ -1401,8 +1419,8 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     if(me.type==='staff'){try{localStorage.setItem('tm_sess',JSON.stringify({role:'staff',u:c.u,p:c.p}))}catch(e){}}
     $('meExp').hidden=!me.exp; if(me.exp){ if(!$('xDate').value)$('xDate').value=today(); loadExp(); }
   }
-  $('meBack').addEventListener('click',function(){show('entries')});
-  $('meOut').addEventListener('click',function(){setCred(null);try{localStorage.removeItem('tm_sess')}catch(e){};show('entries')});
+  $('meBack').addEventListener('click',function(){showEntries()});
+  $('meOut').addEventListener('click',function(){setCred(null);try{localStorage.removeItem('tm_sess')}catch(e){};showEntries()});
 
   /* ---------- expense manager ---------- */
   function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -1421,7 +1439,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     $('xIn').textContent=money(inc); $('xOut').textContent=money(out); $('xBal').textContent=money(inc-out);
     var l=xItems.slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))});
     $('xList').innerHTML=l.length?l.map(function(x){var isIn=x.type==='Income';
-      return '<div class="xrow"><div class="who"><b>'+esc(x.purpose)+(x.pending?' <span class="pend">sending…</span>':'')+'</b><span>'+esc(fmtDob(x.date))+(x.by?' · '+esc(x.by):'')+'</span></div>'+
+      return '<div class="xrow"><div class="who"><b>'+esc(x.purpose)+''+'</b><span>'+esc(fmtDob(x.date))+(x.by?' · '+esc(x.by):'')+'</span></div>'+
         '<span class="xamt '+(isIn?'in':'out')+'">'+(isIn?'+ ':'− ')+money(x.amount)+'</span><button type="button" class="del" data-xdel="'+esc(x.id)+'" aria-label="Delete">✕</button></div>'}).join('')
       :'<div class="emptyl">No entries yet.</div>';
   }
