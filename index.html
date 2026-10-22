@@ -264,6 +264,10 @@ a.ucard:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 
 .modal{background:color-mix(in srgb,#0d1428 35%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .modal .card,.modal .lbox,.modal .vbox{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none;border-color:var(--line)}
+/* speed: blur only on the bar, header and pop-ups — not on every box and input */
+.card,a.tile,button.tile,.stat,.grp ul,.vm div,.values span,.empty,.emptyl,.dd,.ph,.ucard,.back,input,select,textarea{backdrop-filter:none;-webkit-backdrop-filter:none}
+:root{--glass:color-mix(in srgb,var(--surface) 84%,transparent)}
+input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))}
 
 .vact{flex-wrap:nowrap;align-items:center}
 .vact .sw{flex:1;min-width:150px;position:relative;height:46px;margin-right:4px;border-radius:10px 38px 10px 38px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
@@ -274,6 +278,57 @@ a.ucard:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .vact .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .vact .btn{flex:none}
 
+.sw.dl{position:relative;height:56px;margin:12px 0 4px;border-radius:12px 44px 12px 44px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
+.sw.dl .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:56px;color:#121212;font-family:var(--body);font-size:20px;font-weight:700;pointer-events:none}
+.sw.dl .swk{position:absolute;left:0;top:-7px;width:76px;height:70px;border-radius:12px 64px 12px 64px;background:linear-gradient(135deg,#ec0c8c,#ff5e62);box-shadow:0 6px 16px rgba(236,12,140,.35);cursor:grab;touch-action:none;z-index:1}
+.sw.dl .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.etop{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.adminbtn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:var(--body);font-weight:700;font-size:.9rem;color:var(--bg);background:var(--navy);padding:9px 16px;border-radius:999px}
+.adminbtn svg{width:17px;height:17px}
+.adminbtn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.esec{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.esec h3{letter-spacing:.08em}
+.esec .note{margin-top:-6px}
+.mlist{display:flex;flex-direction:column;gap:8px;width:100%}
+.mem{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.mem:hover,.mem:focus-visible{border-color:var(--teal)}
+.mem b{display:block;font-weight:700;color:var(--ink)}
+.mem span{font-size:.8rem;color:var(--rose);font-weight:700;letter-spacing:.04em}
+.mem .go{margin-left:auto}
+.mecard{display:flex;gap:16px;align-items:center}
+.av.big{width:64px;height:64px;font-size:1.3rem}
+.atabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.atabs::-webkit-scrollbar{display:none}
+.atabs button{all:unset;cursor:pointer;flex:none;font-family:var(--body);font-weight:700;font-size:.86rem;padding:9px 15px;border-radius:999px;border:1.5px solid var(--line);color:var(--navy);background:var(--surface)}
+.atabs button.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.atabs button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.alist2{display:flex;flex-direction:column;gap:10px}
+.acard{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg)}
+.acard .an{font-family:var(--display);font-size:1.25rem;color:var(--navy)}
+.acard .at{font-size:.78rem;color:var(--rose);font-weight:700;letter-spacing:.05em;margin-left:6px}
+.acard .ac{font-size:.85rem;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+.acard .ac.none{color:var(--rose)}
+.acard .row{margin-top:8px}
+.accform{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:12px}
+.chk{display:flex;gap:10px;align-items:center;font-weight:600;color:var(--ink);font-size:.92rem}
+.chk input{width:20px;height:20px;accent-color:var(--teal)}
+.btn.wa{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#1fa855;border-color:#1fa855;color:#fff;text-decoration:none;font-weight:700}
+.btn.wa svg{width:20px;height:20px}
+.xtype{display:flex;gap:8px}
+.xtype button{all:unset;cursor:pointer;flex:1;text-align:center;font-family:var(--body);font-weight:700;padding:10px;border-radius:10px;border:1.5px solid var(--line);color:var(--navy)}
+.xtype button.on[data-xt=Expense]{background:var(--rose);border-color:var(--rose);color:#fff}
+.xtype button.on[data-xt=Income]{background:#1f8a54;border-color:#1f8a54;color:#fff}
+.stat.bal b{color:var(--teal)}
+.xlist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.xrow{display:flex;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.xrow:first-child{border-top:0}
+.xrow .who span{display:block}
+.xamt{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.xamt.in{color:#1f8a54}.xamt.out{color:var(--rose)}
+.xrow .del{font-size:.8rem}
+.pend{font-size:.7rem;color:var(--warn,#9a6b00);font-weight:700}
+.obchip{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:30;background:#e0b04b;color:#1b1300;font-weight:700;font-size:12px;padding:6px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.2);font-family:var(--body)}
+.obchip.ok{background:#1f8a54;color:#fff}
 .sw.sv{position:relative;height:56px;margin:14px 0 4px;border-radius:12px 44px 12px 44px;background:linear-gradient(135deg,#fbfbfb,#d3dadb);touch-action:none;user-select:none;-webkit-user-select:none}
 .sw.sv .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:56px;color:#121212;font-family:var(--body);font-size:22px;font-weight:700;pointer-events:none}
 .sw.sv .swk{position:absolute;left:0;top:-7px;width:76px;height:70px;border-radius:12px 64px 12px 64px;background:linear-gradient(135deg,#0f9b5f,#3ddc84);box-shadow:0 6px 16px rgba(15,155,95,.35);cursor:grab;touch-action:none;z-index:1}
@@ -393,12 +448,12 @@ footer small{opacity:.8;font-size:.85rem}
       <p class="lead">Use these services to evaluate student programmes and to manage the Academy library.</p>
     </div>
     <div class="grid">
-      <a class="tile" href="https://asjadfarhan996-svg.github.io/talents-meet/" target="_blank" rel="noopener">
+      <a class="tile" href="talents.html">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 13l2.5 2.5 4.5-5"/></svg></div>
         <div class="txt"><b>Talents Meet</b><span>Evaluate student programmes and check results</span></div>
         <div class="go" aria-hidden="true">→</div>
       </a>
-      <a class="tile" href="https://script.google.com/macros/s/AKfycbwJsA03dol83EPQMcDFspl0lx8Hn_Oqt9s-wa0aGsLTzk-qjIqlzpbBOgtYe7wvkBOD4w/exec" target="_blank" rel="noopener">
+      <a class="tile" href="library.html">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5z"/><path d="M12 6v13.5"/></svg></div>
         <div class="txt"><b>Digital Library</b><span>Daruswalah Library: issue, return and add books</span></div>
         <div class="go" aria-hidden="true">→</div>
@@ -426,7 +481,6 @@ footer small{opacity:.8;font-size:.85rem}
       <label class="sr" for="fc">Class</label>
       <select id="fc"><option value="">All classes</option><option>PLUS ONE</option><option>PLUS TWO</option><option>DEGREE 1</option></select>
     </div>
-    <p class="note">Tap a student to see full details.</p>
     <div id="list" class="list"></div>
     <p class="note" id="dbnote" hidden></p>
   </div>
@@ -436,22 +490,21 @@ footer small{opacity:.8;font-size:.85rem}
   <div class="in">
     <div class="vhead"><div><span class="eyebrow">Other</span><h2>More options</h2></div></div>
     <div class="grid">
-      <button type="button" class="tile" id="openAdd">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M3 20c1-4 4-6 7-6s4 1 5 2"/><path d="M18 14v6M15 17h6"/></svg></div>
-        <div class="txt"><b>Add Students</b><span>Enter new members into the SADA register</span></div>
+      <a class="tile" href="talents.html">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div>
+        <div class="txt"><b>Talents Meet</b><span>Weekly programme, evaluation and results</span></div>
+        <div class="go" aria-hidden="true">→</div>
+      </a>
+      <a class="tile" href="library.html">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5z"/><path d="M12 6v13.5"/></svg></div>
+        <div class="txt"><b>Library</b><span>Daruswalah Library: issue, return and add books</span></div>
+        <div class="go" aria-hidden="true">→</div>
+      </a>
+      <button type="button" class="tile" id="openEntries">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg></div>
+        <div class="txt"><b>Special Entries</b><span>SADA, staff and student logins</span></div>
         <div class="go" aria-hidden="true">→</div>
       </button>
-    
-      <a class="tile" href="https://asjadfarhan996-svg.github.io/talents-meet/" target="_blank" rel="noopener">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 13l2.5 2.5 4.5-5"/></svg></div>
-        <div class="txt"><b>Talents Meet</b><span>Evaluate student programmes and check results</span></div>
-        <div class="go" aria-hidden="true">→</div>
-      </a>
-      <a class="tile" href="https://script.google.com/macros/s/AKfycbwJsA03dol83EPQMcDFspl0lx8Hn_Oqt9s-wa0aGsLTzk-qjIqlzpbBOgtYe7wvkBOD4w/exec" target="_blank" rel="noopener">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5z"/><path d="M12 6v13.5"/></svg></div>
-        <div class="txt"><b>Digital Library</b><span>Daruswalah Library: issue, return and add books</span></div>
-        <div class="go" aria-hidden="true">→</div>
-      </a>
     </div>
 
     <section class="unions" aria-labelledby="unionsH">
@@ -466,14 +519,76 @@ footer small{opacity:.8;font-size:.85rem}
   </div>
 </main>
 
+<main id="v-entries" class="view" hidden>
+  <div class="in">
+    <div class="etop"><button type="button" class="adminbtn" id="openAdminPanel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Admin</button><button type="button" class="back" id="entriesBack">← Other</button></div>
+    <div class="vhead"><div><span class="eyebrow">Special Entries</span><h2>Member logins</h2></div></div>
+    <div class="card esec">
+      <h3>SADA ENTRY</h3><p class="note">Tap your name to log in.</p>
+      <div id="sadaList" class="mlist"><div class="emptyl">Loading…</div></div>
+    </div>
+    <div class="card esec">
+      <h3>STAFF ENTRY</h3><p class="note">For teachers and evaluators.</p>
+      <button type="button" class="btn solid" data-entry="staff">Staff login</button>
+    </div>
+    <div class="card esec">
+      <h3>STUDENT ENTRY</h3><p class="note">For students of the academy.</p>
+      <button type="button" class="btn solid" data-entry="student">Student login</button>
+    </div>
+  </div>
+</main>
+
+<main id="v-me" class="view" hidden>
+  <div class="in">
+    <div class="etop"><button type="button" class="back" id="meBack">← Special Entries</button><button type="button" class="btn small" id="meOut">Log out</button></div>
+    <div class="card mecard"><div class="av big" id="meAv"></div><div class="who"><span class="eyebrow" id="meType"></span><h2 id="meName"></h2><p class="note" id="meTitle"></p></div></div>
+    <div class="card" id="meStaff" hidden><h3>Talents Meet</h3><p class="note">Open the evaluation page. You are logged in there already.</p><a class="btn solid" id="meTm" href="talents.html#go">Open Talents Meet</a></div>
+    <div class="card form" id="meExp" hidden>
+      <div class="vhead"><div><span class="eyebrow">Treasurer</span><h3>Expense Manager</h3></div></div>
+      <div class="stats"><div class="stat"><b id="xIn">0</b><span>Income</span></div><div class="stat"><b id="xOut">0</b><span>Expense</span></div><div class="stat bal"><b id="xBal">0</b><span>Balance</span></div></div>
+      <div class="xtype" role="group" aria-label="Type"><button type="button" class="on" data-xt="Expense">Expense</button><button type="button" data-xt="Income">Income</button></div>
+      <div class="fields">
+        <div class="f"><label for="xDate">Date *</label><input id="xDate" type="date"></div>
+        <div class="f"><label for="xAmt">Amount (₹) *</label><input id="xAmt" inputmode="decimal" placeholder="0" autocomplete="off"></div>
+        <div class="f"><label for="xFor">For what *</label><input id="xFor" placeholder="e.g. Stage decoration" autocomplete="off"></div>
+      </div>
+      <p class="msg err" id="xErr"></p>
+      <div class="sw sv" id="xSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save"></div></div>
+      <div id="xList" class="xlist"></div>
+    </div>
+    <div class="card" id="meSoon"><p class="note">More options for you will be added here soon.</p></div>
+  </div>
+</main>
+
 <main id="v-admin" class="view" hidden>
   <div class="in">
-    <button type="button" class="back" id="backOther">← Back to Other</button>
-    <div class="vhead"><div><span class="eyebrow">Add Students</span><h2>Student Register</h2></div></div>
+    <div class="etop"><button type="button" class="back" id="backOther">← Special Entries</button><button type="button" class="btn small" id="logout2">Log out</button></div>
+    <div class="vhead"><div><span class="eyebrow">Admin panel</span><h2>Control room</h2></div></div>
+    <div class="atabs" id="atabs" role="tablist">
+      <button type="button" class="on" data-at="students">Students data</button><button type="button" data-at="sada">SADA</button><button type="button" data-at="staff">Staff</button>
+      <button type="button" data-at="student">Student logins</button><button type="button" data-at="library">Library</button><button type="button" data-at="admin">Admin</button>
+    </div>
+    <div class="card form acc" id="accPane" hidden>
+      <div class="vhead"><div><h3 id="accTitle"></h3><p class="note" id="accNote"></p></div></div>
+      <div id="accList" class="alist2"></div>
+      <div class="accform" id="accForm">
+        <h3 id="accFormTitle">Add new</h3>
+        <div class="fields">
+          <div class="f"><label for="aName">Name *</label><input id="aName" autocomplete="off"></div>
+          <div class="f" id="aTitleF"><label for="aTitle">Position</label><input id="aTitle" placeholder="e.g. Secretary" autocomplete="off"></div>
+          <div class="f"><label for="aUser">Username *</label><input id="aUser" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+          <div class="f"><label for="aPass">Password *</label><input id="aPass" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+        </div>
+        <label class="chk" id="aExpF"><input type="checkbox" id="aExp"> Can use the Expense Manager</label>
+        <p class="msg err" id="aErr"></p>
+        <div class="sw sv" id="aSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save"></div></div>
+        <button type="button" class="btn small" id="aCancel" hidden>Cancel editing</button>
+      </div>
+    </div>
     <div id="adminList" class="card admin" hidden>
       <div class="vhead">
         <div><h3>Student list</h3><p class="note" id="acount"></p></div>
-        <div class="row"><button type="button" class="btn small solid" id="newBtn">+ Add new student</button><button type="button" class="btn small" id="logout2">Lock</button></div>
+        <div class="row"><button type="button" class="btn small solid" id="newBtn">+ Add new student</button></div>
       </div>
       <label class="sr" for="aq">Search students</label>
       <input id="aq" type="search" placeholder="Search name, class, SNEC UID or roll no" autocomplete="off">
@@ -514,10 +629,12 @@ footer small{opacity:.8;font-size:.85rem}
   </div>
 </main>
 
+<div class="obchip" id="obChip" hidden></div>
 <div class="modal" id="viewBox" hidden>
   <div class="card vbox" role="dialog" aria-modal="true" aria-labelledby="vName">
     <div class="vtop"><div class="vpic" id="vPic"></div><div><h3 id="vName"></h3><p class="note" id="vSub"></p></div></div>
     <div class="vgrid" id="vGrid"></div>
+    <a class="btn wa" id="vWa" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>Contact on WhatsApp</a>
     <div class="row vact"><div class="sw" id="vDel" hidden><span class="swt">Delete</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to delete this student"></div></div><button type="button" class="btn" id="vEdit">Edit</button><button type="button" class="btn solid" id="vClose">Close</button></div>
   </div>
 </div>
@@ -534,8 +651,8 @@ footer small{opacity:.8;font-size:.85rem}
 <div class="modal" id="login" hidden>
   <form class="card lbox" id="loginForm" novalidate>
     <img src="data:image/png;base64,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" alt="">
-    <h3>Admin login</h3>
-    <p class="note">Enter the username and password to continue.</p>
+    <h3 id="lTitle">Admin login</h3>
+    <p class="note" id="lNote">Enter the username and password to continue.</p>
     <div class="f"><label for="lu">Username</label><input id="lu" autocomplete="username"></div>
     <div class="f"><label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password"></div>
     <p class="msg err" id="lerr" role="alert"></p>
@@ -584,6 +701,10 @@ footer small{opacity:.8;font-size:.85rem}
 .hkw .hkask input{flex:1;min-width:0;padding:10px 14px;font:15px var(--body,system-ui,sans-serif);border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 45%,transparent);color:var(--hk-ink)}
 .hkw .hkask input:focus{outline:none;border-color:var(--teal)}
 .hkw .hkask button{border:0;border-radius:999px;padding:10px 16px;font:700 14px var(--body,system-ui,sans-serif);background:var(--teal);color:var(--bg);cursor:pointer}
+.hkw .hkdots{display:inline-flex;gap:4px;padding:4px 0}
+.hkw .hkdots i{width:7px;height:7px;border-radius:50%;background:var(--teal);opacity:.35;animation:hkd 1s infinite}
+.hkw .hkdots i:nth-child(2){animation-delay:.15s}.hkw .hkdots i:nth-child(3){animation-delay:.3s}
+@keyframes hkd{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
 .hkw .tmg{margin-top:10px}
 .hkw .tmh{font-weight:700;color:var(--teal);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
 .hkw .tmn{font-size:13px;opacity:.8}
@@ -599,22 +720,42 @@ footer small{opacity:.8;font-size:.85rem}
 <div class="hkw">
   <button type="button" class="hkfab" id="hkFab" aria-label="Ask Hikma" title="Ask Hikma"><span class="hk"></span></button>
   <div class="hkpanel" id="hkPanel" role="dialog" aria-label="Hikma, SADA assistant">
-    <div class="hktop"><span class="hk"></span><div style="flex:1"><b>Hikma</b><small>SADA Assistant · online</small></div><button type="button" class="hkx" id="hkX" aria-label="Close">✕</button></div>
+    <div class="hktop"><span class="hk"></span><div style="flex:1"><b>Hikma</b><small>SADA · Talents Meet · Library · online</small></div><button type="button" class="hkx" id="hkX" aria-label="Close">✕</button></div>
     <div class="hkchat" id="hkChat" aria-live="polite"></div>
     <div class="hkchips" id="hkChips"></div>
-    <form class="hkask" id="hkForm"><label for="hkIn" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label><input id="hkIn" autocomplete="off" placeholder="Ask anything about SADA..."><button type="submit">Send</button></form>
+    <form class="hkask" id="hkForm"><label for="hkIn" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label><input id="hkIn" autocomplete="off" placeholder="Ask me anything…"><button type="submit">Send</button></form>
   </div>
 </div>
 <script>
 (function(){
   var API='https://script.google.com/macros/s/AKfycby3WzCd27PRGqyH_v8l05cvq-7ZhP08n1CekzDU1gX66VEbHLUqallLhpudfSv_bkWE0A/exec';
-  var SITE='https://sada-daruswalah.github.io', TM='https://asjadfarhan996-svg.github.io/talents-meet/',
-      LIB='https://script.google.com/macros/s/AKfycbwJsA03dol83EPQMcDFspl0lx8Hn_Oqt9s-wa0aGsLTzk-qjIqlzpbBOgtYe7wvkBOD4w/exec';
+  var SITE='https://sada-daruswalah.github.io', TM='talents.html',
+      LIB='library.html';
   var g=function(id){return document.getElementById(id)};
   var fab=g('hkFab'),panel=g('hkPanel'),chat=g('hkChat'),inp=g('hkIn');
   function e(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
-  function link(u,t){return '<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>'}
+  function link(u,t){return '<a href="'+u+'"'+(/^https?:/.test(u)?' target="_blank" rel="noopener"':'')+'>'+t+'</a>'}
   var students=null;
+  var HIST=[]; function pageName(){return TM_ON?'talents':(/library/.test(location.pathname)?'library':'sada')}
+  function md(s){
+    var h=e(s);
+    h=h.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|[\w.-]+\.html[^\s)]*)\)/g,function(m,t,u){return link(u.replace(/&amp;/g,'&'),t)});
+    h=h.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g,'$1<i>$2</i>');
+    var out=[],list=false;
+    h.split('\n').forEach(function(l){var m=l.match(/^\s*[-•*]\s+(.*)/);
+      if(m){if(!list){out.push('<ul>');list=true}out.push('<li>'+m[1]+'</li>')}
+      else{if(list){out.push('</ul>');list=false}out.push(l+'<br>')}});
+    if(list)out.push('</ul>');
+    return out.join('').replace(/(<br>)+$/,'').replace(/<br><ul>/g,'<ul>').replace(/<\/ul><br>/g,'</ul>');
+  }
+  function aiAnswer(q){
+    var ctx='';try{ctx=typeof window.HIKMA_CTX==='function'?String(window.HIKMA_CTX()||''):''}catch(x){}
+    var ctl=window.AbortController?new AbortController():null; var tm=setTimeout(function(){ctl&&ctl.abort()},30000);
+    return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},signal:ctl?ctl.signal:undefined,
+      body:JSON.stringify({action:'hikma',q:q,page:pageName(),ctx:ctx,history:HIST.slice(-10)})})
+      .then(function(r){return r.json()}).then(function(j){clearTimeout(tm);if(!j.ok)throw new Error(j.error||'AI');return j.text})
+      .catch(function(err){clearTimeout(tm);throw err});
+  }
   function getStudents(){
     if(students) return Promise.resolve(students);
     return fetch(API).then(function(r){return r.json()}).then(function(j){students=j.students||[];return students});
@@ -811,7 +952,7 @@ footer small{opacity:.8;font-size:.85rem}
     if(has(q,['union'])) return 'SADA has three class unions:<ul><li><b>ITHIHAD</b> – no website yet</li><li><b>IRTHIVA</b> – '+link('https://irthiva.my.canva.site/','website')+'</li><li><b>INTILAQ</b> – '+link('https://sites.google.com/view/inthilaq/home','website')+'</li></ul>You can also find them on the SADA website under <b>OTHER</b>.';
     if(has(q,['finance','fee','money','account','fund','panam','cash'])) return 'Ha! The <b>FINANCE</b> button on the website is shy and runs away when you touch it 😄 Finance records are not public yet.';
     if(has(q,['password','username','login','log in','sign in'])) return 'Login details are given only to SADA admins and office bearers. Please ask the Chairman or the Academy office.';
-    if(has(q,['add student','register','join','admission','new member','enroll','enrol'])) return 'Admins add students on the SADA website: tap <b>OTHER → Add Students</b> and log in. There you can also View, Edit and Delete students. '+link(SITE,'Open SADA website');
+    if(has(q,['add student','register','join','admission','new member','enroll','enrol'])) return 'Admins add students on the SADA website: tap <b>OTHER → Special Entries → Admin</b> and log in. There you can also View, Edit and Delete students. '+link(SITE,'Open SADA website');
     if(TM_ON&&has(q,['schedule','duty','who is presenting','programme list','program list'])) return 'Type <b>Talents meet@</b> with the meet number to see who presents what. For example: <b>Talents meet@1</b>';
     if(has(q,['talent','evaluat','result','mark','score','valuation'])) return '<b>Talents Meet</b> is where staff evaluate student programmes (Qira\'th, speeches, songs and more) and students check their results. '+link(TM,'Open Talents Meet');
     if(has(q,['library','book','read'])) return 'The <b>Daruswalah Digital Library</b> lets students see their book history, and librarians issue and return books by scanning barcodes. '+link(LIB,'Open Digital Library');
@@ -824,12 +965,15 @@ footer small{opacity:.8;font-size:.85rem}
   function ask(text){
     text=String(text||inp.value).trim(); if(!text||busy) return;
     add(e(text),'me'); inp.value=''; busy=true;
-    var w=add('<i>typing...</i>','ai');
-    Promise.resolve().then(function(){return answer(text)}).then(function(r){
-      setTimeout(function(){w.innerHTML=r;chat.scrollTop=chat.scrollHeight;busy=false},350);
-    }).catch(function(){w.innerHTML='Sorry, I could not reach the SADA register. Check the internet and try again.';busy=false});
+    var w=add('<span class="hkdots"><i></i><i></i><i></i></span>','ai');
+    var local=/talents?\s*meet\s*@\s*\d/i.test(text);
+    var done=function(html,raw){w.innerHTML=html;HIST.push({who:'me',text:text});HIST.push({who:'ai',text:raw||w.textContent});chat.scrollTop=chat.scrollHeight;busy=false};
+    var fallback=function(){return Promise.resolve().then(function(){return answer(text)}).then(function(r){done(r)})
+      .catch(function(){w.innerHTML='Sorry, I could not reach the internet just now. Please try again. 🙏';busy=false})};
+    if(local){fallback();return}
+    aiAnswer(text).then(function(t){done(md(t),t)}).catch(fallback);
   }
-  var CHIPS=['What is SADA?','Who is the chairman?','Class unions','How many students?'];
+  var CHIPS=TM_ON?['Talents meet@1','How do I evaluate?','Tell me a joke 😄','Who is the chairman?']:pageName()==='library'?['Which books are available?','Who has books now?','Tell me a joke 😄','What is SADA?']:['What is SADA?','How many students?','Tell me a joke 😄','How do I use this site?'];
   g('hkChips').innerHTML=CHIPS.map(function(c){return '<button type="button">'+c+'</button>'}).join('');
   chat.addEventListener('click',function(ev){
     var b=ev.target.closest('.tmdl'); if(!b||b.disabled) return;
@@ -839,7 +983,7 @@ footer small{opacity:.8;font-size:.85rem}
   });
   g('hkChips').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)ask(b.textContent)});
   g('hkForm').addEventListener('submit',function(ev){ev.preventDefault();ask()});
-  add('Assalamu alaikum! I am <b>Hikma</b> 😊 Ask me anything about <b>SADA</b> — our Chairman, goals, wings, class unions, students, Talents Meet or the library.','ai');
+  add('Assalamu alaikum! I am <b>Hikma</b> 😊 Your friend on the SADA website. Ask me <i>anything</i> — about SADA, students, Talents Meet, the library, your studies… or just say hi. I speak Malayalam and English. 😄','ai');
   function toggle(open){if(open===undefined)open=!panel.classList.contains('show');panel.classList.toggle('show',open);fab.classList.toggle('open',open);if(open){chat.scrollTop=chat.scrollHeight;inp.focus()}}
   fab.addEventListener('click',function(){toggle()});
   if(TM_ON){
@@ -881,18 +1025,23 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function getCred(){try{return JSON.parse(sessionStorage.getItem('sada_cred')||'null')}catch(e){return null}}
   function setCred(c){try{c?sessionStorage.setItem('sada_cred',JSON.stringify(c)):sessionStorage.removeItem('sada_cred')}catch(e){} memCred=c}
   var memCred=null; var _gc=getCred; getCred=function(){return _gc()||memCred};
-  var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),admin:$('v-admin')};
+  var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),entries:$('v-entries'),me:$('v-me'),admin:$('v-admin')};
   var tabs=[].slice.call(document.querySelectorAll('.dock [data-view]'));
   var pending=null;
   function show(name){
     Object.keys(views).forEach(function(k){views[k].hidden=(k!==name)});
-    tabs.forEach(function(b){b.classList.toggle('on',b.dataset.view===(name==='admin'?'other':name))});
+    tabs.forEach(function(b){b.classList.toggle('on',b.dataset.view===(['admin','entries','me'].indexOf(name)>-1?'other':name))});
     if(name!=='admin'){ $('addForm').hidden=true; $('adminList').hidden=true; }
     window.scrollTo(0,0);
   }
-  function needLogin(then){
-    if(getCred()){then();return}
-    pending=then; $('lerr').textContent=''; $('lu').value=''; $('lp').value='';
+  var loginMode={type:'admin'};
+  var TYPE_NAME={admin:'Admin',sada:'SADA member',staff:'Staff',student:'Student',library:'Library'};
+  function fits(me,mode){if(!me||!mode)return false;if(mode.type==='sada')return me.type==='sada'&&me.id===mode.id;return me.type===mode.type}
+  function needLogin(mode,then){
+    var c=getCred(); if(c&&fits(c.me,mode)){then();return}
+    pending=then; loginMode=mode; $('lerr').textContent=''; $('lu').value=''; $('lp').value='';
+    $('lTitle').textContent=mode.type==='sada'?mode.name:mode.type==='admin'?'Admin login':TYPE_NAME[mode.type]+' login';
+    $('lNote').textContent=mode.type==='sada'?(mode.title||'SADA member')+' · enter your username and password':'Enter the username and password to continue.';
     $('login').hidden=false; setTimeout(function(){$('lu').focus()},30);
   }
   tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.view)})});
@@ -901,14 +1050,16 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var u=$('lu').value.trim(), p=$('lp').value, btn=$('loginForm').querySelector('button[type=submit]');
     if(!u||!p){$('lerr').textContent='Enter the username and password.';return}
     btn.disabled=true; $('lerr').textContent=''; btn.textContent='Checking…';
-    setCred({u:u,p:p});
-    call({action:'login'}).then(function(){$('login').hidden=true;var f=pending;pending=null;f&&f();})
-      .catch(function(err){setCred(null);$('lerr').textContent=/Wrong/.test(err.message)?'Wrong username or password. Please try again.':errText(err)})
+    call({action:'login'},{u:u,p:p}).then(function(j){
+        if(!fits(j.me,loginMode)){$('lerr').textContent='This username is not for '+(loginMode.type==='sada'?loginMode.name:TYPE_NAME[loginMode.type]+' login')+'.';return}
+        setCred({u:u,p:p,me:j.me}); $('login').hidden=true; var f=pending; pending=null; f&&f();
+      })
+      .catch(function(err){$('lerr').textContent=/Wrong/.test(err.message)?'Wrong username or password. Please try again.':errText(err)})
       .then(function(){btn.disabled=false;btn.textContent='Login'});
   });
   $('lcancel').addEventListener('click',function(){$('login').hidden=true;pending=null});
-  $('logout2').addEventListener('click',function(){setCred(null);rows=[];photoCache={};$('addForm').hidden=true;$('adminList').hidden=true;show('other')});
-  $('backOther').addEventListener('click',function(){show('other')});
+  $('logout2').addEventListener('click',function(){setCred(null);rows=[];accs=null;photoCache={};$('addForm').hidden=true;$('adminList').hidden=true;show('entries')});
+  $('backOther').addEventListener('click',function(){show('entries')});
 
   /* district + constituency: searchable lists */
   var ALL=[],n=0; DISTRICTS.forEach(function(d){LAC[d].forEach(function(c){n++;ALL.push({no:n,name:c,dist:d})})});
@@ -971,12 +1122,14 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   /* ---------- server ---------- */
   var API='https://script.google.com/macros/s/AKfycby3WzCd27PRGqyH_v8l05cvq-7ZhP08n1CekzDU1gX66VEbHLUqallLhpudfSv_bkWE0A/exec';
-  function call(body){
-    var c=getCred(); if(c){body.user=c.u;body.pass=c.p;}
+  function netErr(){var e=new Error('No internet connection. Check the internet and try again.');e.net=true;return e}
+  function call(body,cred){
+    var c=cred||getCred(); body=Object.assign({},body); if(c){body.user=c.u;body.pass=c.p;}
     return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
-      .then(function(r){if(!r.ok)throw new Error('Network error ('+r.status+'). Check the internet connection.');return r.json()})
+      .catch(function(){throw netErr()})
+      .then(function(r){if(!r.ok)throw netErr();return r.json().catch(function(){throw netErr()})})
       .then(function(j){
-        if(!j.ok){ if(/Wrong username/.test(j.error||'')){setCred(null);} throw new Error(j.error||'Request failed'); }
+        if(!j.ok){ if(!cred&&/Wrong username/.test(j.error||'')){setCred(null);} throw new Error(j.error||'Request failed'); }
         return j;
       });
   }
@@ -1004,7 +1157,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       var list=by[k].filter(function(r){return !q||[r.name,r.roll].some(function(v){return String(v||'').toLowerCase().indexOf(q)>-1})}).sort(sortRows);
       if(!list.length) return;
       html+='<div class="grp"><h3>'+esc(k)+' <small>'+list.length+' student'+(list.length>1?'s':'')+'</small></h3><ul>'+
-        list.map(function(r){return '<li class="tap" tabindex="0" role="button" data-k="'+esc(pub.indexOf(r))+'"><div class="av">'+esc(initials(r.name))+'</div><div class="who"><b>'+esc(r.name)+'</b><span>Roll '+(esc(r.roll)||'—')+'</span></div><span class="chev" aria-hidden="true">›</span></li>'}).join('')+'</ul></div>';
+        list.map(function(r){return '<li><div class="av">'+esc(initials(r.name))+'</div><div class="who"><b>'+esc(r.name)+'</b><span>Roll '+(esc(r.roll)||'—')+'</span></div></li>'}).join('')+'</ul></div>';
     });
     $('list').innerHTML=html||('<div class="emptyl">'+(pub.length?'No student matches your search.':'No students in the register yet.')+'</div>');
   }
@@ -1014,11 +1167,6 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       .catch(function(){if(!pub.length){pubState='error';renderPublic()}});
   }
   $('q').addEventListener('input',renderPublic); $('fc').addEventListener('change',renderPublic);
-  function openPublic(li){
-    var p=pub[+li.dataset.k]; if(p) openView(p);
-  }
-  $('list').addEventListener('click',function(e){var li=e.target.closest('li.tap');if(li)openPublic(li)});
-  $('list').addEventListener('keydown',function(e){if(e.key==='Enter'){var li=e.target.closest('li.tap');if(li)openPublic(li)}});
   tabs.forEach(function(b){if(b.dataset.view==='students')b.addEventListener('click',loadPublic)});
   renderPublic();
 
@@ -1026,11 +1174,11 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   var rows=[], adminState='idle', photoCache={};
   function byId(id){return rows.find(function(r){return r.uid===id})}
   function loadAdmin(){
-    adminState='loading'; renderAdmin();
-    return call({action:'list'}).then(function(j){rows=j.students||[];adminState='ok';renderAdmin()})
+    if(!rows.length){adminState='loading'; renderAdmin();}
+    return call({action:'list'}).then(function(j){rows=applyPending(j.students||[]);adminState='ok';renderAdmin()})
       .catch(function(err){
         adminState='error'; renderAdmin(); $('acount').textContent=errText(err);
-        if(!getCred()){ $('adminList').hidden=true; needLogin(openAdmin); }
+        if(!getCred()){ $('adminList').hidden=true; needLogin({type:'admin'},openAdmin); }
       });
   }
   function renderAdmin(){
@@ -1041,17 +1189,16 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     $('acount').textContent=rows.length+' student'+(rows.length===1?'':'s')+' in the register';
     $('alist').innerHTML=list.length?list.map(function(r){
       return '<div class="arow"><div class="av">'+esc(initials(r.name))+'</div>'+
-        '<div class="who"><b>'+esc(r.name)+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+'</span></div>'+
+        '<div class="who"><b>'+esc(r.name)+(r.pending?' <span class="pend">sending…</span>':'')+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+'</span></div>'+
         '<div class="acts"><button type="button" data-act="view" data-id="'+esc(r.uid)+'">View</button></div></div>';
     }).join(''):'<div class="emptyl">'+(rows.length?'No student matches your search.':'No students yet. Tap <b>+ Add new student</b> to enter the first one.')+'</div>';
   }
   $('aq').addEventListener('input',renderAdmin);
-  function openAdmin(){show('admin');$('adminList').hidden=false;$('addForm').hidden=true;loadAdmin()}
-  $('openAdd').addEventListener('click',function(){needLogin(openAdmin)});
+  function openAdmin(){show('admin');setATab('students');loadAdmin()}
 
   function getPhoto(uid){
     if(photoCache[uid]) return Promise.resolve(photoCache[uid]);
-    return fetch(API+'?photo='+encodeURIComponent(uid)).then(function(r){return r.json()}).then(function(j){if(j.photo)photoCache[uid]=j.photo;return j.photo||''});
+    return call({action:'photo',uid:uid}).then(function(j){if(j.photo)photoCache[uid]=j.photo;return j.photo||''});
   }
 
   /* view */
@@ -1059,6 +1206,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function openView(r,admin){
     viewing=r.uid;
     $('vEdit').hidden=!admin; $('vDel').hidden=!admin; if(admin) slideReset();
+    var ph=String(r.phone||'').replace(/\D/g,'').slice(-10); $('vWa').hidden=!(admin&&ph.length===10); $('vWa').href='https://wa.me/91'+ph;
     $('vPic').innerHTML=esc(initials(r.name));
     getPhoto(r.uid).then(function(p){if(viewing===r.uid&&p)$('vPic').innerHTML='<img alt="Photo of '+esc(r.name)+'" src="'+esc(p)+'">'}).catch(function(){});
     $('vName').textContent=r.name||'';
@@ -1079,17 +1227,15 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function sGo(){
     var id=viewing, r=byId(id); if(!id){sBack();return}
     if(!confirm('Delete '+((r&&r.name)||'this student')+'?\nThis student will be removed from the register and the Google Sheet. This cannot be undone.')){sBack();return}
-    sBusy=true; swt.textContent='Deleting…'; swt.style.opacity='1';
-    call({action:'delete',uid:id}).then(function(){
-      rows=rows.filter(function(x){return x.uid!==id}); delete photoCache[id]; pub=[]; renderAdmin(); if(editingId===id) closeForm(); closeView();
-    }).catch(function(err){sBusy=false;swt.textContent='Delete';sBack();alert('Could not delete: '+errText(err))});
+    rows=rows.filter(function(x){return x.uid!==id}); delete photoCache[id]; pub=[]; renderAdmin(); if(editingId===id) closeForm(); closeView();
+    obAdd({action:'delete',uid:id},'Delete '+((r&&r.name)||id));
   }
   swk.addEventListener('pointerdown',function(e){if(sBusy)return;sDrag=true;sStart=e.clientX-sx;swk.setPointerCapture(e.pointerId);swk.classList.add('grab')});
   swk.addEventListener('pointermove',function(e){if(sDrag)sPut(e.clientX-sStart)});
   function sEnd(){if(!sDrag)return;sDrag=false;swk.classList.remove('grab');if(sx>=sMax()*0.85){sPut(sMax());sGo()}else sBack()}
   swk.addEventListener('pointerup',sEnd); swk.addEventListener('pointercancel',sEnd);
   swk.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!sBusy){e.preventDefault();sPut(sMax());sGo()}});
-  $('vEdit').addEventListener('click',function(){var id=viewing,r=byId(id)||pub.find(function(x){return x.uid===id});closeView();if(!r)return;needLogin(function(){show('admin');$('adminList').hidden=false;loadAdmin();openForm(r)})});
+  $('vEdit').addEventListener('click',function(){var id=viewing,r=byId(id);closeView();if(!r)return;needLogin({type:'admin'},function(){openForm(r)})});
 
   /* delete */
   function openDel(r){deleting=r.uid;$('dText').textContent=r.name+' ('+(r.cls||'')+', Roll '+(r.roll||'—')+') will be removed from the register and the Google Sheet. This cannot be undone.';$('dErr').textContent='';$('dYes').disabled=false;$('dYes').textContent='Delete';$('delBox').hidden=false;$('dNo').focus()}
@@ -1169,20 +1315,192 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var was=editingId, clash=byId(rec.snecUid);
     if(clash && rec.snecUid!==was){$('fUid').classList.add('bad');m.classList.add('err');m.textContent='SNEC UID '+rec.snecUid+' already belongs to '+clash.name+'. Use Edit on that student instead.';return}
     if(!was||photoChanged) rec.photo=photo;
-    $('saveBtn').disabled=true; m.textContent='Saving to Google Sheet…';
-    call({action:'save',student:rec,oldUid:was||''}).then(function(){
-      if(rec.photo){ if(was) delete photoCache[was]; photoCache[rec.snecUid]=rec.photo; }
-      else if(was && was!==rec.snecUid && photoCache[was]){ photoCache[rec.snecUid]=photoCache[was]; delete photoCache[was]; }
-      pub=[];
-      loadAdmin();
-      if(was){ m.textContent=''; closeForm(); return; }
-      m.textContent=rec.name+' saved.';
-      ['fName','fUid','fRoll','fPhone','fOwner','fMobile','fFather','fLac','fDob','fDist'].forEach(function(id){$(id).value=''});
-      photo='';photoChanged=false;$('phPrev').innerHTML=phEmpty;$('picClear').hidden=true;$('fName').focus();
-    }).catch(function(err){m.classList.add('err');m.textContent='Could not save: '+errText(err)})
-      .then(function(){$('saveBtn').disabled=false});
+    if(rec.photo){ if(was) delete photoCache[was]; photoCache[rec.snecUid]=rec.photo; }
+    else if(was && was!==rec.snecUid && photoCache[was]){ photoCache[rec.snecUid]=photoCache[was]; delete photoCache[was]; }
+    rows=rows.filter(function(r){return r.uid!==was&&r.uid!==rec.snecUid}); rows.push(rowOf(rec)); pub=[]; renderAdmin();
+    obAdd({action:'save',student:rec,oldUid:was||''},rec.name);
+    if(was){ m.textContent=''; closeForm(); return; }
+    m.textContent=rec.name+' saved ✓';
+    ['fName','fUid','fRoll','fPhone','fOwner','fMobile','fFather','fLac','fDob','fDist'].forEach(function(id){$(id).value=''});
+    photo='';photoChanged=false;$('phPrev').innerHTML=phEmpty;$('picClear').hidden=true;$('fName').focus();
   });
 
+  /* ---------- helpers for instant saving (outbox) ---------- */
+  function rowOf(s){return {uid:s.snecUid,cls:s.cls,name:s.name,roll:s.rollNo,phone:s.phone,owner:s.phoneOwner,mobile:s.mobile,father:s.father,dob:s.dob,dist:s.district,lac:s.constituency,pending:true}}
+  var OB='sada_outbox', obBusy=false, obTimer=null;
+  function obLoad(){try{return JSON.parse(localStorage.getItem(OB)||'[]')}catch(e){return []}}
+  function obSave(l){try{localStorage.setItem(OB,JSON.stringify(l))}catch(e){}}
+  function applyPending(list){
+    obLoad().forEach(function(it){var b=it.body;
+      if(b.action==='save'){var s=b.student;list=list.filter(function(r){return r.uid!==b.oldUid&&r.uid!==s.snecUid});list.push(rowOf(s))}
+      else if(b.action==='delete'){list=list.filter(function(r){return r.uid!==b.uid})}
+    });
+    return list;
+  }
+  function obChip(){var c=$('obChip'),n=obLoad().length;
+    if(n){c.hidden=false;c.classList.remove('ok');c.textContent=(navigator.onLine===false?'Offline · ':'Sending ')+n+' change'+(n===1?'':'s')+'…'}
+    else if(!c.hidden){c.classList.add('ok');c.textContent='All saved ✓';setTimeout(function(){if(!obLoad().length)c.hidden=true},1500)}}
+  function obAdd(body,label){var c=getCred();var l=obLoad();l.push({body:body,cred:{u:c.u,p:c.p},label:label,id:Date.now()+Math.random()});obSave(l);obChip();obFlush()}
+  function obFlush(){
+    if(obBusy)return; var l=obLoad(); if(!l.length){obChip();return}
+    obBusy=true; clearTimeout(obTimer); obChip(); var it=l[0];
+    call(it.body,it.cred).then(function(){
+      obSave(obLoad().filter(function(x){return x.id!==it.id})); obBusy=false; obChip();
+      if(obLoad().length) obFlush(); else afterSync();
+    }).catch(function(err){
+      obBusy=false;
+      if(err.net){obChip();obTimer=setTimeout(obFlush,8000);return}
+      obSave(obLoad().filter(function(x){return x.id!==it.id})); obChip();
+      alert('NOT saved: '+it.label+'\n'+errText(err)+'\nPlease do it again.');
+      afterSync(); obFlush();
+    });
+  }
+  function afterSync(){ if(!views.admin.hidden&&atab==='students'&&getCred()) loadAdmin(); if(!views.me.hidden&&!$('meExp').hidden) loadExp(); }
+  window.addEventListener('online',obFlush); setTimeout(obFlush,1200);
+
+  /* ---------- slide control (Save / Delete) ---------- */
+  function slider(sw,go){
+    var k=sw.querySelector('.swk'),tx=sw.querySelector('.swt'),label=tx.textContent,x=0,st=0,drag=false,busy=false;
+    function mx(){return sw.clientWidth-k.offsetWidth}
+    function put(v){x=Math.max(0,Math.min(v,mx()));k.style.transform='translateX('+x+'px)';tx.style.opacity=String(1-x/Math.max(1,mx())*0.9)}
+    function back(){k.style.transition='transform .3s ease';tx.style.transition='opacity .3s ease';put(0);setTimeout(function(){k.style.transition='';tx.style.transition=''},320)}
+    function done(){busy=false;tx.textContent=label;back()}
+    function fire(){if(busy)return;busy=true;put(mx());go(done,function(t){tx.textContent=t;tx.style.opacity='1'})}
+    k.addEventListener('pointerdown',function(e){if(busy)return;drag=true;st=e.clientX-x;k.setPointerCapture(e.pointerId)});
+    k.addEventListener('pointermove',function(e){if(drag)put(e.clientX-st)});
+    function end(){if(!drag)return;drag=false;if(x>=mx()*0.85)fire();else back()}
+    k.addEventListener('pointerup',end);k.addEventListener('pointercancel',end);
+    k.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();fire()}});
+  }
+  var toastT=null;
+  function note(el,text,bad){el.textContent=text;el.classList.toggle('err',!!bad)}
+
+  /* ---------- SPECIAL ENTRIES ---------- */
+  var members=[]; try{members=JSON.parse(localStorage.getItem('sada_members')||'[]')}catch(e){}
+  function renderMembers(){
+    $('sadaList').innerHTML=members.length?members.map(function(m){return '<button type="button" class="mem" data-id="'+esc(m.id)+'"><div class="av">'+esc(initials(m.name))+'</div><div><b>'+esc(m.name)+'</b><span>'+esc(m.title||'Member')+'</span></div><span class="go" aria-hidden="true">→</span></button>'}).join(''):'<div class="emptyl">Loading…</div>';
+  }
+  function loadMembers(){
+    renderMembers();
+    fetch(API+'?members=1').then(function(r){return r.json()}).then(function(j){if(!j.ok)return;members=j.members||[];try{localStorage.setItem('sada_members',JSON.stringify(members))}catch(e){}renderMembers()})
+      .catch(function(){if(!members.length)$('sadaList').innerHTML='<div class="emptyl">Could not load. Check the internet connection.</div>'});
+  }
+  $('openEntries').addEventListener('click',function(){show('entries');loadMembers()});
+  $('entriesBack').addEventListener('click',function(){show('other')});
+  $('sadaList').addEventListener('click',function(e){var b=e.target.closest('.mem');if(!b)return;var m=members.find(function(x){return x.id===b.dataset.id});if(m)needLogin({type:'sada',id:m.id,name:m.name,title:m.title},openMe)});
+  document.querySelectorAll('[data-entry]').forEach(function(b){b.addEventListener('click',function(){needLogin({type:b.dataset.entry},openMe)})});
+  $('openAdminPanel').addEventListener('click',function(){needLogin({type:'admin'},openAdmin)});
+
+  /* ---------- member page ---------- */
+  function openMe(){
+    var c=getCred(), me=c&&c.me; if(!me){show('entries');return}
+    show('me');
+    $('meAv').textContent=initials(me.name); $('meName').textContent=me.name;
+    $('meType').textContent=TYPE_NAME[me.type]||''; $('meTitle').textContent=me.title||'';
+    $('meStaff').hidden=me.type!=='staff';
+    if(me.type==='staff'){try{localStorage.setItem('tm_sess',JSON.stringify({role:'staff',u:c.u,p:c.p}))}catch(e){}}
+    $('meExp').hidden=!me.exp; if(me.exp){ if(!$('xDate').value)$('xDate').value=today(); loadExp(); }
+  }
+  $('meBack').addEventListener('click',function(){show('entries')});
+  $('meOut').addEventListener('click',function(){setCred(null);try{localStorage.removeItem('tm_sess')}catch(e){};show('entries')});
+
+  /* ---------- expense manager ---------- */
+  function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
+  var xItems=[], xType='Expense';
+  try{xItems=JSON.parse(localStorage.getItem('sada_exp')||'[]')}catch(e){}
+  function xApply(list){
+    obLoad().forEach(function(it){var b=it.body;
+      if(b.action==='exp.add'&&!list.some(function(x){return x.id===b.item.id}))list.push(Object.assign({by:'',pending:true},b.item));
+      if(b.action==='exp.delete')list=list.filter(function(x){return x.id!==b.id});
+    });
+    return list;
+  }
+  function renderExp(){
+    var inc=0,out=0; xItems.forEach(function(x){if(x.type==='Income')inc+=Number(x.amount)||0;else out+=Number(x.amount)||0});
+    $('xIn').textContent=money(inc); $('xOut').textContent=money(out); $('xBal').textContent=money(inc-out);
+    var l=xItems.slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))});
+    $('xList').innerHTML=l.length?l.map(function(x){var isIn=x.type==='Income';
+      return '<div class="xrow"><div class="who"><b>'+esc(x.purpose)+(x.pending?' <span class="pend">sending…</span>':'')+'</b><span>'+esc(fmtDob(x.date))+(x.by?' · '+esc(x.by):'')+'</span></div>'+
+        '<span class="xamt '+(isIn?'in':'out')+'">'+(isIn?'+ ':'− ')+money(x.amount)+'</span><button type="button" class="del" data-xdel="'+esc(x.id)+'" aria-label="Delete">✕</button></div>'}).join('')
+      :'<div class="emptyl">No entries yet.</div>';
+  }
+  function loadExp(){
+    xItems=xApply(xItems.filter(function(x){return !x.pending})); renderExp();
+    call({action:'exp.list'}).then(function(j){xItems=xApply(j.items||[]);try{localStorage.setItem('sada_exp',JSON.stringify(j.items||[]))}catch(e){}renderExp()}).catch(function(){});
+  }
+  document.querySelectorAll('[data-xt]').forEach(function(b){b.addEventListener('click',function(){xType=b.dataset.xt;document.querySelectorAll('[data-xt]').forEach(function(o){o.classList.toggle('on',o===b)})})});
+  $('xAmt').addEventListener('input',function(){var v=this.value.replace(/[^\d.]/g,'');if(v!==this.value)this.value=v});
+  slider($('xSave'),function(done){
+    var amt=Number($('xAmt').value), what=$('xFor').value.trim(), d=$('xDate').value;
+    if(!d){note($('xErr'),'Choose the date.',1);done();return}
+    if(!(amt>0)){note($('xErr'),'Enter the amount.',1);done();return}
+    if(!what){note($('xErr'),'Enter what it is for.',1);done();return}
+    var item={id:'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:d,type:xType,amount:amt,purpose:what};
+    xItems.push(Object.assign({by:(getCred().me||{}).name,pending:true},item)); renderExp();
+    obAdd({action:'exp.add',item:item},xType+' '+money(amt)+' · '+what);
+    $('xAmt').value=''; $('xFor').value=''; note($('xErr'),xType+' saved ✓',0); done();
+  });
+  $('xList').addEventListener('click',function(e){var b=e.target.closest('[data-xdel]');if(!b)return;var x=xItems.find(function(i){return i.id===b.dataset.xdel});if(!x)return;
+    if(!confirm('Delete this entry?\n'+x.purpose+' · '+money(x.amount)))return;
+    xItems=xItems.filter(function(i){return i!==x});renderExp();obAdd({action:'exp.delete',id:x.id},'Delete '+x.purpose)});
+
+  /* ---------- ADMIN PANEL: tabs and logins ---------- */
+  var atab='students', accs=null, aEdit=null;
+  var ACC_INFO={sada:['SADA members','These names appear in SADA ENTRY. A member without a username cannot log in yet.'],
+    staff:['Staff','Staff log in through STAFF ENTRY here and in Talents Meet.'],
+    student:['Student logins','Students log in through STUDENT ENTRY.'],
+    library:['Library logins','Librarians use these to log in to the Library.'],
+    admin:['Admin login','Change the admin username and password. Keep them secret.']};
+  function setATab(k){
+    atab=k; document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.classList.toggle('on',b.dataset.at===k)});
+    var st=k==='students'; $('adminList').hidden=!st; if(!st)$('addForm').hidden=true; $('accPane').hidden=st;
+    if(!st){ resetAccForm(); renderAcc(); loadAcc(); }
+  }
+  document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.addEventListener('click',function(){setATab(b.dataset.at)})});
+  function loadAcc(){ call({action:'acc.list'}).then(function(j){accs=j.accounts||[];renderAcc()}).catch(function(err){if(!accs)$('accList').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'}) }
+  function renderAcc(){
+    var info=ACC_INFO[atab]; $('accTitle').textContent=info[0]; $('accNote').textContent=info[1];
+    var isAdmin=atab==='admin';
+    $('aTitleF').hidden=atab!=='sada'; $('aExpF').hidden=atab!=='sada'; $('aName').closest('.f').hidden=isAdmin;
+    if(!accs){$('accList').innerHTML='<div class="emptyl">Loading…</div>';return}
+    if(isAdmin){ $('accList').innerHTML=''; var ad=accs.find(function(a){return a.type==='admin'}); if(ad&&(!aEdit||aEdit.id!==ad.id)){fillAcc(ad);} $('accFormTitle').textContent='Change admin login'; $('aCancel').hidden=true; return; }
+    var list=accs.filter(function(a){return a.type===atab});
+    $('accList').innerHTML=list.length?list.map(function(a){
+      return '<div class="acard" data-id="'+esc(a.id)+'"><div><span class="an">'+esc(a.name)+'</span>'+(a.title?'<span class="at">'+esc(a.title)+'</span>':'')+(a.exp&&a.type==='sada'?'<span class="at">· Expense Manager</span>':'')+'</div>'+
+        (a.u?'<div class="ac">Username: '+esc(a.u)+' · Password: '+esc(a.p)+'</div>':'<div class="ac none">No login yet. Tap Edit to give a username and password.</div>')+
+        '<div class="row"><button type="button" class="btn small" data-aedit="'+esc(a.id)+'">Edit</button></div>'+
+        '<div class="sw dl"><span class="swt">Delete</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to delete '+esc(a.name)+'"></div></div></div>'}).join('')
+      :'<div class="emptyl">Nobody added yet. Use the form below.</div>';
+    [].forEach.call($('accList').querySelectorAll('.acard'),function(card){
+      slider(card.querySelector('.sw'),function(done,say){
+        say('Deleting…');
+        call({action:'acc.delete',id:card.dataset.id}).then(function(j){accs=j.accounts||[];if(aEdit&&aEdit.id===card.dataset.id)resetAccForm();renderAcc()})
+          .catch(function(err){done();alert('Could not delete: '+errText(err))});
+      });
+    });
+  }
+  $('accList').addEventListener('click',function(e){var b=e.target.closest('[data-aedit]');if(!b)return;var a=accs.find(function(x){return x.id===b.dataset.aedit});if(a){fillAcc(a);$('accForm').scrollIntoView({block:'start',behavior:'smooth'})}});
+  function fillAcc(a){aEdit=a;$('aName').value=a.name;$('aTitle').value=a.title||'';$('aUser').value=a.u||'';$('aPass').value=a.p||'';$('aExp').checked=!!a.exp;
+    $('accFormTitle').textContent='Edit '+a.name;$('aCancel').hidden=false;note($('aErr'),'',1)}
+  function resetAccForm(){aEdit=null;['aName','aTitle','aUser','aPass'].forEach(function(id){$(id).value=''});$('aExp').checked=false;$('accFormTitle').textContent='Add new';$('aCancel').hidden=true;note($('aErr'),'',1)}
+  $('aCancel').addEventListener('click',function(){resetAccForm();renderAcc()});
+  slider($('aSave'),function(done,say){
+    var acc={id:aEdit?aEdit.id:'',type:atab==='admin'?'admin':atab,name:atab==='admin'?'Admin':$('aName').value.trim(),title:$('aTitle').value.trim(),u:$('aUser').value.trim(),p:$('aPass').value,exp:$('aExp').checked};
+    if(acc.name.length<2){note($('aErr'),'Please enter the name.',1);done();return}
+    var needCred=acc.type!=='sada'||acc.u||acc.p;
+    if(needCred&&acc.u.length<3){note($('aErr'),'Username must have at least 3 characters.',1);done();return}
+    if(needCred&&acc.p.length<4){note($('aErr'),'Password must have at least 4 characters.',1);done();return}
+    say('Saving…'); note($('aErr'),'',1);
+    call({action:'acc.save',acc:acc}).then(function(j){
+      accs=j.accounts||[];
+      if(acc.type==='admin'){var c=getCred();setCred({u:acc.u,p:acc.p,me:c.me});}
+      var wasEdit=!!aEdit; resetAccForm(); renderAcc(); note($('aErr'),acc.name+(wasEdit?' updated ✓':' added ✓'),0); done();
+    }).catch(function(err){note($('aErr'),errText(err),1);done()});
+  });
+
+  window.HIKMA_CTX=function(){var c=getCred(),v=Object.keys(views).filter(function(k){return !views[k].hidden})[0]||'home';
+    return 'Open screen: '+v+'\n'+(c&&c.me?'Logged in as '+c.me.name+' ('+(TYPE_NAME[c.me.type]||c.me.type)+(c.me.title?', '+c.me.title:'')+')':'Not logged in.');};
   /* FINANCE runs away */
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('.dock .dodge').forEach(function(b){
