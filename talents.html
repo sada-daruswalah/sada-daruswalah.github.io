@@ -178,6 +178,45 @@ body::before{position:absolute!important;inset:0!important}
 <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js"></script>
 </head>
 <body>
+<!-- ===== Site lock ===== -->
+<style>
+#lockScr{display:none}
+html.sitelocked{overflow:hidden}
+html.sitelocked body{overflow:hidden}
+html.sitelocked .hkw{display:none!important}
+html.sitelocked #lockScr{display:flex}
+#lockScr{position:fixed;inset:0;z-index:1000;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px 16px;text-align:center;
+  background:radial-gradient(120% 80% at 50% 0%,#2a3d94 0%,#1f2f7a 40%,#0d1428 100%);color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#lockScr .lkadm{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:16px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;
+  font:600 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif;padding:10px 14px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+#lockScr .lkadm:hover{background:rgba(255,255,255,.16)}
+#lockScr .lkadm:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
+#lockScr .lkic{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.07);border:2px solid rgba(255,209,102,.55);
+  box-shadow:0 0 0 10px rgba(255,209,102,.06),0 18px 40px rgba(0,0,0,.35)}
+#lockScr .lkic svg{width:72px;height:72px}
+#lockScr h1{margin:10px 0 0;font-size:28px;letter-spacing:.06em;text-transform:uppercase;color:#ffd166}
+#lockScr p{margin:0;max-width:340px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.85)}
+#lockScr small{margin-top:18px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+</style>
+<div id="lockScr" role="alert" aria-live="polite">
+  <a class="lkadm" id="lkAdm" href="index.html#admin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Admin login</a>
+  <div class="lkic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd166" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.6" fill="#ffd166"/><path d="M12 17v2"/></svg></div>
+  <h1>Site locked</h1>
+  <p>The SADA website is closed for a while by the admin. Please check back later.</p>
+  <small>SADA · Daruswalah Academy</small>
+</div>
+<script>
+(function(){
+  var API='https://script.google.com/macros/s/AKfycby3WzCd27PRGqyH_v8l05cvq-7ZhP08n1CekzDU1gX66VEbHLUqallLhpudfSv_bkWE0A/exec';
+  var on=false; try{on=localStorage.getItem('sada_lock')==='1'}catch(e){}
+  function isAdmin(){try{var c=JSON.parse(sessionStorage.getItem('sada_cred')||'null');return !!(c&&c.me&&c.me.type==='admin')}catch(e){return false}}
+  function paint(){document.documentElement.classList.toggle('sitelocked',on&&!isAdmin())}
+  window.sadaLock=function(v){if(typeof v==='boolean'){on=v;try{localStorage.setItem('sada_lock',v?'1':'0')}catch(e){}}paint();return on};
+  paint();
+  fetch(API+'?lock=1').then(function(r){return r.json()}).then(function(j){if(j&&j.ok)window.sadaLock(!!j.locked)}).catch(function(){});
+  document.getElementById('lkAdm').addEventListener('click',function(e){if(typeof window.SADA_ADMIN_LOGIN==='function'){e.preventDefault();window.SADA_ADMIN_LOGIN()}});
+})();
+</script>
 
 <section id="splash" class="screen on">
   <a class="home" href="./" aria-label="Back to SADA home">← SADA</a>

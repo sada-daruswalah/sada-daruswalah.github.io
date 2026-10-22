@@ -357,6 +357,10 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .sw.sv .swt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-left:56px;color:#121212;font-family:var(--body);font-size:22px;font-weight:700;pointer-events:none}
 .sw.sv .swk{position:absolute;left:0;top:-7px;width:76px;height:70px;border-radius:12px 64px 12px 64px;background:linear-gradient(135deg,#0f9b5f,#3ddc84);box-shadow:0 6px 16px rgba(15,155,95,.35);cursor:grab;touch-action:none;z-index:1}
 .sw.sv .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.sw.sv.red .swk{background:linear-gradient(135deg,#b3261e,#ef5350);box-shadow:0 6px 16px rgba(179,38,30,.35)}
+.lkst{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;margin:6px 0 4px;font-weight:700;font-size:16px}
+.lkst svg{width:34px;height:34px;flex:none}
+.lkst.is-on{background:#fdecea;color:#8c1d18}.lkst.is-off{background:#e6f6ee;color:#0b6b41}
 footer{background:var(--navy);color:var(--bg);padding-block:36px}
 footer .in{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center}
 footer .fb{display:flex;align-items:center;gap:12px}
@@ -376,6 +380,49 @@ body::before{position:absolute!important;inset:0!important}
 </style>
 </head>
 <body>
+<!-- ===== Site lock ===== -->
+<style>
+#lockScr{display:none}
+html.sitelocked{overflow:hidden}
+html.sitelocked body{overflow:hidden}
+html.sitelocked .hkw{display:none!important}
+html.sitelocked #lockScr{display:flex}
+#lockScr{position:fixed;inset:0;z-index:19;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px 16px;text-align:center;
+  background:radial-gradient(120% 80% at 50% 0%,#2a3d94 0%,#1f2f7a 40%,#0d1428 100%);color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#lockScr .lkadm{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:16px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;
+  font:600 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif;padding:10px 14px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+#lockScr .lkadm:hover{background:rgba(255,255,255,.16)}
+#lockScr .lkadm:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
+#lockScr .lkic{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.07);border:2px solid rgba(255,209,102,.55);
+  box-shadow:0 0 0 10px rgba(255,209,102,.06),0 18px 40px rgba(0,0,0,.35)}
+#lockScr .lkic svg{width:72px;height:72px}
+#lockScr h1{margin:10px 0 0;font-size:28px;letter-spacing:.06em;text-transform:uppercase;color:#ffd166}
+#lockScr p{margin:0;max-width:340px;font-size:15px;line-height:1.55;color:rgba(255,255,255,.85)}
+#lockScr small{margin-top:18px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+</style>
+<div id="lockScr" role="alert" aria-live="polite">
+  <a class="lkadm" id="lkAdm" href="#admin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Admin login</a>
+  <div class="lkic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd166" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.6" fill="#ffd166"/><path d="M12 17v2"/></svg></div>
+  <h1>Site locked</h1>
+  <p>The SADA website is closed for a while by the admin. Please check back later.</p>
+  <small>SADA · Daruswalah Academy</small>
+</div>
+<script>
+(function(){
+  var API='https://script.google.com/macros/s/AKfycby3WzCd27PRGqyH_v8l05cvq-7ZhP08n1CekzDU1gX66VEbHLUqallLhpudfSv_bkWE0A/exec';
+  var on=false; try{on=localStorage.getItem('sada_lock')==='1'}catch(e){}
+  function isAdmin(){try{var c=JSON.parse(sessionStorage.getItem('sada_cred')||'null');return !!(c&&c.me&&c.me.type==='admin')}catch(e){return false}}
+  function paint(){document.documentElement.classList.toggle('sitelocked',on&&!isAdmin())}
+  window.sadaLock=function(v){if(typeof v==='boolean'){on=v;try{localStorage.setItem('sada_lock',v?'1':'0')}catch(e){}}paint();return on};
+  paint();
+  fetch(API+'?lock=1').then(function(r){return r.json()}).then(function(j){if(j&&j.ok)window.sadaLock(!!j.locked)}).catch(function(){});
+  document.getElementById('lkAdm').addEventListener('click',function(e){if(typeof window.SADA_ADMIN_LOGIN==='function'){e.preventDefault();window.SADA_ADMIN_LOGIN()}});
+})();
+</script>
+
+
+
+
 <main id="v-home">
 <header class="hero" id="top">
   <div class="in">
@@ -627,7 +674,14 @@ body::before{position:absolute!important;inset:0!important}
     <div class="vhead"><div><span class="eyebrow">Admin panel</span><h2>Control room</h2></div></div>
     <div class="atabs" id="atabs" role="tablist">
       <button type="button" class="on" data-at="students">Students data</button><button type="button" data-at="sada">SADA</button><button type="button" data-at="staff">Staff</button>
-      <button type="button" data-at="union">Unions</button><button type="button" data-at="student">Student logins</button><button type="button" data-at="library">Library</button><button type="button" data-at="admin">Admin</button>
+      <button type="button" data-at="union">Unions</button><button type="button" data-at="student">Student logins</button><button type="button" data-at="library">Library</button><button type="button" data-at="admin">Admin</button><button type="button" data-at="lock">🔒 Site lock</button>
+    </div>
+    <div class="card form" id="lockPane" hidden>
+      <div class="vhead"><div><h3>Site lock</h3><p class="note">When the site is locked, everyone sees only a lock screen on the SADA site, Talents Meet and the Library. Only the admin can log in.</p></div></div>
+      <div class="lkst" id="lkSt"></div>
+      <p class="msg err" id="lkErr"></p>
+      <div class="sw sv red" id="lkOn"><span class="swt">Lock site</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to lock the site"></div></div>
+      <div class="sw sv" id="lkOff" hidden><span class="swt">Unlock site</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to unlock the site"></div></div>
     </div>
     <div class="card form acc" id="accPane" hidden>
       <div class="vhead"><div><h3 id="accTitle"></h3><p class="note" id="accNote"></p></div></div>
@@ -1087,7 +1141,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   var $=function(id){return document.getElementById(id)};
   function getCred(){try{return JSON.parse(sessionStorage.getItem('sada_cred')||'null')}catch(e){return null}}
-  function setCred(c){try{c?sessionStorage.setItem('sada_cred',JSON.stringify(c)):sessionStorage.removeItem('sada_cred')}catch(e){} memCred=c}
+  function setCred(c){try{c?sessionStorage.setItem('sada_cred',JSON.stringify(c)):sessionStorage.removeItem('sada_cred')}catch(e){} memCred=c; if(window.sadaLock)window.sadaLock()}
   var memCred=null; var _gc=getCred; getCred=function(){return _gc()||memCred};
   var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),entries:$('v-entries'),elist:$('v-elist'),me:$('v-me'),admin:$('v-admin')};
   var tabs=[].slice.call(document.querySelectorAll('.dock [data-view]'));
@@ -1118,7 +1172,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     btn.disabled=true; $('lerr').textContent=''; btn.textContent='Checking…';
     call({action:'login'},{u:u,p:p}).then(function(j){
         if(!fits(j.me,loginMode)){$('lerr').textContent='This username is not for '+(loginMode.name||TYPE_NAME[loginMode.type]+' login')+'.';return}
-        setCred({u:u,p:p,me:j.me}); $('login').hidden=true; var f=pending; pending=null; f&&f();
+        if(typeof j.locked==='boolean'&&window.sadaLock)window.sadaLock(j.locked); setCred({u:u,p:p,me:j.me}); $('login').hidden=true; var f=pending; pending=null; f&&f();
       })
       .catch(function(err){$('lerr').textContent=/Wrong/.test(err.message)?'Wrong username or password. Please try again.':errText(err)})
       .then(function(){btn.disabled=false;btn.textContent='Login'});
@@ -1602,10 +1656,28 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     admin:['Admin login','Change the admin username and password. Keep them secret.']};
   function setATab(k){
     atab=k; document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.classList.toggle('on',b.dataset.at===k)});
-    var st=k==='students'; $('adminList').hidden=!st; if(!st)$('addForm').hidden=true; $('accPane').hidden=st;
+    var st=k==='students', lk=k==='lock'; $('adminList').hidden=!st; if(!st)$('addForm').hidden=true; $('accPane').hidden=st||lk; $('lockPane').hidden=!lk;
+    if(lk){renderLock();return}
     if(!st){ resetAccForm(); renderAcc(); loadAcc(); }
   }
   document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.addEventListener('click',function(){setATab(b.dataset.at)})});
+  /* ---------- site lock ---------- */
+  var LK_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
+  var LK_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 7.5-2"/></svg>';
+  function renderLock(){
+    var on=window.sadaLock?window.sadaLock():false;
+    $('lkSt').className='lkst '+(on?'is-on':'is-off');
+    $('lkSt').innerHTML=(on?LK_ON:LK_OFF)+'<span>'+(on?'The site is LOCKED':'The site is open')+'</span>';
+    $('lkOn').hidden=on; $('lkOff').hidden=!on;
+  }
+  function lockGo(v){return function(done,say){
+    $('lkErr').textContent=''; say(v?'Locking…':'Unlocking…');
+    call({action:'lock.set',on:v}).then(function(j){window.sadaLock(!!j.locked);done();renderLock()})
+      .catch(function(err){$('lkErr').textContent=errText(err);done()});
+  }}
+  slider($('lkOn'),lockGo(true)); slider($('lkOff'),lockGo(false));
+  window.SADA_ADMIN_LOGIN=function(){needLogin({type:'admin'},function(){openAdmin();setATab('lock')})};
+  if(location.hash==='#admin'){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){} setTimeout(window.SADA_ADMIN_LOGIN,0)}
   function loadAcc(){ call({action:'acc.list'}).then(function(j){accs=j.accounts||[];renderAcc()}).catch(function(err){if(!accs)$('accList').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'}) }
   function renderAcc(){
     var info=ACC_INFO[atab]; $('accTitle').textContent=info[0]; $('accNote').textContent=info[1];
