@@ -162,7 +162,7 @@ iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(
       var spare=g.list.filter(function(n){return !busy[n]});
       out.rows=TM_PROGS.map(function(p){
         var who=p[2]==='none'?[]:p[2]==='report'?(rep?[rep]:[]):p[2]==='special'?spare:[tmPerson(g.list,day,p[2])];
-        return {no:p[0],label:p[1],who:who.filter(Boolean),min:TM_MIN[p[1]]||''};
+        return {no:p[0],label:p[1],who:who.filter(Boolean).map(function(n){return window.tmRename?window.tmRename(n):n}),min:TM_MIN[p[1]]||''};
       });
       return out;
     });

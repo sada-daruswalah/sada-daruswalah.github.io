@@ -575,6 +575,12 @@ const PMAP={"Supplication":"Supplication","Qira'at":"Qira'th","Welcome":"Welcome
   "Sermon":"Spiritual Talk","Malayalam Speech 1":"Malayalam Speech","Malayalam Speech 2":"Malayalam Speech","English Speech 1":"English Speech",
   "English Speech 2":"English Speech","Arabic Speech":"Arabic Speech","Urdu Speech":"Urdu Speech","Song 1":"Song","Song 2":"Song","Song 3":"Song"};
 const normN=s=>String(s||"").toUpperCase().replace(/[^A-Z]/g,"");
+/* the weekly programme list was written with the old names; show the new name when the admin has changed one */
+window.tmRename=function(n){
+  const k=normN(n);let hit=STUDENTS.filter(s=>s.orig&&normN(s.orig)===k);
+  if(hit.length!==1){const toks=String(n).toUpperCase().split(/[^A-Z]+/).filter(w=>w.length>=3);hit=STUDENTS.filter(s=>{const o=normN(s.orig||"");return toks.length&&toks.every(w=>o.indexOf(w)>-1)});}
+  return hit.length===1&&hit[0].orig&&normN(hit[0].orig)!==normN(hit[0].name)?hit[0].name:n;
+};
 function byName(name){
   const n=normN(name);let hit=STUDENTS.filter(s=>normN(s.name)===n);
   if(hit.length===1)return hit[0];
@@ -816,7 +822,7 @@ $("#scClose").onclick=stopScan;
       var spare=g.list.filter(function(n){return !busy[n]});
       out.rows=TM_PROGS.map(function(p){
         var who=p[2]==='none'?[]:p[2]==='report'?(rep?[rep]:[]):p[2]==='special'?spare:[tmPerson(g.list,day,p[2])];
-        return {no:p[0],label:p[1],who:who.filter(Boolean),min:TM_MIN[p[1]]||''};
+        return {no:p[0],label:p[1],who:who.filter(Boolean).map(function(n){return window.tmRename?window.tmRename(n):n}),min:TM_MIN[p[1]]||''};
       });
       return out;
     });
