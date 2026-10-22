@@ -291,7 +291,6 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .ehead:focus-visible{outline:3px solid var(--teal);outline-offset:-3px}
 .ehead .txt b{letter-spacing:.08em}
 .ehead .chev{margin-left:auto;font-size:1.6rem;color:var(--teal);transition:transform .2s}
-.esec.open .chev{transform:rotate(90deg)}
 .ebody{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
 .esearch{margin:0}
 .mlist{display:flex;flex-direction:column;gap:8px;width:100%}
@@ -324,6 +323,23 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .xtype button.on[data-xt=Expense]{background:var(--rose);border-color:var(--rose);color:#fff}
 .xtype button.on[data-xt=Income]{background:#1f8a54;border-color:#1f8a54;color:#fff}
 .stat.bal b{color:var(--teal)}
+.xtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.xtabs::-webkit-scrollbar{display:none}
+.xtabs button,.xcats button{all:unset;cursor:pointer;flex:none;font-family:var(--body);font-weight:700;font-size:.85rem;padding:8px 13px;border-radius:999px;border:1.5px solid var(--line);color:var(--navy)}
+.xtabs button.on,.xcats button.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.xcats{display:flex;gap:6px;flex-wrap:wrap}
+.xpane{display:flex;flex-direction:column;gap:12px}
+.xpick .row{flex-wrap:nowrap}.xpick input{flex:1}
+.xstu{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px}
+.xstu label{display:flex;gap:10px;align-items:center;padding:9px 12px;border-top:1px solid var(--line);font-weight:600;font-size:.9rem;cursor:pointer}
+.xstu label:first-child{border-top:0}
+.xstu input{width:20px;height:20px;accent-color:var(--teal);flex:none}
+.xstu .paid{margin-left:auto;font-size:.75rem;color:#1f8a54;font-weight:700}
+.xline{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.xline .row{justify-content:space-between}
+.xbill{width:54px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.xk{flex:none;font-size:.68rem;font-weight:800;letter-spacing:.05em;padding:3px 7px;border-radius:6px;color:#fff;background:var(--muted)}
+.xk.Income{background:#1f8a54}.xk.Expense{background:var(--rose)}.xk.Liability{background:#9a6b00}.xk.Deposit{background:var(--navy)}
+.xrow a{color:var(--teal);font-weight:700;text-decoration:none}
 .xlist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .xrow{display:flex;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
 .xrow:first-child{border-top:0}
@@ -345,6 +361,15 @@ footer img{width:48px;height:48px;border-radius:50%;background:#fff}
 footer b{font-family:var(--display);font-weight:400;font-size:1.3rem;letter-spacing:.14em;display:block}
 footer small{opacity:.8;font-size:.85rem}
 @media (prefers-reduced-motion:reduce){a.tile{transition:none}}
+
+/* speed: no live blur anywhere (it is what made phones slow) */
+*,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body{position:relative}
+body::before{position:absolute!important;inset:0!important}
+.dock{background:color-mix(in srgb,var(--surface) 94%,transparent)!important}
+.modal{background:color-mix(in srgb,#0d1428 55%,transparent)!important}
+.hkw .hkfab{background:var(--surface)!important}
+.hkw .hkpanel{background:var(--bg)!important}
 </style>
 </head>
 <body>
@@ -530,16 +555,21 @@ footer small{opacity:.8;font-size:.85rem}
     <div class="vhead"><div><span class="eyebrow">Special Entries</span><h2>Member logins</h2></div></div>
     <div class="card esec" data-sec="sada">
       <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14.6c2.6.2 4.4 1.9 5 5"/></svg></div><div class="txt"><b>SADA ENTRY</b><span id="cnt-sada">Office bearers</span></div><span class="chev" aria-hidden="true">›</span></button>
-      <div class="ebody" hidden><div class="mlist" id="list-sada"><div class="emptyl">Loading…</div></div></div>
     </div>
     <div class="card esec" data-sec="staff">
       <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 2.5h6v3H9z"/><path d="M8.5 13l2.5 2.5 4.5-5"/></svg></div><div class="txt"><b>STAFF ENTRY</b><span id="cnt-staff">Teachers and evaluators</span></div><span class="chev" aria-hidden="true">›</span></button>
-      <div class="ebody" hidden><div class="mlist" id="list-staff"><div class="emptyl">Loading…</div></div></div>
     </div>
     <div class="card esec" data-sec="student">
-      <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c3 2 7 2 10 0v-4.5"/></svg></div><div class="txt"><b>STUDENT ENTRY</b><span id="cnt-student">Students of the academy</span></div><span class="chev" aria-hidden="true">›</span></button>
-      <div class="ebody" hidden><input type="search" class="esearch" id="stuQ" placeholder="Search your name or roll no" autocomplete="off"><div class="mlist" id="list-student"><div class="emptyl">Loading…</div></div></div>
+      <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c3 2 7 2 10 0v-4.5"/></svg></div><div class="txt"><b>STUDENT ENTRY</b><span id="cnt-student">Log in with your SNEC UID</span></div><span class="chev" aria-hidden="true">›</span></button>
     </div>
+  </div>
+</main>
+
+<main id="v-elist" class="view" hidden>
+  <div class="in">
+    <div class="etop"><button type="button" class="back" id="elistBack">← Special Entries</button></div>
+    <div class="vhead"><div><span class="eyebrow" id="elistEyebrow">Special Entries</span><h2 id="elistTitle"></h2></div></div>
+    <div class="mlist" id="elistBody"></div>
   </div>
 </main>
 
@@ -549,17 +579,37 @@ footer small{opacity:.8;font-size:.85rem}
     <div class="card mecard"><div class="av big" id="meAv"></div><div class="who"><span class="eyebrow" id="meType"></span><h2 id="meName"></h2><p class="note" id="meTitle"></p></div></div>
     <div class="card" id="meStaff" hidden><h3>Talents Meet</h3><p class="note">Open the evaluation page. You are logged in there already.</p><a class="btn solid" id="meTm" href="talents.html#go">Open Talents Meet</a></div>
     <div class="card form" id="meExp" hidden>
-      <div class="vhead"><div><span class="eyebrow">Treasurer</span><h3>Expense Manager</h3></div></div>
-      <div class="stats"><div class="stat"><b id="xIn">0</b><span>Income</span></div><div class="stat"><b id="xOut">0</b><span>Expense</span></div><div class="stat bal"><b id="xBal">0</b><span>Balance</span></div></div>
-      <div class="xtype" role="group" aria-label="Type"><button type="button" class="on" data-xt="Expense">Expense</button><button type="button" data-xt="Income">Income</button></div>
-      <div class="fields">
-        <div class="f"><label for="xDate">Date *</label><input id="xDate" type="date"></div>
-        <div class="f"><label for="xAmt">Amount (₹) *</label><input id="xAmt" inputmode="decimal" placeholder="0" autocomplete="off"></div>
-        <div class="f"><label for="xFor">For what *</label><input id="xFor" placeholder="e.g. Stage decoration" autocomplete="off"></div>
+      <div class="vhead"><div><span class="eyebrow">Treasurer</span><h3>Expense Manager</h3></div><a class="btn small" id="xSheet" target="_blank" rel="noopener">Open finance sheet</a></div>
+      <div class="stats"><div class="stat"><b id="xIn">₹0</b><span>Income</span></div><div class="stat"><b id="xOut">₹0</b><span>Expense</span></div><div class="stat bal"><b id="xBal">₹0</b><span>Balance</span></div></div>
+      <div class="stats"><div class="stat"><b id="xLiab">₹0</b><span>Liabilities</span></div><div class="stat"><b id="xDep">₹0</b><span>Deposits</span></div></div>
+      <p class="note" id="xCats"></p>
+      <div class="xtabs" role="tablist"><button type="button" class="on" data-xp="Income">Income</button><button type="button" data-xp="Expense">Expense</button><button type="button" data-xp="Liability">Liability</button><button type="button" data-xp="Deposit">Deposit</button><button type="button" data-xp="History">History</button></div>
+      <div class="f" id="xDateF"><label for="xDate">Date *</label><input id="xDate" type="date"></div>
+      <div class="xpane" data-p="Income">
+        <div class="xcats" id="xCatChips"><button type="button" class="on" data-cat="MEMBERSHIP">Membership</button><button type="button" data-cat="SSO">SSO</button><button type="button" data-cat="SADA">SADA</button><button type="button" data-cat="OTHER">Other</button></div>
+        <div class="f"><label for="xAmt">Amount for each person (₹) *</label><input id="xAmt" inputmode="decimal" placeholder="e.g. 100" autocomplete="off"></div>
+        <div class="xpick">
+          <div class="row"><input type="search" id="xStuQ" placeholder="Search student" autocomplete="off"><button type="button" class="btn small" id="xAll">All</button><button type="button" class="btn small" id="xNone">Clear</button></div>
+          <div class="xstu" id="xStuList"></div>
+          <p class="note" id="xSel">Tick the students who paid.</p>
+        </div>
+        <div class="f"><label for="xOther">Someone not in the list (optional)</label><input id="xOther" placeholder="Name" autocomplete="off"></div>
+      </div>
+      <div class="xpane" data-p="Expense" hidden>
+        <div id="xLines"></div>
+        <button type="button" class="btn small" id="xAddLine">+ Add another expense</button>
+      </div>
+      <div class="xpane" data-p="Liability" hidden>
+        <p class="note">Money SADA borrowed. Delete it from History when it is paid back.</p>
+        <div class="fields"><div class="f"><label for="xLName">Name of creditor *</label><input id="xLName" autocomplete="off"></div><div class="f"><label for="xLAmt">Amount (₹) *</label><input id="xLAmt" inputmode="decimal" autocomplete="off"></div></div>
+      </div>
+      <div class="xpane" data-p="Deposit" hidden>
+        <p class="note">Money SADA lent to someone. Delete it from History when it comes back.</p>
+        <div class="fields"><div class="f"><label for="xDName">Name of debtor *</label><input id="xDName" autocomplete="off"></div><div class="f"><label for="xDAmt">Amount (₹) *</label><input id="xDAmt" inputmode="decimal" autocomplete="off"></div></div>
       </div>
       <p class="msg err" id="xErr"></p>
       <div class="sw sv" id="xSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save"></div></div>
-      <div id="xList" class="xlist"></div>
+      <div class="xpane" data-p="History" hidden><div id="xList" class="xlist"></div></div>
     </div>
     <div class="card" id="meSoon"><p class="note">More options for you will be added here soon.</p></div>
   </div>
@@ -1032,12 +1082,12 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function getCred(){try{return JSON.parse(sessionStorage.getItem('sada_cred')||'null')}catch(e){return null}}
   function setCred(c){try{c?sessionStorage.setItem('sada_cred',JSON.stringify(c)):sessionStorage.removeItem('sada_cred')}catch(e){} memCred=c}
   var memCred=null; var _gc=getCred; getCred=function(){return _gc()||memCred};
-  var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),entries:$('v-entries'),me:$('v-me'),admin:$('v-admin')};
+  var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),entries:$('v-entries'),elist:$('v-elist'),me:$('v-me'),admin:$('v-admin')};
   var tabs=[].slice.call(document.querySelectorAll('.dock [data-view]'));
   var pending=null;
   function show(name){
     Object.keys(views).forEach(function(k){views[k].hidden=(k!==name)});
-    tabs.forEach(function(b){b.classList.toggle('on',b.dataset.view===(['admin','entries','me'].indexOf(name)>-1?'other':name))});
+    tabs.forEach(function(b){b.classList.toggle('on',b.dataset.view===(['admin','entries','elist','me'].indexOf(name)>-1?'other':name))});
     if(name!=='admin'){ $('addForm').hidden=true; $('adminList').hidden=true; }
     window.scrollTo(0,0);
   }
@@ -1048,7 +1098,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var c=getCred(); if(c&&fits(c.me,mode)){then();return}
     pending=then; loginMode=mode; $('lerr').textContent=''; $('lu').value=''; $('lp').value='';
     $('lTitle').textContent=mode.name||(mode.type==='admin'?'Admin login':TYPE_NAME[mode.type]+' login');
-    $('lNote').textContent=mode.type==='student'?((mode.title?mode.title+' · ':'')+'Username: SNEC UID · Password: date of birth (DDMMYYYY)'):mode.name?((mode.title||TYPE_NAME[mode.type])+' · enter your username and password'):'Enter the username and password to continue.';
+    $('lNote').textContent=mode.type==='student'?'Username: your SNEC UID · Password: your date of birth (DDMMYYYY)':mode.name?((mode.title||TYPE_NAME[mode.type])+' · enter your username and password'):'Enter the username and password to continue.';
     $('login').hidden=false; setTimeout(function(){$('lu').focus()},30);
   }
   tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.view)})});
@@ -1336,7 +1386,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function rowOf(s){return {uid:s.snecUid,cls:s.cls,name:s.name,roll:s.rollNo,phone:s.phone,owner:s.phoneOwner,mobile:s.mobile,father:s.father,dob:s.dob,dist:s.district,lac:s.constituency,pending:true}}
   var OB='sada_outbox', obBusy=false, obTimer=null;
   function obLoad(){try{return JSON.parse(localStorage.getItem(OB)||'[]')}catch(e){return []}}
-  function obSave(l){try{localStorage.setItem(OB,JSON.stringify(l))}catch(e){}}
+  function obSave(l){try{localStorage.setItem(OB,JSON.stringify(l));return true}catch(e){return false}}
   function applyPending(list){
     obLoad().forEach(function(it){var b=it.body;
       if(b.action==='save'){var s=b.student;list=list.filter(function(r){return r.uid!==b.oldUid&&r.uid!==s.snecUid});list.push(rowOf(s))}
@@ -1347,7 +1397,9 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function obChip(){var c=$('obChip'),n=obLoad().length;
     if(n){c.hidden=false;c.classList.remove('ok');c.textContent=(navigator.onLine===false?'Offline · ':'Sending ')+n+' change'+(n===1?'':'s')+'…'}
     else if(!c.hidden){c.classList.add('ok');c.textContent='All saved ✓';setTimeout(function(){if(!obLoad().length)c.hidden=true},1500)}}
-  function obAdd(body,label){var c=getCred();var l=obLoad();l.push({body:body,cred:{u:c.u,p:c.p},label:label,id:Date.now()+Math.random()});obSave(l);obChip();obFlush()}
+  function obAdd(body,label){var c=getCred();var l=obLoad();l.push({body:body,cred:{u:c.u,p:c.p},label:label,id:Date.now()+Math.random()});
+    if(!obSave(l)){call(body,{u:c.u,p:c.p}).then(afterSync).catch(function(err){alert('NOT saved: '+label+'\n'+errText(err)+'\nPlease do it again.');afterSync()});return}
+    obChip();obFlush()}
   function obFlush(){
     if(obBusy)return; var l=obLoad(); if(!l.length){obChip();return}
     obBusy=true; clearTimeout(obTimer); obChip(); var it=l[0];
@@ -1386,27 +1438,29 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   var ppl={members:[],staff:[],students:[]}; try{ppl=Object.assign(ppl,JSON.parse(localStorage.getItem('sada_people')||'{}'))}catch(e){}
   var SECS={sada:'members',staff:'staff',student:'students'}, pplLoaded=false;
   function memBtn(type,m){return '<button type="button" class="mem" data-type="'+type+'" data-id="'+esc(m.id)+'"><div class="av">'+esc(initials(m.name))+'</div><div><b>'+esc(m.name)+'</b><span>'+esc(m.title||TYPE_NAME[type])+'</span></div><span class="go" aria-hidden="true">→</span></button>'}
+  var listType=null;
   function renderMembers(){
-    Object.keys(SECS).forEach(function(type){
-      var list=ppl[SECS[type]]||[], box=$('list-'+type);
-      $('cnt-'+type).textContent=list.length?list.length+(type==='sada'?' office bearer':type==='staff'?' staff member':' student')+(list.length===1?'':'s'):({sada:'Office bearers',staff:'Teachers and evaluators',student:'Students of the academy'})[type];
-      if(type==='student'){var q=$('stuQ').value.trim().toLowerCase();list=list.filter(function(m){return !q||(m.name+' '+(m.title||'')).toLowerCase().indexOf(q)>-1})}
-      box.innerHTML=list.length?list.map(function(m){return memBtn(type,m)}).join(''):'<div class="emptyl">'+(pplLoaded?(type==='student'&&$('stuQ').value?'No student matches.':'Nobody added yet.'):'Loading…')+'</div>';
-    });
+    ['sada','staff'].forEach(function(type){var n=(ppl[SECS[type]]||[]).length;
+      $('cnt-'+type).textContent=n?n+(type==='sada'?' office bearer':' staff member')+(n===1?'':'s'):(type==='sada'?'Office bearers':'Teachers and evaluators')});
+    if(listType&&!views.elist.hidden){
+      var list=ppl[SECS[listType]]||[];
+      $('elistBody').innerHTML=list.length?list.map(function(m){return memBtn(listType,m)}).join(''):'<div class="emptyl">'+(pplLoaded?'Nobody added yet.':'Loading…')+'</div>';
+    }
   }
   function loadMembers(){
     renderMembers();
-    fetch(API+'?members=1').then(function(r){return r.json()}).then(function(j){if(!j.ok)return;ppl={members:j.members||[],staff:j.staff||[],students:j.students||[]};pplLoaded=true;try{localStorage.setItem('sada_people',JSON.stringify(ppl))}catch(e){}renderMembers()})
+    fetch(API+'?members=1').then(function(r){return r.json()}).then(function(j){if(!j.ok)return;ppl={members:j.members||[],staff:j.staff||[],students:[]};pplLoaded=true;try{localStorage.setItem('sada_people',JSON.stringify(ppl))}catch(e){}renderMembers()})
       .catch(function(){pplLoaded=true;renderMembers()});
   }
   function showEntries(){show('entries');loadMembers()}
+  function openList(type){listType=type;show('elist');$('elistTitle').textContent=type==='sada'?'SADA ENTRY':'STAFF ENTRY';$('elistEyebrow').textContent=type==='sada'?'Office bearers':'Teachers and evaluators';renderMembers();loadMembers()}
   $('openEntries').addEventListener('click',showEntries);
   $('entriesBack').addEventListener('click',function(){show('other')});
+  $('elistBack').addEventListener('click',showEntries);
   [].forEach.call(document.querySelectorAll('.esec'),function(sec){
-    sec.querySelector('.ehead').addEventListener('click',function(){var open=!sec.classList.contains('open');sec.classList.toggle('open',open);sec.querySelector('.ebody').hidden=!open;this.setAttribute('aria-expanded',String(open))});
+    sec.querySelector('.ehead').addEventListener('click',function(){var k=sec.dataset.sec;if(k==='student')needLogin({type:'student'},openMe);else openList(k)});
   });
-  $('stuQ').addEventListener('input',renderMembers);
-  $('v-entries').addEventListener('click',function(e){var b=e.target.closest('.mem');if(!b)return;var type=b.dataset.type,m=(ppl[SECS[type]]||[]).find(function(x){return x.id===b.dataset.id});if(m)needLogin({type:type,id:m.id,name:m.name,title:m.title},openMe)});
+  $('elistBody').addEventListener('click',function(e){var b=e.target.closest('.mem');if(!b)return;var type=b.dataset.type,m=(ppl[SECS[type]]||[]).find(function(x){return x.id===b.dataset.id});if(m)needLogin({type:type,id:m.id,name:m.name,title:m.title},openMe)});
   $('openAdminPanel').addEventListener('click',function(){needLogin({type:'admin'},openAdmin)});
 
   /* ---------- member page ---------- */
@@ -1417,51 +1471,114 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     $('meType').textContent=TYPE_NAME[me.type]||''; $('meTitle').textContent=me.title||'';
     $('meStaff').hidden=me.type!=='staff';
     if(me.type==='staff'){try{localStorage.setItem('tm_sess',JSON.stringify({role:'staff',u:c.u,p:c.p}))}catch(e){}}
-    $('meExp').hidden=!me.exp; if(me.exp){ if(!$('xDate').value)$('xDate').value=today(); loadExp(); }
+    $('meExp').hidden=!me.exp; if(me.exp){ if(!$('xDate').value)$('xDate').value=today(); setPane(xPane); loadExp(); }
   }
   $('meBack').addEventListener('click',function(){showEntries()});
   $('meOut').addEventListener('click',function(){setCred(null);try{localStorage.removeItem('tm_sess')}catch(e){};showEntries()});
 
-  /* ---------- expense manager ---------- */
+  /* ---------- expense manager (SADA'S FINANCE sheet) ---------- */
   function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
   function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
-  var xItems=[], xType='Expense';
-  try{xItems=JSON.parse(localStorage.getItem('sada_exp')||'[]')}catch(e){}
+  var xItems=[], xStus=[], xPane='Income', xCat='MEMBERSHIP', xPicked={};
+  try{var c0=JSON.parse(localStorage.getItem('sada_fin')||'{}');xItems=c0.items||[];xStus=c0.students||[];if(c0.sheet)$('xSheet').href=c0.sheet}catch(e){}
+  function newXId(){return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
   function xApply(list){
     obLoad().forEach(function(it){var b=it.body;
-      if(b.action==='exp.add'&&!list.some(function(x){return x.id===b.item.id}))list.push(Object.assign({by:'',pending:true},b.item));
+      if(b.action==='exp.add')(b.items||[b.item]).forEach(function(i){if(i&&!list.some(function(x){return x.id===i.id}))list.push(Object.assign({by:'',pending:true},i,{bill:i.bill?'#':''}))});
       if(b.action==='exp.delete')list=list.filter(function(x){return x.id!==b.id});
     });
     return list;
   }
+  function sumOf(kind,cat){return xItems.filter(function(x){return x.kind===kind&&(!cat||x.cat===cat)}).reduce(function(s,x){return s+(Number(x.amount)||0)},0)}
   function renderExp(){
-    var inc=0,out=0; xItems.forEach(function(x){if(x.type==='Income')inc+=Number(x.amount)||0;else out+=Number(x.amount)||0});
-    $('xIn').textContent=money(inc); $('xOut').textContent=money(out); $('xBal').textContent=money(inc-out);
+    var inc=sumOf('Income'),out=sumOf('Expense');
+    $('xIn').textContent=money(inc);$('xOut').textContent=money(out);$('xBal').textContent=money(inc-out);
+    $('xLiab').textContent=money(sumOf('Liability'));$('xDep').textContent=money(sumOf('Deposit'));
+    $('xCats').textContent='Membership '+money(sumOf('Income','MEMBERSHIP'))+' · SSO '+money(sumOf('Income','SSO'))+' · SADA '+money(sumOf('Income','SADA'))+' · Other '+money(sumOf('Income','OTHER'));
+    renderStu();
     var l=xItems.slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))});
-    $('xList').innerHTML=l.length?l.map(function(x){var isIn=x.type==='Income';
-      return '<div class="xrow"><div class="who"><b>'+esc(x.purpose)+''+'</b><span>'+esc(fmtDob(x.date))+(x.by?' · '+esc(x.by):'')+'</span></div>'+
-        '<span class="xamt '+(isIn?'in':'out')+'">'+(isIn?'+ ':'− ')+money(x.amount)+'</span><button type="button" class="del" data-xdel="'+esc(x.id)+'" aria-label="Delete">✕</button></div>'}).join('')
+    $('xList').innerHTML=l.length?l.map(function(x){
+      var title=x.kind==='Income'?esc(x.name)+' · '+esc(x.cat):x.kind==='Expense'?(x.bill&&x.bill!=='#'?'<a href="'+esc(x.bill)+'" target="_blank" rel="noopener">'+esc(x.reason)+' 🧾</a>':esc(x.reason))+(x.source?' · '+esc(x.source):''):esc(x.name);
+      var plus=x.kind==='Income'||x.kind==='Liability';
+      return '<div class="xrow"><span class="xk '+esc(x.kind)+'">'+esc(x.kind)+'</span><div class="who"><b>'+title+'</b><span>'+esc(fmtDob(x.date))+(x.by?' · '+esc(x.by):'')+'</span></div>'+
+        '<span class="xamt '+(plus?'in':'out')+'">'+money(x.amount)+'</span><button type="button" class="del" data-xdel="'+esc(x.id)+'" aria-label="Delete">✕</button></div>'}).join('')
       :'<div class="emptyl">No entries yet.</div>';
+  }
+  function renderStu(){
+    var q=$('xStuQ').value.trim().toLowerCase();
+    var paid={}; xItems.forEach(function(x){if(x.kind==='Income'&&x.cat===xCat)paid[String(x.name).toUpperCase()]=(paid[String(x.name).toUpperCase()]||0)+Number(x.amount||0)});
+    $('xStuList').innerHTML=xStus.length?xStus.filter(function(n){return !q||n.toLowerCase().indexOf(q)>-1}).map(function(n){
+      return '<label><input type="checkbox" data-n="'+esc(n)+'"'+(xPicked[n]?' checked':'')+'>'+esc(n)+(paid[n.toUpperCase()]?'<span class="paid">paid '+money(paid[n.toUpperCase()])+'</span>':'')+'</label>'}).join(''):'<div class="emptyl">Loading the student list…</div>';
+    var k=Object.keys(xPicked).length; $('xSel').textContent=k?k+' student'+(k===1?'':'s')+' ticked':'Tick the students who paid.';
   }
   function loadExp(){
     xItems=xApply(xItems.filter(function(x){return !x.pending})); renderExp();
-    call({action:'exp.list'}).then(function(j){xItems=xApply(j.items||[]);try{localStorage.setItem('sada_exp',JSON.stringify(j.items||[]))}catch(e){}renderExp()}).catch(function(){});
+    call({action:'exp.list'}).then(function(j){
+      xStus=j.students||[]; if(j.sheet)$('xSheet').href=j.sheet;
+      try{localStorage.setItem('sada_fin',JSON.stringify({items:j.items||[],students:xStus,sheet:j.sheet}))}catch(e){}
+      xItems=xApply(j.items||[]); renderExp();
+    }).catch(function(err){if(!xStus.length)$('xStuList').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'});
   }
-  document.querySelectorAll('[data-xt]').forEach(function(b){b.addEventListener('click',function(){xType=b.dataset.xt;document.querySelectorAll('[data-xt]').forEach(function(o){o.classList.toggle('on',o===b)})})});
-  $('xAmt').addEventListener('input',function(){var v=this.value.replace(/[^\d.]/g,'');if(v!==this.value)this.value=v});
+  function setPane(p){xPane=p;document.querySelectorAll('[data-xp]').forEach(function(b){b.classList.toggle('on',b.dataset.xp===p)});
+    document.querySelectorAll('.xpane').forEach(function(d){d.hidden=d.dataset.p!==p});
+    $('xSave').hidden=p==='History'; $('xDateF').hidden=p==='History'; note($('xErr'),'',1);
+    if(p==='Expense'&&!$('xLines').children.length)addLine();}
+  document.querySelectorAll('[data-xp]').forEach(function(b){b.addEventListener('click',function(){setPane(b.dataset.xp)})});
+  document.querySelectorAll('[data-cat]').forEach(function(b){b.addEventListener('click',function(){xCat=b.dataset.cat;document.querySelectorAll('[data-cat]').forEach(function(o){o.classList.toggle('on',o===b)});renderStu()})});
+  $('xStuQ').addEventListener('input',renderStu);
+  $('xStuList').addEventListener('change',function(e){var c=e.target;if(!c.dataset.n)return;if(c.checked)xPicked[c.dataset.n]=1;else delete xPicked[c.dataset.n];renderStu()});
+  $('xAll').addEventListener('click',function(){var q=$('xStuQ').value.trim().toLowerCase();xStus.forEach(function(n){if(!q||n.toLowerCase().indexOf(q)>-1)xPicked[n]=1});renderStu()});
+  $('xNone').addEventListener('click',function(){xPicked={};renderStu()});
+  ['xAmt','xLAmt','xDAmt'].forEach(function(id){$(id).addEventListener('input',function(){var v=this.value.replace(/[^\d.]/g,'');if(v!==this.value)this.value=v})});
+  function addLine(){
+    var d=document.createElement('div');d.className='xline';
+    d.innerHTML='<div class="fields"><div class="f"><label>Expense (e.g. Purchase) *</label><input class="lr" autocomplete="off"></div><div class="f"><label>Amount (₹) *</label><input class="la" inputmode="decimal" autocomplete="off"></div><div class="f"><label>Where bought (source)</label><input class="ls" autocomplete="off"></div></div>'+
+      '<div class="row"><label class="btn small pick">📷 Bill photo<input type="file" accept="image/*" class="sr lf"></label><img class="xbill" alt="Bill" hidden><button type="button" class="del lx">Remove</button></div>';
+    d.querySelector('.la').addEventListener('input',function(){var v=this.value.replace(/[^\d.]/g,'');if(v!==this.value)this.value=v});
+    d.querySelector('.lx').addEventListener('click',function(){d.remove();if(!$('xLines').children.length)addLine()});
+    d.querySelector('.lf').addEventListener('change',function(){var f=this.files[0];this.value='';if(!f)return;shrinkBill(f,function(u){d._bill=u;var im=d.querySelector('.xbill');im.src=u;im.hidden=false})});
+    $('xLines').appendChild(d);
+  }
+  $('xAddLine').addEventListener('click',addLine);
+  function shrinkBill(f,done){var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){
+    var s=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+    var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);
+    var q=0.75,u=c.toDataURL('image/jpeg',q);while(u.length>700000&&q>0.35){q-=0.1;u=c.toDataURL('image/jpeg',q)}done(u)};im.src=rd.result};rd.readAsDataURL(f)}
   slider($('xSave'),function(done){
-    var amt=Number($('xAmt').value), what=$('xFor').value.trim(), d=$('xDate').value;
+    var d=$('xDate').value,items=[],label='';
     if(!d){note($('xErr'),'Choose the date.',1);done();return}
-    if(!(amt>0)){note($('xErr'),'Enter the amount.',1);done();return}
-    if(!what){note($('xErr'),'Enter what it is for.',1);done();return}
-    var item={id:'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:d,type:xType,amount:amt,purpose:what};
-    xItems.push(Object.assign({by:(getCred().me||{}).name,pending:true},item)); renderExp();
-    obAdd({action:'exp.add',item:item},xType+' '+money(amt)+' · '+what);
-    $('xAmt').value=''; $('xFor').value=''; note($('xErr'),xType+' saved ✓',0); done();
+    if(xPane==='Income'){
+      var amt=Number($('xAmt').value),names=Object.keys(xPicked),oth=$('xOther').value.trim();
+      if(oth)names.push(oth.toUpperCase());
+      if(!(amt>0)){note($('xErr'),'Enter the amount.',1);done();return}
+      if(!names.length){note($('xErr'),'Tick at least one student.',1);done();return}
+      items=names.map(function(n){return {id:newXId(),kind:'Income',cat:xCat,name:n,amount:amt,date:d}});
+      label=xCat+' '+money(amt)+' × '+names.length;
+    }else if(xPane==='Expense'){
+      var bad='';
+      [].forEach.call($('xLines').children,function(l){var r=l.querySelector('.lr').value.trim(),a=Number(l.querySelector('.la').value),s=l.querySelector('.ls').value.trim();
+        if(!r&&!a&&!s&&!l._bill)return; if(!r)bad='Enter what each expense is for.'; else if(!(a>0))bad='Enter the amount of "'+r+'".';
+        items.push({id:newXId(),kind:'Expense',reason:r,amount:a,source:s,bill:l._bill||'',date:d})});
+      if(bad){note($('xErr'),bad,1);done();return}
+      if(!items.length){note($('xErr'),'Enter the expense.',1);done();return}
+      label=items.length+' expense'+(items.length===1?'':'s');
+    }else{
+      var L=xPane==='Liability',nm=$(L?'xLName':'xDName').value.trim(),am=Number($(L?'xLAmt':'xDAmt').value);
+      if(!nm){note($('xErr'),'Enter the name.',1);done();return}
+      if(!(am>0)){note($('xErr'),'Enter the amount.',1);done();return}
+      items=[{id:newXId(),kind:xPane,name:nm,amount:am,date:d}]; label=xPane+' '+nm;
+    }
+    var me=(getCred().me||{}).name||'';
+    items.forEach(function(i){xItems.push(Object.assign({by:me,pending:true},i,{bill:i.bill?'#':''}))});
+    obAdd({action:'exp.add',items:items},label);
+    if(xPane==='Income'){xPicked={};$('xOther').value='';}
+    else if(xPane==='Expense'){$('xLines').innerHTML='';addLine();}
+    else ['xLName','xLAmt','xDName','xDAmt'].forEach(function(id){$(id).value=''});
+    renderExp(); note($('xErr'),label+' saved ✓',0); done();
   });
   $('xList').addEventListener('click',function(e){var b=e.target.closest('[data-xdel]');if(!b)return;var x=xItems.find(function(i){return i.id===b.dataset.xdel});if(!x)return;
-    if(!confirm('Delete this entry?\n'+x.purpose+' · '+money(x.amount)))return;
-    xItems=xItems.filter(function(i){return i!==x});renderExp();obAdd({action:'exp.delete',id:x.id},'Delete '+x.purpose)});
+    if(!confirm('Delete this entry?\n'+x.kind+' · '+(x.reason||x.name)+' · '+money(x.amount)))return;
+    xItems=xItems.filter(function(i){return i!==x});renderExp();obAdd({action:'exp.delete',id:x.id},'Delete '+(x.reason||x.name))});
 
   /* ---------- ADMIN PANEL: tabs and logins ---------- */
   var atab='students', accs=null, aEdit=null;

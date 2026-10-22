@@ -163,6 +163,17 @@ input[readonly]{color:var(--muted);background:color-mix(in srgb,var(--bg) 70%,tr
 .stname{font-family:var(--display);font-size:19px;color:var(--navy)}
 .stmeta{font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
 .who{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:6px 0 4px}
+
+/* speed: no live blur anywhere */
+*,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body{position:relative}
+body::before{position:absolute!important;inset:0!important}
+.tabs{background:color-mix(in srgb,var(--surface) 94%,transparent)!important}
+.top{background:var(--surface)!important}
+.sheet{background:color-mix(in srgb,#000 55%,transparent)!important}
+.sheet .box{background:var(--bg)!important}
+.hkw .hkfab{background:var(--surface)!important}
+.hkw .hkpanel{background:var(--bg)!important}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js"></script>
 </head>
