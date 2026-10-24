@@ -386,6 +386,9 @@ footer small{opacity:.8;font-size:.85rem}
 .brow .pts{margin-left:auto;text-align:right;line-height:1.1}
 .brow .pts b{display:block;font-family:var(--display);font-weight:400;font-size:1.7rem;color:var(--navy);font-variant-numeric:tabular-nums}
 .brow .pts span{font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.brow .pts+.pts{margin-left:14px}
+#ptCur,#ptPerm{margin-top:20px}
+#ptCur .swt,#ptPerm .swt{font-size:16px;padding-left:70px}
 .plist2{display:flex;flex-direction:column;gap:12px;margin-top:12px}
 .pcard{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .pcard .ph1{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
@@ -746,9 +749,6 @@ html.sitelocked #lockScr{display:flex}
     <div class="card esec" data-sec="student">
       <button type="button" class="ehead" aria-expanded="false"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c3 2 7 2 10 0v-4.5"/></svg></div><div class="txt"><b>STUDENT ENTRY</b><span id="cnt-student">Log in with your SNEC UID</span></div><span class="chev" aria-hidden="true">›</span></button>
     </div>
-    <div class="card esec" data-sec="pres">
-      <button type="button" class="ehead"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8"/><path d="M10 8l4 2-4 2z" fill="currentColor"/></svg></div><div class="txt"><b>PRESENTATION</b><span>Slide shows on the big screen</span></div><span class="pico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></span></button>
-    </div>
   </div>
 </main>
 
@@ -764,7 +764,6 @@ html.sitelocked #lockScr{display:flex}
   <div class="in">
     <div class="etop"><button type="button" class="back" id="meBack">← Special Entries</button><button type="button" class="btn small" id="meOut">Log out</button></div>
     <div class="card mecard"><div class="av big" id="meAv"></div><div class="who"><span class="eyebrow" id="meType"></span><h2 id="meName"></h2><p class="note" id="meTitle"></p></div></div>
-    <div class="card" id="meStaff" hidden><h3>Talents Meet</h3><p class="note">Open the evaluation page. You are logged in there already.</p><a class="btn solid" id="meTm" href="talents.html#go">Open Talents Meet</a></div>
     <div class="card form" id="meExp" hidden>
       <div class="vhead"><div><span class="eyebrow">Treasurer</span><h3>Expense Manager</h3></div><a class="btn small" id="xSheet" target="_blank" rel="noopener">Open finance sheet</a></div>
       <div class="stats"><div class="stat"><b id="xIn">₹0</b><span>Income</span></div><div class="stat"><b id="xOut">₹0</b><span>Expense</span></div><div class="stat bal"><b id="xBal">₹0</b><span>Balance</span></div></div>
@@ -805,6 +804,7 @@ html.sitelocked #lockScr{display:flex}
         <div class="f"><label for="pName">Program name *</label><input id="pName" autocomplete="off"></div>
         <div class="f"><label for="pPres">President *</label><input id="pPres" autocomplete="off"></div>
       </div>
+      <div class="f" style="margin-top:14px"><label for="pObj">Objective *</label><textarea id="pObj" rows="2" placeholder="What is the aim of this program?"></textarea></div>
       <p class="flab">Type *</p>
       <div class="xcats" id="pType"><button type="button" data-v="Arts">Arts</button><button type="button" data-v="Sports">Sports</button></div>
       <div id="pMore" hidden>
@@ -830,6 +830,7 @@ html.sitelocked #lockScr{display:flex}
       <p class="note">Each program: your mark out of 5. Tap a number. You can change it later.</p>
       <div class="plist2" id="sProgList"></div>
     </div>
+    <div class="card" id="meStaff" hidden><h3>Talents Meet</h3><p class="note">Open the evaluation page. You are logged in there already.</p><a class="btn solid" id="meTm" href="talents.html#go">Open Talents Meet</a></div>
     <div class="card" id="meSoon"><p class="note">More options for you will be added here soon.</p></div>
   </div>
 </main>
@@ -849,6 +850,7 @@ html.sitelocked #lockScr{display:flex}
         <div class="f"><label for="qName">Program name *</label><input id="qName" autocomplete="off"></div>
         <div class="f"><label for="qPres">President *</label><input id="qPres" autocomplete="off"></div>
       </div>
+      <div class="f" style="margin-top:14px"><label for="qObj">Objective *</label><textarea id="qObj" rows="2" placeholder="What is the aim of this program?"></textarea></div>
       <p class="flab">Type *</p>
       <div class="xcats" id="qType"><button type="button" data-v="Arts">Arts</button><button type="button" data-v="Sports">Sports</button></div>
       <div id="qMore" hidden>
@@ -865,11 +867,25 @@ html.sitelocked #lockScr{display:flex}
       <h3 style="margin-top:22px">SADA programs</h3>
       <div class="plist2" id="spAdmList"></div>
     </div>
-    <div class="card" id="progPane" hidden>
-      <div class="vhead"><div><h3>Union points table</h3><p class="note">Most points on top. With equal points, the union that reached them first stays on top.</p></div></div>
+    <div id="progPane" hidden>
+    <div class="card">
+      <div class="vhead"><div><span class="eyebrow">Current</span><h3>Current union points table</h3><p class="note">Points the unions have now. Staff see this table. Most points on top; with equal points, the union that reached them first stays on top.</p></div></div>
       <div class="board" id="aBoard"></div>
-      <h3 style="margin-top:22px">All programs</h3>
+      <p class="msg err" id="ptErrC"></p>
+      <div class="sw sv red" id="ptCur"><span class="swt">Delete current points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to delete the current points"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="vhead"><div><span class="eyebrow">Permanent</span><h3>Permanent points table</h3><p class="note">All the marks each union has received so far.</p></div></div>
+      <div class="board" id="aBoardP"></div>
+      <p class="msg err" id="ptErrP"></p>
+      <div class="sw sv red" id="ptPerm"><span class="swt">Delete permanent points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to delete the permanent points"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin-top:22px">Upcoming programs</h3>
+      <div class="plist2" id="aUpList"></div>
+      <h3 style="margin-top:22px">Finished programs</h3>
       <div class="plist2" id="aProgList"></div>
+    </div>
     </div>
     <div class="card form" id="presPane" hidden>
       <div class="vhead"><div><h3>Presentation password</h3><p class="note" id="presInfo">PRESENTATION in Special Entries opens with this password only (no username).</p></div></div>
@@ -2006,15 +2022,15 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       try{localStorage.setItem('sada_prog',JSON.stringify(PG))}catch(e){} renderProg()})
       .catch(function(err){['uProgList','sProgList','aProgList'].forEach(function(id){var el=$(id);if(el&&!el.children.length)el.innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})});
   }
-  function boardHTML(board){
+  function boardHTML(board,perm){
     if(!board.length)return '<div class="emptyl">No class unions yet.</div>';
     return board.map(function(u,i){var lg=uLogo(u.name);
       return '<div class="brow'+(i===0&&u.total>0?' first':'')+'"><span class="rk">'+(i+1)+'</span>'+(lg?'<img alt="" src="'+lg+'">':'')+
-        '<div class="bn"><b>'+esc(u.name)+'</b><span>'+u.programs+' program'+(u.programs===1?'':'s')+'</span></div><div class="pts"><b>'+u.total+'</b><span>points</span></div></div>'}).join('');
+        '<div class="bn"><b>'+esc(u.name)+'</b><span>'+u.programs+' program'+(u.programs===1?'':'s')+'</span></div><div class="pts"><b>'+u.total+'</b><span>'+(perm?'current':'points')+'</span></div>'+(perm?'<div class="pts"><b>'+(u.permanent||0)+'</b><span>permanent</span></div>':'')+'</div>'}).join('');
   }
   function detailsHTML(p){
     return '<dl><dt>Date</dt><dd>'+esc(niceDate(p.date))+'</dd><dt>Time</dt><dd>'+esc(niceTime(p.start))+' – '+esc(niceTime(p.end))+'</dd>'+
-      '<dt>Type</dt><dd>'+esc(p.type)+' · '+esc(p.mode)+'</dd><dt>'+(p.type==='Sports'?'Place':'Venue')+'</dt><dd>'+esc(p.venue)+'</dd><dt>President</dt><dd>'+esc(p.president)+'</dd></dl>';
+      '<dt>Type</dt><dd>'+esc(p.type)+' · '+esc(p.mode)+'</dd><dt>'+(p.type==='Sports'?'Place':'Venue')+'</dt><dd>'+esc(p.venue)+'</dd><dt>President</dt><dd>'+esc(p.president)+'</dd>'+(p.objective?'<dt>Objective</dt><dd>'+esc(p.objective)+'</dd>':'')+'</dl>';
   }
   function renderProg(){
     var c=getCred(), me=c&&c.me, list=pgPending((PG.programs||[]).slice()), nStaff=(PG.staff||[]).length;
@@ -2037,11 +2053,14 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     }
     if(!views.admin.hidden&&atab==='progs'){
       $('aBoard').innerHTML=boardHTML(PG.board||[]);
+      $('aBoardP').innerHTML=boardHTML((PG.board||[]).map(function(u){return {name:u.name,programs:u.programs,total:u.permanent||0}}).sort(function(a,b){return b.total-a.total}));
+      var upc=list.filter(function(p){return !p.due}).reverse(); list=list.filter(function(p){return p.due});
+      $('aUpList').innerHTML=upc.length?upc.map(function(p){return '<div class="pcard"><div class="ph1"><div><small>'+esc(p.union)+' · '+esc(niceDate(p.date))+'</small><b>'+esc(p.name)+'</b></div><span class="tag soon">Upcoming</span></div>'+detailsHTML(p)+'<button type="button" class="rmv" data-rm="'+esc(p.id)+'">Remove</button></div>'}).join(''):'<div class="emptyl">No upcoming programs.</div>';
       $('aProgList').innerHTML=list.length?list.map(function(p){
         var got={}; (p.marks||[]).forEach(function(m){got[m.sid]=m.mark});
         var br=(PG.staff||[]).map(function(s){return got[s.id]==null?'<span class="no">'+esc(s.name)+': —</span>':'<span>'+esc(s.name)+': <b>'+got[s.id]+'</b></span>'}).join('');
         return '<div class="pcard"><div class="ph1"><div><small>'+esc(p.union)+' · '+esc(niceDate(p.date))+'</small><b>'+esc(p.name)+'</b></div><span class="tag '+(!p.due?'soon':'done')+'">'+(p.total||0)+' / '+(nStaff*5)+'</span></div>'+detailsHTML(p)+
-          '<div class="mbreak">'+br+'</div><button type="button" class="rmv" data-rm="'+esc(p.id)+'">Remove</button></div>'}).join(''):'<div class="emptyl">No union programs yet.</div>';
+          '<div class="mbreak">'+br+'</div><button type="button" class="rmv" data-rm="'+esc(p.id)+'">Remove</button></div>'}).join(''):'<div class="emptyl">No finished programs yet.</div>';
     }
   }
   /* staff marks: instant (saved in the background) */
@@ -2058,7 +2077,9 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     b.textContent='Removing…'; b.disabled=true;
     call({action:'prog.del',id:b.dataset.rm}).then(function(j){PG.programs=j.programs||[];PG.board=j.board||PG.board;renderProg()}).catch(function(err){alert(errText(err));renderProg()});
   }
-  $('uProgList').addEventListener('click',rmHandler); $('aProgList').addEventListener('click',rmHandler);
+  $('uProgList').addEventListener('click',rmHandler); $('aProgList').addEventListener('click',rmHandler); $('aUpList').addEventListener('click',rmHandler);
+  function ptReset(kind){return function(done,say){say('Deleting…');var E=$(kind==='perm'?'ptErrP':'ptErrC');note(E,'',0);call({action:'pts.reset',kind:kind}).then(function(j){PG={programs:j.programs||[],board:j.board||[],staff:j.staff||[],today:j.today||''};renderProg();note(E,(kind==='perm'?'Permanent points deleted ✓ (current points too)':'Current points deleted ✓'),0);done()}).catch(function(err){note(E,errText(err),1);done()})}}
+  slider($('ptCur'),ptReset('cur')); slider($('ptPerm'),ptReset('perm'));
 
   /* union: register a program */
   var pType='', pMode='';
@@ -2077,13 +2098,13 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   $('pDate').addEventListener('input',checkClash); $('pDate').addEventListener('change',checkClash);
   slider($('pSave'),function(done,say){
     var c=getCred(); if(!c){done();return}
-    var p={id:'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:$('pDate').value,name:$('pName').value.trim(),president:$('pPres').value.trim(),type:pType,mode:pMode,venue:$('pVenue').value.trim(),start:$('pStart').value,end:$('pEnd').value};
-    var miss=!p.date?'Choose the date.':p.name.length<2?'Enter the program name.':p.president.length<2?'Enter the name of the President.':!p.type?'Choose the type: Arts or Sports.':!p.mode?(p.type==='Arts'?'Choose Stage or Off stage.':'Choose Indoor or Outdoor.'):!p.venue?(p.type==='Arts'?'Enter the venue.':'Enter the place.'):!p.start||!p.end?'Enter the starting and ending time.':p.end<=p.start?'The ending time must be after the starting time.':'';
+    var p={id:'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:$('pDate').value,name:$('pName').value.trim(),president:$('pPres').value.trim(),objective:$('pObj').value.trim(),type:pType,mode:pMode,venue:$('pVenue').value.trim(),start:$('pStart').value,end:$('pEnd').value};
+    var miss=!p.date?'Choose the date.':p.name.length<2?'Enter the program name.':p.president.length<2?'Enter the name of the President.':p.objective.length<2?'Enter the objective of the program.':!p.type?'Choose the type: Arts or Sports.':!p.mode?(p.type==='Arts'?'Choose Stage or Off stage.':'Choose Indoor or Outdoor.'):!p.venue?(p.type==='Arts'?'Enter the venue.':'Enter the place.'):!p.start||!p.end?'Enter the starting and ending time.':p.end<=p.start?'The ending time must be after the starting time.':'';
     if(!miss&&clashOf(p.date))miss='This day already registered by another union.';
     if(miss){note($('pErr'),miss,1);done();return}
     note($('pErr'),'',0); say('Saving…');
     call({action:'prog.add',prog:p}).then(function(j){PG.programs=j.programs||[];
-      ['pDate','pName','pPres','pVenue','pStart','pEnd'].forEach(function(id){$(id).value=''}); setPType(''); $('pMore').hidden=true; $('pType').querySelectorAll('button').forEach(function(b){b.classList.remove('on')});
+      ['pDate','pName','pPres','pObj','pVenue','pStart','pEnd'].forEach(function(id){$(id).value=''}); setPType(''); $('pMore').hidden=true; $('pType').querySelectorAll('button').forEach(function(b){b.classList.remove('on')});
       note($('pErr'),p.name+' registered ✓',0); done(); renderProg();
     }).catch(function(err){note($('pErr'),errText(err),1);done();loadProg()});
   });
@@ -2107,11 +2128,11 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   $('qType').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setQType(b.dataset.v)});
   $('qMode').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;qMode=b.dataset.v;$('qMode').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)})});
   slider($('qSave'),function(done,say){
-    var p={id:'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:$('qDate').value,name:$('qName').value.trim(),president:$('qPres').value.trim(),type:qType,mode:qMode,venue:$('qVenue').value.trim(),start:$('qStart').value,end:$('qEnd').value};
-    var miss=!p.date?'Choose the date.':p.name.length<2?'Enter the program name.':p.president.length<2?'Enter the name of the President.':!p.type?'Choose the type: Arts or Sports.':!p.mode?(p.type==='Arts'?'Choose Stage or Off stage.':'Choose Indoor or Outdoor.'):!p.venue?(p.type==='Arts'?'Enter the venue.':'Enter the place.'):!p.start||!p.end?'Enter the starting and ending time.':p.end<=p.start?'The ending time must be after the starting time.':'';
+    var p={id:'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:$('qDate').value,name:$('qName').value.trim(),president:$('qPres').value.trim(),objective:$('qObj').value.trim(),type:qType,mode:qMode,venue:$('qVenue').value.trim(),start:$('qStart').value,end:$('qEnd').value};
+    var miss=!p.date?'Choose the date.':p.name.length<2?'Enter the program name.':p.president.length<2?'Enter the name of the President.':p.objective.length<2?'Enter the objective of the program.':!p.type?'Choose the type: Arts or Sports.':!p.mode?(p.type==='Arts'?'Choose Stage or Off stage.':'Choose Indoor or Outdoor.'):!p.venue?(p.type==='Arts'?'Enter the venue.':'Enter the place.'):!p.start||!p.end?'Enter the starting and ending time.':p.end<=p.start?'The ending time must be after the starting time.':'';
     if(miss){note($('qErr'),miss,1);done();return}
     note($('qErr'),'',0); say('Saving…');
-    call({action:'sp.add',prog:p}).then(function(j){setSP(j.programs);['qDate','qName','qPres','qVenue','qStart','qEnd'].forEach(function(id){$(id).value=''});setQType('');$('qMore').hidden=true;$('qType').querySelectorAll('button').forEach(function(b){b.classList.remove('on')});note($('qErr'),p.name+' added ✓',0);done()})
+    call({action:'sp.add',prog:p}).then(function(j){setSP(j.programs);['qDate','qName','qPres','qObj','qVenue','qStart','qEnd'].forEach(function(id){$(id).value=''});setQType('');$('qMore').hidden=true;$('qType').querySelectorAll('button').forEach(function(b){b.classList.remove('on')});note($('qErr'),p.name+' added ✓',0);done()})
       .catch(function(err){note($('qErr'),errText(err),1);done()});
   });
   $('spAdmList').addEventListener('click',function(e){var b=e.target.closest('[data-sp]');if(!b)return;
@@ -2261,7 +2282,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   $('presOpenAdm').addEventListener('click',openPres);
   $('hkTest').addEventListener('click',function(){var b=this;b.disabled=true;$('hkOut').textContent='Checking… (up to 30 seconds)';
     call({action:'hk.test'}).then(function(j){b.disabled=false;
-      $('hkOut').textContent=j.result+(j.keyStart?'\nKey starts with: '+j.keyStart:'')+((j.tries||[]).length?'\n\n'+j.tries.map(function(t){return t.model+' → '+t.code+(t.code===200?' ✓':'')+(t.msg?' · '+t.msg:'')}).join('\n'):'')})
+      $('hkOut').textContent=(j.result===undefined?'The SADA code on Google is not the newest one. Paste the newest Code.gs, Save, then Deploy → Manage deployments → ✏️ → New version → Deploy.\n(reply: '+JSON.stringify(j).slice(0,200)+')':j.result)+(j.keyStart?'\nKey starts with: '+j.keyStart:'')+((j.tries||[]).length?'\n\n'+j.tries.map(function(t){return t.model+' → '+t.code+(t.code===200?' ✓':'')+(t.msg?' · '+t.msg:'')}).join('\n'):'')})
       .catch(function(err){b.disabled=false;$('hkOut').textContent='Could not run the check: '+errText(err)})});
 
   /* site lock type chips */

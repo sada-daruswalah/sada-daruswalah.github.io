@@ -670,7 +670,6 @@ function evalView(){
   const camIcon=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>`;
   return `<label for="eid" style="margin-top:6px">Student ID</label>
   <div class="scanrow"><div class="idbox${evalId?"":" none"}" id="eid">${evalId?esc(evalId):"Not scanned yet"}</div><button class="cam" id="camBtn" aria-label="Scan the student ID card">${camIcon}</button></div>
-  <button type="button" class="scanbig" id="camBig">${camIcon}<span>${evalStudent?"Scan another ID card":"Scan student ID card"}</span></button>
   <div class="err" id="iderr"></div>
   ${evalStudent?`<div class="formcard">
     <label for="fprog">Performed Program <span class="req">*</span></label>${sel("fprog",PROGRAMS)}
@@ -682,14 +681,14 @@ function evalView(){
     <div class="err" id="ferr"></div>
     <div class="sw sv" id="fsaveSw" role="group" aria-label="Slide right to save" style="margin-top:22px"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save"></div></div><button class="btn" id="fsave" style="display:none">Save</button>
     <div class="center"><button class="btn ghost" id="fcancel" style="padding:10px 26px">Cancel</button></div>
-  </div>`:`<div class="empty">Only the camera can choose a student: tap <b>Scan student ID card</b> and hold the card in the box.</div>`}`;
+  </div>`:`<div class="empty">Only the camera can choose a student: tap the <b>camera button</b> above and hold the ID card in the box.</div>`}`;
 }
 function setStudent(v){
   evalId=String(v||"").trim().toUpperCase();evalStudent=findStudent(evalId);render();
   if(!evalStudent&&evalId)$("#iderr").textContent="No student with this ID: "+evalId;
 }
 function bindEval(){
-  $("#camBtn").onclick=startScan;$("#camBig").onclick=startScan;
+  $("#camBtn").onclick=startScan;
   if(!evalStudent)return;
   $("#fcancel").onclick=()=>{evalId="";evalStudent=null;if(!backToMeet())render()};
   bindSaveSlide($("#fsaveSw"),$("#fsave"));
