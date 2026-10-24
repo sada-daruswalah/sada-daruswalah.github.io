@@ -31,7 +31,8 @@ html.sitelocked .hkw{display:none!important}
 html.sitelocked #lockScr{display:flex}
 #lockScr{position:fixed;inset:0;z-index:1000;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px 16px;text-align:center;
   background:radial-gradient(120% 80% at 50% 0%,#2a3d94 0%,#1f2f7a 40%,#0d1428 100%);color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-#lockScr .lkadm{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:16px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;
+#lockScr .lktop{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:16px;right:16px;display:flex;flex-wrap:wrap;gap:8px}
+#lockScr .lkadm{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;
   font:600 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif;padding:10px 14px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 #lockScr .lkadm:hover{background:rgba(255,255,255,.16)}
 #lockScr .lkadm:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
@@ -43,7 +44,7 @@ html.sitelocked #lockScr{display:flex}
 #lockScr small{margin-top:18px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
 </style>
 <div id="lockScr" role="alert" aria-live="polite">
-  <a class="lkadm" id="lkAdm" href="index.html#admin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Admin login</a>
+  <div class="lktop" id="lkTop"><a class="lkadm" id="lkAdm" href="index.html#admin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Admin login</a></div>
   <div class="lkic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd166" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.6" fill="#ffd166"/><path d="M12 17v2"/></svg></div>
   <h1>Site locked</h1>
   <p>The SADA website is closed for a while by the admin. Please check back later.</p>
@@ -52,12 +53,16 @@ html.sitelocked #lockScr{display:flex}
 <script>
 (function(){
   var API='https://script.google.com/macros/s/AKfycby3WzCd27PRGqyH_v8l05cvq-7ZhP08n1CekzDU1gX66VEbHLUqallLhpudfSv_bkWE0A/exec';
-  var on=false; try{on=localStorage.getItem('sada_lock')==='1'}catch(e){}
-  function isAdmin(){try{var c=JSON.parse(sessionStorage.getItem('sada_cred')||'null');return !!(c&&c.me&&c.me.type==='admin')}catch(e){return false}}
-  function paint(){document.documentElement.classList.toggle('sitelocked',on&&!isAdmin())}
-  window.sadaLock=function(v){if(typeof v==='boolean'){on=v;try{localStorage.setItem('sada_lock',v?'1':'0')}catch(e){}}paint();return on};
+  var NAMES={library:'Librarian',staff:'Staff',sada:'SADA',student:'Student'}, HREF='index.html#admin'.replace('#admin','');
+  var st={on:false,open:[]}; try{var raw=localStorage.getItem('sada_lock');st=raw==='1'?{on:true,open:[]}:raw==='0'?st:Object.assign(st,JSON.parse(raw||'{}'))}catch(e){}
+  function who(){try{var c=JSON.parse(sessionStorage.getItem('sada_cred')||'null');return c&&c.me?c.me.type:''}catch(e){return ''}}
+  function paint(){var t=who();document.documentElement.classList.toggle('sitelocked',st.on&&t!=='admin'&&st.open.indexOf(t)<0);
+    var top=document.getElementById('lkTop');[].slice.call(top.querySelectorAll('.lkrole')).forEach(function(x){x.remove()});
+    st.open.forEach(function(k){if(!NAMES[k])return;var a=document.createElement('a');a.className='lkadm lkrole';a.href=HREF+'#login-'+k;a.textContent=NAMES[k];
+      a.addEventListener('click',function(e){if(typeof window.SADA_ROLE_LOGIN==='function'){e.preventDefault();window.SADA_ROLE_LOGIN(k)}});top.appendChild(a)})}
+  window.sadaLock=function(v,open){if(typeof v==='boolean'){st.on=v;if(Array.isArray(open))st.open=open.filter(function(k){return NAMES[k]});try{localStorage.setItem('sada_lock',JSON.stringify(st))}catch(e){}}paint();return st.on};
   paint();
-  fetch(API+'?lock=1').then(function(r){return r.json()}).then(function(j){if(j&&j.ok)window.sadaLock(!!j.locked)}).catch(function(){});
+  fetch(API+'?lock=1').then(function(r){return r.json()}).then(function(j){if(j&&j.ok)window.sadaLock(!!j.locked,j.open||[])}).catch(function(){});
   document.getElementById('lkAdm').addEventListener('click',function(e){if(typeof window.SADA_ADMIN_LOGIN==='function'){e.preventDefault();window.SADA_ADMIN_LOGIN()}});
 })();
 </script>
@@ -219,7 +224,7 @@ html.sitelocked #lockScr{display:flex}
     return h;
   }
 
-  /* ---- PDF of the programme sheets ---- */
+  /* ---- PDF of the program sheets ---- */
   var jsPdfP=null;
   function loadJsPdf(){
     if(window.jspdf) return Promise.resolve(window.jspdf);
@@ -341,27 +346,27 @@ html.sitelocked #lockScr{display:flex}
   }
   function answer(raw){
     var tmm=raw.match(/talents?\s*meet\s*@\s*(\d{1,3})/i);
-    if(tmm&&+tmm[1]>0) return TM_ON?tmSchedule(+tmm[1]):'The weekly programme list is available on the '+link(TM,'Talents Meet')+' website. Ask Hikma there.';
+    if(tmm&&+tmm[1]>0) return TM_ON?tmSchedule(+tmm[1]):'The weekly program list is available on the '+link(TM,'Talents Meet')+' website. Ask Hikma there.';
     var q=' '+raw.toLowerCase().trim()+' ';
     if(has(q,[' hi ',' hello',' hai ',' salam','assalam','salaam',' hey '])) return 'Wa alaikum assalam! 😊 I am <b>Hikma</b>, the SADA assistant. Ask me about SADA, our Chairman, goals, wings, students, Talents Meet or the library.';
     if(has(q,['thank','thanks','nanni','jazak'])) return 'You are welcome! Ask me anything else about SADA. 😊';
     if(has(q,['chairman','president','leader','naeem','naim','head of sada'])) return 'The Chairman of SADA is <b>Muhammad Naeem</b>. His message to students: learn with sincerity, live with discipline and serve with a smile. He invites every student to take part, stay active and make SADA proud.';
     if(has(q,['full form','stand for','stands for','meaning of sada','what is sada','about sada','sada enthan','sada entha',' sada?'])) return '<b>SADA</b> stands for <b>Students Association of Daruswalah Academy</b>. It is the official student body of the Academy and brings every student together to learn, lead and serve, guided by faith, knowledge and good character.';
     if(has(q,['vision'])) return '<b>Our Vision:</b> to raise a generation of students who are rooted in faith, rich in knowledge, disciplined in conduct and ready to serve society with sincerity.';
-    if(has(q,['mission'])) return '<b>Our Mission:</b> to nurture leadership, creativity and responsibility in every student through organised programmes, a culture of reading, and a spirit of unity and service.';
-    if(has(q,['goal','aim','objective','lakshyam'])) return '<b>Vision:</b> students rooted in faith, rich in knowledge, disciplined and ready to serve.<br><b>Mission:</b> nurture leadership, creativity and responsibility through programmes, reading and unity.';
+    if(has(q,['mission'])) return '<b>Our Mission:</b> to nurture leadership, creativity and responsibility in every student through organised programs, a culture of reading, and a spirit of unity and service.';
+    if(has(q,['goal','aim','objective','lakshyam'])) return '<b>Vision:</b> students rooted in faith, rich in knowledge, disciplined and ready to serve.<br><b>Mission:</b> nurture leadership, creativity and responsibility through programs, reading and unity.';
     if(has(q,['value','principle'])) return 'SADA\'s core values are <b>Faith, Knowledge, Discipline, Unity, Leadership, Service, Respect</b> and <b>Excellence</b>.';
     if(has(q,['pledge','motto','slogan'])) return 'Our motto is <b>Knowledge · Discipline · Service</b>.<br>The SADA Pledge: <i>"Together we learn, together we lead, and together we serve."</i>';
-    if(has(q,['wing','department','activit','work','programme','program ','what does sada do'])) return 'SADA works through six wings:<ul><li><b>Academic</b> – study circles, quizzes, revision</li><li><b>Literary &amp; Arts</b> – speeches, essays, poetry, calligraphy</li><li><b>Spiritual</b> – prayers, dhikr, moral classes</li><li><b>Library &amp; Reading</b> – Digital Library, reading campaigns</li><li><b>Discipline &amp; Assembly</b> – morning assembly</li><li><b>Sports &amp; Welfare</b> – games and student wellbeing</li></ul>';
+    if(has(q,['wing','department','activit','work','program','program ','what does sada do'])) return 'SADA works through six wings:<ul><li><b>Academic</b> – study circles, quizzes, revision</li><li><b>Literary &amp; Arts</b> – speeches, essays, poetry, calligraphy</li><li><b>Spiritual</b> – prayers, dhikr, moral classes</li><li><b>Library &amp; Reading</b> – Digital Library, reading campaigns</li><li><b>Discipline &amp; Assembly</b> – morning assembly</li><li><b>Sports &amp; Welfare</b> – games and student wellbeing</li></ul>';
     if(has(q,['ithihad','ittihad','ithihad'])) return '<b>ITHIHAD</b> is one of SADA\'s class unions. It has no website yet.';
     if(has(q,['irthiva','irtiqa','irthiqa'])) return '<b>IRTHIVA</b> is one of SADA\'s class unions. '+link('https://irthiva.my.canva.site/','Visit IRTHIVA');
     if(has(q,['intilaq','inthilaq','intilak'])) return '<b>INTILAQ</b> is one of SADA\'s class unions. Its motto: <i>New Beginnings, Limitless Possibilities</i>. '+link('https://sites.google.com/view/inthilaq/home','Visit INTILAQ');
     if(has(q,['union'])) return 'SADA has three class unions:<ul><li><b>ITHIHAD</b> – no website yet</li><li><b>IRTHIVA</b> – '+link('https://irthiva.my.canva.site/','website')+'</li><li><b>INTILAQ</b> – '+link('https://sites.google.com/view/inthilaq/home','website')+'</li></ul>You can also find them on the SADA website under <b>OTHER</b>.';
-    if(has(q,['finance','fee','money','account','fund','panam','cash'])) return 'Ha! The <b>FINANCE</b> button on the website is shy and runs away when you touch it 😄 Finance records are not public yet.';
+    if(has(q,['finance','fee','money','account','fund','panam','cash'])) return 'A new section is coming soon in the empty place of the bottom bar 😊 Finance records are private and kept by the Treasurer.';
     if(has(q,['password','username','login','log in','sign in'])) return 'Login details are given only to SADA admins and office bearers. Please ask the Chairman or the Academy office.';
     if(has(q,['add student','register','join','admission','new member','enroll','enrol'])) return 'Admins add students on the SADA website: tap <b>OTHER → Special Entries → Admin</b> and log in. There you can also View, Edit and Delete students. '+link(SITE,'Open SADA website');
-    if(TM_ON&&has(q,['schedule','duty','who is presenting','programme list','program list'])) return 'Type <b>Talents meet@</b> with the meet number to see who presents what. For example: <b>Talents meet@1</b>';
-    if(has(q,['talent','evaluat','result','mark','score','valuation'])) return '<b>Talents Meet</b> is where staff evaluate student programmes (Qira\'th, speeches, songs and more) and students check their results. '+link(TM,'Open Talents Meet');
+    if(TM_ON&&has(q,['schedule','duty','who is presenting','program list','program list'])) return 'Type <b>Talents meet@</b> with the meet number to see who presents what. For example: <b>Talents meet@1</b>';
+    if(has(q,['talent','evaluat','result','mark','score','valuation'])) return '<b>Talents Meet</b> is where staff evaluate student programs (Qira\'th, speeches, songs and more) and students check their results. '+link(TM,'Open Talents Meet');
     if(has(q,['library','book','read'])) return 'The <b>Daruswalah Digital Library</b> lets students see their book history, and librarians issue and return books by scanning barcodes. '+link(LIB,'Open Digital Library');
     if(has(q,['website','link','site','url','portal'])) return 'The official SADA website is '+link(SITE,'sada-daruswalah.github.io')+'.';
     if(has(q,['academy','daruswalah','daru swalah','darussalam'])) return 'SADA is the students\' association of <b>Daruswalah Academy</b>. Every student of the Academy is a member of SADA.';
@@ -374,7 +379,7 @@ html.sitelocked #lockScr{display:flex}
     add(e(text),'me'); inp.value=''; busy=true;
     var w=add('<span class="hkdots"><i></i><i></i><i></i></span>','ai');
     var local=/talents?\s*meet\s*@\s*\d/i.test(text);
-    var done=function(html,raw){w.innerHTML=html;HIST.push({who:'me',text:text});HIST.push({who:'ai',text:raw||w.textContent});chat.scrollTop=chat.scrollHeight;busy=false};
+    var done=function(html,raw){w.innerHTML=html;HIST.push({who:'me',text:text});HIST.push({who:'ai',text:raw||w.textContent});HIST=HIST.slice(-30);try{localStorage.setItem('hk_hist',JSON.stringify(HIST))}catch(x){}chat.scrollTop=chat.scrollHeight;busy=false};
     var why=function(err){if(!err)return '';var m=String(err.message||err);var s=/NO_KEY/.test(m)?'AI key is not set yet':/BUSY/.test(m)?'AI is busy, try again in a minute':/AI_FAILED/.test(m)?'Gemini did not answer — check the key':/Wrong username|Unknown action|Bad request/.test(m)?'SADA code is not updated yet (Deploy → New version)':'could not reach the AI';return '<div class="hkwhy">('+s+')</div>'};
     var fallback=function(err){return Promise.resolve().then(function(){return answer(text)}).then(function(r){done(r+why(err))})
       .catch(function(){w.innerHTML='Sorry, I could not reach the internet just now. Please try again. 🙏';busy=false})};
@@ -382,6 +387,8 @@ html.sitelocked #lockScr{display:flex}
     aiAnswer(text).then(function(t){done(md(t),t)}).catch(fallback);
   }
   var CHIPS=TM_ON?['Talents meet@1','How do I evaluate?','Tell me a joke 😄','Who is the chairman?']:pageName()==='library'?['Which books are available?','Who has books now?','Tell me a joke 😄','What is SADA?']:['What is SADA?','How many students?','Tell me a joke 😄','How do I use this site?'];
+  /* one Hikma on every page: the chat continues when you move between SADA, Talents Meet and the Library */
+  try{var H0=JSON.parse(localStorage.getItem('hk_hist')||'[]');if(Array.isArray(H0)&&H0.length){HIST=H0.slice(-30);HIST.slice(-12).forEach(function(m){add(m.who==='me'?e(m.text):md(m.text),m.who==='me'?'me':'ai')})}}catch(x){}
   g('hkChips').innerHTML=CHIPS.map(function(c){return '<button type="button">'+c+'</button>'}).join('');
   chat.addEventListener('click',function(ev){
     var b=ev.target.closest('.tmdl'); if(!b||b.disabled) return;
