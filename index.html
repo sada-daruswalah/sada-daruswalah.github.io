@@ -360,6 +360,7 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .sw.sv.red .swk{background:linear-gradient(135deg,#b3261e,#ef5350);box-shadow:0 6px 16px rgba(179,38,30,.35)}
 .lkst{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;margin:6px 0 4px;font-weight:700;font-size:16px}
 .lkst svg{width:34px;height:34px;flex:none}
+.arow .cardt{color:var(--teal)}.arow .nocard{color:#b3261e;font-style:normal}
 .lkst.is-on{background:#fdecea;color:#8c1d18}.lkst.is-off{background:#e6f6ee;color:#0b6b41}
 footer{background:var(--navy);color:var(--bg);padding-block:36px}
 footer .in{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center}
@@ -929,7 +930,8 @@ html.sitelocked #lockScr{display:flex}
     <div id="adminList" class="card admin" hidden>
       <div class="vhead">
         <div><h3>Student list</h3><p class="note" id="acount"></p></div>
-        <div class="row"><button type="button" class="btn small solid" id="newBtn">+ Add new student</button></div>
+        <div class="row"><button type="button" class="btn small solid" id="newBtn">+ Add new student</button><button type="button" class="btn small" id="linkBtn">Link ID cards automatically</button></div>
+        <p class="note" id="linkOut" style="white-space:pre-line" hidden></p>
       </div>
       <label class="sr" for="aq">Search students</label>
       <input id="aq" type="search" placeholder="Search name, class, SNEC UID or roll no" autocomplete="off">
@@ -957,7 +959,8 @@ html.sitelocked #lockScr{display:flex}
         <div class="f"><label for="fPhone">Phone number *</label><input id="fPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digits" autocomplete="off"></div>
         <div class="f combo"><label for="fOwner">Owner of number *</label><input id="fOwner" placeholder="Type or choose" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="fOwnerList"><ul id="fOwnerList" class="dd" role="listbox" hidden></ul></div>
         <div class="f combo"><label for="fMobile">Mobile *</label><input id="fMobile" placeholder="Type or choose" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="fMobileList"><ul id="fMobileList" class="dd" role="listbox" hidden></ul></div>
-        <div class="f"><label for="fCard">ID card number <small>(barcode, e.g. 16)</small></label><input id="fCard" inputmode="numeric" placeholder="SSAODIAUACOB00__" autocomplete="off"></div>
+        <div class="f"><label for="fCard">ID card number <small>(e.g. SSI016 or just 16)</small></label><input id="fCard" placeholder="SSI___" autocomplete="off" autocapitalize="characters"></div>
+        <div class="f"><label for="fShort">Short name <small>(shown in Talents Meet and the Library)</small></label><input id="fShort" placeholder="Filled from the ID card list if empty" autocomplete="off" autocapitalize="characters"></div>
         <div class="f"><label for="fFather">Name of father *</label><input id="fFather" autocomplete="off"></div>
         <div class="f"><label for="fDob">Date of birth *</label><input id="fDob" type="date"></div>
         
@@ -1590,11 +1593,16 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     $('acount').textContent=rows.length+' student'+(rows.length===1?'':'s')+' in the register';
     $('alist').innerHTML=list.length?list.map(function(r){
       return '<div class="arow"><div class="av">'+esc(initials(r.name))+'</div>'+
-        '<div class="who"><b>'+esc(r.name)+''+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+'</span></div>'+
+        '<div class="who"><b>'+esc(r.name)+''+'</b><span>'+esc(r.cls||'—')+' · Roll '+(esc(r.roll)||'—')+' · UID '+(esc(r.uid)||'—')+(r.card?' · <b class="cardt">'+esc(cardNo(r.card)||r.card)+'</b>':' · <i class="nocard">no ID card</i>')+'</span></div>'+
         '<div class="acts"><button type="button" data-act="view" data-id="'+esc(r.uid)+'">View</button></div></div>';
     }).join(''):'<div class="emptyl">'+(rows.length?'No student matches your search.':'No students yet. Tap <b>+ Add new student</b> to enter the first one.')+'</div>';
   }
   $('aq').addEventListener('input',renderAdmin);
+  $('linkBtn').addEventListener('click',function(){var b=this;b.disabled=true;b.textContent='Linking…';$('linkOut').hidden=false;$('linkOut').textContent='Matching the names in the register with the ID card list…';
+    call({action:'ids.link'}).then(function(j){b.disabled=false;b.textContent='Link ID cards automatically';
+      $('linkOut').textContent='Linked now: '+j.linked.length+(j.linked.length?'\n'+j.linked.map(function(x){return x.id+' → '+x.full+' ('+x.short+')'}).join('\n'):'')+
+        (j.left.length?'\n\nNot linked ('+j.left.length+'), please use View → Edit and type the ID card number:\n'+j.left.join('\n'):'\n\nAll ID cards are linked ✓');loadAdmin()})
+      .catch(function(err){b.disabled=false;b.textContent='Link ID cards automatically';$('linkOut').textContent=errText(err)})});
   function openAdmin(){show('admin');setATab('students');loadAdmin()}
 
   function getPhoto(uid){
@@ -1612,7 +1620,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     getPhoto(r.uid).then(function(p){if(viewing===r.uid&&p)$('vPic').innerHTML='<img alt="Photo of '+esc(r.name)+'" src="'+esc(p)+'">'}).catch(function(){});
     $('vName').textContent=r.name||'';
     $('vSub').textContent=(r.cls||'')+' · Roll '+(r.roll||'—');
-    $('vGrid').innerHTML=[['Class',r.cls],['SNEC UID',r.uid],['Roll no',r.roll],['ID card',r.card],['Phone number',r.phone],['Owner of number',r.owner],['Mobile',r.mobile],
+    $('vGrid').innerHTML=[['Class',r.cls],['SNEC UID',r.uid],['Roll no',r.roll],['ID card',r.card],['Short name',r.short||(SSI[cardNo(r.card)]||[])[1]||''],['Phone number',r.phone],['Owner of number',r.owner],['Mobile',r.mobile],
       ['Name of father',r.father],['Date of birth',fmtDob(r.dob)],['District',r.dist],['Constituency',r.lac]]
       .map(function(p){return '<div><span>'+p[0]+'</span>'+(esc(p[1])||'—')+'</div>'}).join('');
     $('viewBox').hidden=false; $('vClose').focus();
@@ -1658,7 +1666,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   /* form */
   var editingId=null;
-  var FIELDS={fClass:'cls',fName:'name',fUid:'uid',fRoll:'roll',fCard:'card',fPhone:'phone',fOwner:'owner',fMobile:'mobile',fFather:'father',fDob:'dob',fDist:'dist',fLac:'lac'};
+  var FIELDS={fClass:'cls',fName:'name',fUid:'uid',fRoll:'roll',fCard:'card',fShort:'short',fPhone:'phone',fOwner:'owner',fMobile:'mobile',fFather:'father',fDob:'dob',fDist:'dist',fLac:'lac'};
   function openForm(r){
     editingId=r?r.uid:null;
     var keepClass=$('fClass').value;
@@ -1699,7 +1707,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var m=$('msg'); m.classList.remove('err');
     var v=function(id){return $(id).value.trim()};
     var rec={cls:v('fClass').toUpperCase(),name:v('fName').toUpperCase(),snecUid:v('fUid'),rollNo:v('fRoll'),phone:v('fPhone'),phoneOwner:v('fOwner').toUpperCase(),mobile:v('fMobile').toUpperCase(),
-      father:v('fFather').toUpperCase(),constituency:v('fLac'),dob:v('fDob'),district:v('fDist'),card:cardNo(v('fCard'))};
+      father:v('fFather').toUpperCase(),constituency:v('fLac'),dob:v('fDob'),district:v('fDist'),card:cardNo(v('fCard')),short:v('fShort').toUpperCase()};
     var need=[['fClass','class'],['fName','name of student'],['fUid','SNEC UID'],['fRoll','roll no'],['fPhone','phone number'],['fOwner','owner of number'],
       ['fMobile','mobile'],['fFather','name of father'],['fDob','date of birth'],['fDist','district'],['fLac','constituency']];
     var miss=[];
@@ -1724,13 +1732,16 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     obAdd({action:'save',student:rec,oldUid:was||''},rec.name);
     if(was){ m.textContent=''; closeForm(); return; }
     m.textContent=rec.name+' saved ✓';
-    ['fName','fUid','fRoll','fPhone','fOwner','fMobile','fFather','fLac','fDob','fDist','fCard'].forEach(function(id){$(id).value=''});
+    ['fName','fUid','fRoll','fPhone','fOwner','fMobile','fFather','fLac','fDob','fDist','fCard','fShort'].forEach(function(id){$(id).value=''});
     photo='';photoChanged=false;$('phPrev').innerHTML=phEmpty;$('picClear').hidden=true;$('fName').focus();
   });
 
   /* ---------- helpers for instant saving (outbox) ---------- */
-  function cardNo(v){v=String(v||'').trim().toUpperCase();var m=v.match(/(\d{1,4})$/);return m?'SSAODIAUACOB'+('0000'+parseInt(m[1],10)).slice(-4):''}
-  function rowOf(s){return {card:s.card,uid:s.snecUid,cls:s.cls,name:s.name,roll:s.rollNo,phone:s.phone,owner:s.phoneOwner,mobile:s.mobile,father:s.father,dob:s.dob,dist:s.district,lac:s.constituency,pending:true}}
+  var SSI={"SSI001":[1,"IBRAHEEM.A"],"SSI002":[2,"MUHAMMED NAEEM"],"SSI003":[3,"ADIL ROSHAN"],"SSI004":[4,"MUHAMMED BISHR K K"],"SSI005":[5,"MUHAMMED SHAMMAS"],"SSI006":[6,"MOHAMMED MINHAJ KP"],"SSI007":[7,"MUHAMMED FARHAN P"],"SSI008":[8,"MUHAMMED SHAFI"],"SSI009":[9,"NAJIH ABDULLAH"],"SSI010":[10,"MUHUMMED SAHAL P V"],"SSI011":[11,"AL AMEEN P K"],"SSI012":[12,"SHAHDAN AHMAD V P"],"SSI013":[13,"HADHI AMAN T P"],"SSI014":[14,"MUHAMMED SINAN P KSR"],"SSI015":[15,"MUHAMMED SINAN P KLR"],"SSI016":[16,"ASJAD FARHAN"],"SSI017":[17,"MUHAMMED RIDVAN K"],"SSI018":[18,"MUHAMMAD AYMAN"],"SSI019":[23,"ADNAN K"],"SSI020":[25,"AMJAD A C"],"SSI021":[20,"MUHAMMED C K"],"SSI022":[29,"MUHAMMED JINSHAD A"],"SSI023":[27,"MUHAMMED P"],"SSI024":[30,"MUHAMMED AMEEN N"],"SSI025":[35,"MUHAMMED ANAS K"],"SSI026":[28,"MUHAMMED HASAN SALIH"],"SSI027":[21,"MUHAMMED JUNAID K P"],"SSI028":[19,"MUHAMMED NADHISH P"],"SSI029":[31,"MUHAMMED NAFIH V"],"SSI030":[26,"MUHAMMED RAMZAN"],"SSI031":[33,"MUHAMMED SHAHIN"],"SSI032":[22,"MUHAMMED SINAN P C"],"SSI033":[24,"MUHAMMED SINAN P K"],"SSI034":[32,"MUHAMMED SUHAIL P"],"SSI035":[34,"MUHAMMAD RISAL N"]};
+  function cardNo(v){v=String(v||'').trim().toUpperCase().replace(/\s+/g,'');var m=v.match(/^SSAODIAUACOB0*(\d{1,4})$/);
+    if(m){var n=parseInt(m[1],10);for(var k in SSI)if(SSI[k][0]===n)return k;return ''}
+    m=v.match(/^(?:SSI)?0*(\d{1,3})$/);return m&&+m[1]>0?'SSI'+('000'+parseInt(m[1],10)).slice(-3):''}
+  function rowOf(s){return {card:s.card,short:s.short,uid:s.snecUid,cls:s.cls,name:s.name,roll:s.rollNo,phone:s.phone,owner:s.phoneOwner,mobile:s.mobile,father:s.father,dob:s.dob,dist:s.district,lac:s.constituency,pending:true}}
   var OB='sada_outbox', obBusy=false, obTimer=null;
   function obLoad(){try{return JSON.parse(localStorage.getItem(OB)||'[]')}catch(e){return []}}
   function obSave(l){try{localStorage.setItem(OB,JSON.stringify(l));return true}catch(e){return false}}
