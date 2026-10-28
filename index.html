@@ -960,7 +960,7 @@ html.sitelocked #lockScr{display:flex}
         <div class="f combo"><label for="fOwner">Owner of number *</label><input id="fOwner" placeholder="Type or choose" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="fOwnerList"><ul id="fOwnerList" class="dd" role="listbox" hidden></ul></div>
         <div class="f combo"><label for="fMobile">Mobile *</label><input id="fMobile" placeholder="Type or choose" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="fMobileList"><ul id="fMobileList" class="dd" role="listbox" hidden></ul></div>
         <div class="f"><label for="fCard">ID card number <small>(e.g. SSI016 or just 16)</small></label><input id="fCard" placeholder="SSI___" autocomplete="off" autocapitalize="characters"></div>
-        <div class="f"><label for="fShort">Short name <small>(shown in Talents Meet and the Library)</small></label><input id="fShort" placeholder="Filled from the ID card list if empty" autocomplete="off" autocapitalize="characters"></div>
+        
         <div class="f"><label for="fFather">Name of father *</label><input id="fFather" autocomplete="off"></div>
         <div class="f"><label for="fDob">Date of birth *</label><input id="fDob" type="date"></div>
         
@@ -1620,7 +1620,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     getPhoto(r.uid).then(function(p){if(viewing===r.uid&&p)$('vPic').innerHTML='<img alt="Photo of '+esc(r.name)+'" src="'+esc(p)+'">'}).catch(function(){});
     $('vName').textContent=r.name||'';
     $('vSub').textContent=(r.cls||'')+' · Roll '+(r.roll||'—');
-    $('vGrid').innerHTML=[['Class',r.cls],['SNEC UID',r.uid],['Roll no',r.roll],['ID card',r.card],['Short name',r.short||(SSI[cardNo(r.card)]||[])[1]||''],['Phone number',r.phone],['Owner of number',r.owner],['Mobile',r.mobile],
+    $('vGrid').innerHTML=[['Class',r.cls],['SNEC UID',r.uid],['Roll no',r.roll],['ID card',r.card],['Phone number',r.phone],['Owner of number',r.owner],['Mobile',r.mobile],
       ['Name of father',r.father],['Date of birth',fmtDob(r.dob)],['District',r.dist],['Constituency',r.lac]]
       .map(function(p){return '<div><span>'+p[0]+'</span>'+(esc(p[1])||'—')+'</div>'}).join('');
     $('viewBox').hidden=false; $('vClose').focus();
@@ -1666,7 +1666,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
 
   /* form */
   var editingId=null;
-  var FIELDS={fClass:'cls',fName:'name',fUid:'uid',fRoll:'roll',fCard:'card',fShort:'short',fPhone:'phone',fOwner:'owner',fMobile:'mobile',fFather:'father',fDob:'dob',fDist:'dist',fLac:'lac'};
+  var FIELDS={fClass:'cls',fName:'name',fUid:'uid',fRoll:'roll',fCard:'card',fPhone:'phone',fOwner:'owner',fMobile:'mobile',fFather:'father',fDob:'dob',fDist:'dist',fLac:'lac'};
   function openForm(r){
     editingId=r?r.uid:null;
     var keepClass=$('fClass').value;
@@ -1707,7 +1707,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var m=$('msg'); m.classList.remove('err');
     var v=function(id){return $(id).value.trim()};
     var rec={cls:v('fClass').toUpperCase(),name:v('fName').toUpperCase(),snecUid:v('fUid'),rollNo:v('fRoll'),phone:v('fPhone'),phoneOwner:v('fOwner').toUpperCase(),mobile:v('fMobile').toUpperCase(),
-      father:v('fFather').toUpperCase(),constituency:v('fLac'),dob:v('fDob'),district:v('fDist'),card:cardNo(v('fCard')),short:v('fShort').toUpperCase()};
+      father:v('fFather').toUpperCase(),constituency:v('fLac'),dob:v('fDob'),district:v('fDist'),card:cardNo(v('fCard'))};
     var need=[['fClass','class'],['fName','name of student'],['fUid','SNEC UID'],['fRoll','roll no'],['fPhone','phone number'],['fOwner','owner of number'],
       ['fMobile','mobile'],['fFather','name of father'],['fDob','date of birth'],['fDist','district'],['fLac','constituency']];
     var miss=[];
@@ -1732,7 +1732,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     obAdd({action:'save',student:rec,oldUid:was||''},rec.name);
     if(was){ m.textContent=''; closeForm(); return; }
     m.textContent=rec.name+' saved ✓';
-    ['fName','fUid','fRoll','fPhone','fOwner','fMobile','fFather','fLac','fDob','fDist','fCard','fShort'].forEach(function(id){$(id).value=''});
+    ['fName','fUid','fRoll','fPhone','fOwner','fMobile','fFather','fLac','fDob','fDist','fCard'].forEach(function(id){$(id).value=''});
     photo='';photoChanged=false;$('phPrev').innerHTML=phEmpty;$('picClear').hidden=true;$('fName').focus();
   });
 

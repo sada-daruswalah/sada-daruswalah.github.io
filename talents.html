@@ -662,10 +662,11 @@ function bindMeet(){
 function backToMeet(){if(!fromMeet)return false;fromMeet=null;tab="meet";document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x.dataset.t==="meet"));render();return true;}
 
 function sel(id,arr){return `<select id="${id}"><option value="">Select</option>${arr.map(v=>`<option>${esc(v)}</option>`).join("")}</select>`}
-function findStudent(v){v=String(v||"").trim().toUpperCase();if(!v)return null;
-  const ex=STUDENTS.find(s=>s.id===v);if(ex)return ex;
-  const m=v.match(/^[A-Z]{6,}(\d{5,})$/);if(!m)return null;
-  const n=parseInt(m[1],10);return STUDENTS.find(s=>parseInt(s.id.replace(/\D/g,""),10)===n)||null}
+function findStudent(v){v=String(v||"").trim().toUpperCase().replace(/\s+/g,"");if(!v)return null;
+  const ex=STUDENTS.find(s=>s.id===v||s.old===v);if(ex)return ex;
+  let m=v.match(/^SSI0*(\d{1,3})$/);if(m){const id="SSI"+("000"+parseInt(m[1],10)).slice(-3);return STUDENTS.find(s=>s.id===id)||null}
+  m=v.match(/^SSAODIAUACOB0*(\d{1,4})$/);if(m){const o="SSAODIAUACOB"+("0000"+parseInt(m[1],10)).slice(-4);return STUDENTS.find(s=>s.old===o)||null}
+  return null}
 function evalView(){
   const camIcon=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>`;
   return `<label for="eid" style="margin-top:6px">Student ID</label>
