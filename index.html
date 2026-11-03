@@ -411,7 +411,13 @@ footer small{opacity:.8;font-size:.85rem}
 .pcard dt{color:var(--muted);font-weight:700}
 .pcard dd{margin:0;color:var(--ink)}
 .tag{flex:none;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;white-space:nowrap}
-.bcopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bcopts button{all:unset;cursor:pointer;text-align:center;font-weight:700;font-size:.82rem;line-height:1.3;padding:11px 8px;border-radius:12px;border:1.5px solid var(--line);color:var(--navy);background:var(--surface)}.bcopts button.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}.bcopts button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.bcopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hist{display:flex;flex-direction:column;gap:10px;margin-top:8px}.hrow{display:grid;grid-template-columns:minmax(90px,38%) 1fr 48px;align-items:center;gap:10px;font-size:.88rem}.hrow b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hbar{height:16px;border-radius:8px;background:var(--band);overflow:hidden}.hbar i{display:block;height:100%;border-radius:8px;background:var(--teal)}.hrow span{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy)}
+.atstu{margin-top:12px;display:flex;flex-direction:column;gap:6px}.astu{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.astu small{color:var(--muted);font-size:.76rem}.astu .pc{grid-row:span 2;align-self:center;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.atl{display:flex;flex-direction:column;gap:6px;margin-top:12px}.atl button{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}.atl button .ck{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;flex:none;font-weight:800;color:#fff}.atl button.on{border-color:var(--teal);background:color-mix(in srgb,var(--teal) 10%,var(--surface))}.atl button.on .ck{background:var(--teal);border-color:var(--teal)}.atl button small{display:block;color:var(--muted);font-size:.76rem}.atl button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.atcount{display:flex;gap:10px;margin:12px 0}.atcount div{flex:1;text-align:center;padding:10px;border-radius:12px;background:var(--band)}.atcount b{display:block;font-size:1.5rem;color:var(--navy);font-variant-numeric:tabular-nums}.atcount span{font-size:.75rem;color:var(--muted)}
+.scanbig{width:100%;justify-content:center;gap:10px;padding:14px!important;font-size:1rem!important}
+#atScan{position:fixed;inset:0;background:#000;z-index:60;display:none;flex-direction:column}#atScan.on{display:flex}#atScan video{flex:1;width:100%;object-fit:cover;min-height:0}#atScan .frame{position:absolute;left:10%;right:10%;top:32%;height:22%;border:3px solid #5fd1c9;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.45);pointer-events:none}#atScan .sbar{display:flex;align-items:center;gap:10px;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#111;color:#fff}#atScan .sbar div{flex:1;font-size:.95rem}#atScan .sbar button{all:unset;cursor:pointer;padding:9px 16px;border:1px solid #888;border-radius:999px;color:#fff;font-weight:700}#atScan .flash{position:absolute;left:50%;top:14%;transform:translateX(-50%);background:#0b6b41;color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .2s;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}#atScan .flash.show{opacity:1}#atScan .flash.bad{background:#a12a2a}.bcopts button{all:unset;cursor:pointer;text-align:center;font-weight:700;font-size:.82rem;line-height:1.3;padding:11px 8px;border-radius:12px;border:1.5px solid var(--line);color:var(--navy);background:var(--surface)}.bcopts button.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}.bcopts button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
 .acard .alogo{width:36px;height:36px;border-radius:8px;object-fit:cover;vertical-align:middle;margin-right:8px;background:#000}
 .ulogo-f{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.ulogo-f img{width:56px;height:56px;border-radius:12px;object-fit:cover;background:#000}
 .bcrule{margin:8px 0 0;padding-left:20px;color:var(--muted);font-size:.9rem;line-height:1.55}.bcrule li{margin:4px 0}.bcrule b{color:var(--ink,inherit)}
@@ -848,7 +854,8 @@ html.sitelocked #lockScr{display:flex}
       <p class="note">Each program: your mark out of 5. Tap a number. You can change it later.</p>
       <div class="plist2" id="sProgList"></div>
     </div>
-    <div class="card" id="meBest" hidden><h3>Best Class</h3><p class="note">Best class and best class union for this month, semester and year.</p><button type="button" class="btn solid" id="meBestOpen">Open Best Class</button></div>
+    <div class="card" id="meAtt" hidden><h3>Program attendance</h3><p class="note">Choose a program, then scan the ID cards. Each scan saves at once.</p><div class="plist2" id="meAttList"></div></div>
+    <div class="card" id="meBest" hidden><h3>Best Class</h3><p class="note">Best Class and Best Union: current and permanent points.</p><button type="button" class="btn solid" id="meBestOpen">Open Best Class</button></div>
     <div class="card" id="meBU" hidden><h3>Best Unions</h3><p class="note">Union points: most points on top.</p><div class="board" id="muBoard"></div><div id="muHost"></div></div>
     <div class="card form" id="meBC" hidden>
       <div class="vhead"><div><span class="eyebrow">Best Class</span><h3>Add marks</h3></div></div>
@@ -873,24 +880,69 @@ html.sitelocked #lockScr{display:flex}
     <div class="amback" id="amBack" hidden></div>
     <div class="atabs" id="atabs" role="menu"><span class="amlab">ADMIN PANEL</span>
       <button type="button" class="on" data-at="students"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5"/></svg>Students data</button><button type="button" data-at="sada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .7 3.5 2.6 3.5 6"/></svg>SADA</button><button type="button" data-at="staff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7.5" r="3.5"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>Staff</button>
-      <button type="button" data-at="union"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Unions</button><button type="button" data-at="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg>Student logins</button><button type="button" data-at="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="M16 5l3.5-1 2.5 15.5-3.5 1z"/></svg>Library</button><button type="button" data-at="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg>Admin</button><button type="button" data-at="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Site lock</button><button type="button" data-at="sprog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>SADA Programs</button><button type="button" data-at="progs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Best Unions</button><button type="button" data-at="best"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg>Best Class</button><button type="button" data-at="hikma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Hikma</button>
+      <button type="button" data-at="union"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Unions</button><button type="button" data-at="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg>Student logins</button><button type="button" data-at="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="M16 5l3.5-1 2.5 15.5-3.5 1z"/></svg>Library</button><button type="button" data-at="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg>Admin</button><button type="button" data-at="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Site lock</button><button type="button" data-at="sprog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>SADA Programs</button><button type="button" data-at="progs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Best Unions</button><button type="button" data-at="best"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg>Best Class</button><button type="button" data-at="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8.5 13l2.5 2.5 4.5-5"/><path d="M9 2.5v3M15 2.5v3"/></svg>Attendance</button><button type="button" data-at="hikma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Hikma</button>
     </div>
-    <div class="card form" id="bestPane" hidden>
-      <div class="vhead"><div><h3>Best Class</h3><p class="note">Set the semester dates. The year is from the start of Semester 1 to the end of Semester 2. The month is the current month.</p></div></div>
-      <p class="flab">Semester 1</p>
-      <div class="fields"><div class="f"><label for="s1f">From</label><input id="s1f" type="date"></div><div class="f"><label for="s1t">To</label><input id="s1t" type="date"></div></div>
-      <p class="flab">Semester 2</p>
-      <div class="fields"><div class="f"><label for="s2f">From</label><input id="s2f" type="date"></div><div class="f"><label for="s2t">To</label><input id="s2t" type="date"></div></div>
-      <p class="flab">Who can see Best Class and Best class union</p>
+    <div id="bestPane" hidden>
+    <div class="card">
+      <div class="vhead"><div><span class="eyebrow">Current</span><h3>Current class points table</h3><p class="note">Library + Talents Meet + staff marks since the last delete. Delete it at the end of a month or semester to start again.</p></div></div>
+      <p class="note" id="acInfo"></p>
+      <div class="board" id="acCur"></div>
+      <p class="msg err" id="acErrC"></p>
+      <div class="sw sv red" id="acCurDel"><span class="swt">Delete current points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Delete current points"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="vhead"><div><span class="eyebrow">Permanent</span><h3>Permanent class points table</h3><p class="note">All the points each class has received so far.</p></div></div>
+      <div class="board" id="acPerm"></div>
+      <p class="msg err" id="acErrP"></p>
+      <div class="sw sv red" id="acPermDel"><span class="swt">Delete permanent points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Delete permanent points"></div></div>
+    </div>
+    <div class="card form" style="margin-top:16px">
+      <div class="vhead"><div><h3>Who can see and edit</h3><p class="note">Tap to choose. The admin can always see and edit.</p></div></div>
+      <p class="flab">Who can see Best Class</p>
       <div class="xcats" id="bcSee"><button type="button" data-t="sada">SADA</button><button type="button" data-t="staff">Staff</button><button type="button" data-t="union">Unions</button><button type="button" data-t="student">Students</button><button type="button" data-t="library">Librarian</button></div>
-      <p class="note" style="margin-top:6px">Tap to choose. The admin can always see it.</p>
+      <p class="flab">Who can edit Best Class (delete points)</p>
+      <div class="xcats" id="bcEdit"><button type="button" data-t="sada">SADA</button><button type="button" data-t="staff">Staff</button><button type="button" data-t="union">Unions</button><button type="button" data-t="student">Students</button><button type="button" data-t="library">Librarian</button></div>
       <p class="flab">Who can see Best Union marks</p>
       <div class="xcats" id="buSee"><button type="button" data-t="sada">SADA</button><button type="button" data-t="staff">Staff</button><button type="button" data-t="union">Unions</button><button type="button" data-t="student">Students</button><button type="button" data-t="library">Librarian</button></div>
-      <p class="flab">Who can edit Best Unions (delete points, remove programs)</p>
+      <p class="flab">Who can edit Best Union (delete points, remove programs)</p>
       <div class="xcats" id="buEdit"><button type="button" data-t="sada">SADA</button><button type="button" data-t="staff">Staff</button><button type="button" data-t="union">Unions</button><button type="button" data-t="student">Students</button><button type="button" data-t="library">Librarian</button></div>
       <p class="msg err" id="bcCfgErr"></p>
-      <div class="sw sv" id="bcCfgSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save the Best Class settings"></div></div>
-      <button type="button" class="btn small solid" id="bcAdmOpen" style="margin-top:14px">Open Best Class</button>
+      <div class="sw sv" id="bcCfgSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save the settings"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Marks from the staff</h3>
+      <div class="plist2" id="acList"></div>
+    </div>
+    </div>
+    <div id="attPane" hidden>
+    <div class="card form">
+      <div class="vhead"><div><span class="eyebrow">Program attendance</span><h3>New program</h3></div></div>
+      <div class="fields"><div class="f"><label for="atName">Program name *</label><input id="atName" autocomplete="off"></div><div class="f"><label for="atDate">Date *</label><input id="atDate" type="date"></div></div>
+      <p class="flab">Who takes part *</p>
+      <div class="xcats" id="atCls"><button type="button" data-v="All">All classes</button><button type="button" data-v="Plus One">Plus One</button><button type="button" data-v="Plus Two">Plus Two</button><button type="button" data-v="Degree 1">Degree</button></div>
+      <p class="msg err" id="atErr"></p>
+      <div class="sw sv" id="atSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save the program"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="vhead"><div><h3>Programs</h3><p class="note">Tap “Take attendance” to scan the ID cards.</p></div></div>
+      <div class="plist2" id="atList"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="vhead"><div><h3>Attendance of each program</h3><p class="note">Percent of the students who were present.</p></div></div>
+      <div class="hist" id="atHist"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="vhead"><div><h3>Each student</h3><p class="note">How many programs each student attended.</p></div></div>
+      <div class="xcats" id="atStuCls"><button type="button" class="on" data-v="">All</button><button type="button" data-v="Plus One">Plus One</button><button type="button" data-v="Plus Two">Plus Two</button><button type="button" data-v="Degree 1">Degree</button></div>
+      <div class="atstu" id="atStu"></div>
+    </div>
+    <div class="card form" style="margin-top:16px">
+      <h3>Who can take attendance</h3>
+      <div class="xcats" id="atWho"><button type="button" data-t="sada">SADA</button><button type="button" data-t="staff">Staff</button><button type="button" data-t="union">Unions</button><button type="button" data-t="student">Students</button><button type="button" data-t="library">Librarian</button></div>
+      <p class="note" style="margin-top:6px">They see “Program attendance” on their page after they log in. Only the admin makes programs.</p>
+      <p class="msg err" id="atWhoErr"></p>
+      <div class="sw sv" id="atWhoSave"><span class="swt">Save</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to save who can take attendance"></div></div>
+    </div>
     </div>
     <div class="card form" id="spPane" hidden>
       <div class="vhead"><div><h3>Add a SADA program</h3><p class="note">It shows to everyone under PROGRAMS in the bottom bar. The newest program is on top.</p></div></div>
@@ -1027,15 +1079,17 @@ html.sitelocked #lockScr{display:flex}
   <div class="in">
     <div class="etop"><button type="button" class="back" id="bestBack">← Back</button></div>
     <div class="vhead"><div><span class="eyebrow">SADA</span><h2>Best Class</h2></div></div>
-    <div class="bcopts" id="bcOpts">
-      <button type="button" data-k="union-month">Best class union (month)</button><button type="button" data-k="cls-month">Best class (month)</button>
-      <button type="button" data-k="union-sem">Best class union (sem)</button><button type="button" data-k="cls-sem">Best class (sem)</button>
-      <button type="button" data-k="union-year">Best class union (year)</button><button type="button" data-k="cls-year">Best class (year)</button>
-    </div>
-    <h3 id="bcHead" style="margin-top:20px"></h3>
-    <p class="note" id="bcInfo"></p>
-    <div class="board" id="bcBoard"><div class="emptyl">Loading…</div></div>
+    <div class="bcopts two" id="bcOpts"><button type="button" data-k="cls">Best Class</button><button type="button" data-k="union">Best Union</button></div>
+    <p class="note" id="bcInfo" style="margin-top:14px"></p>
     <p class="note" id="bcWarn" hidden></p>
+    <h3 style="margin-top:18px">Current points</h3>
+    <div class="board" id="bvCur"></div>
+    <p class="msg err" id="bvErrC"></p>
+    <div class="sw sv red" id="bvCurDel"><span class="swt">Delete current points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Delete current points"></div></div>
+    <h3 style="margin-top:22px">Permanent points</h3>
+    <div class="board" id="bvPerm"></div>
+    <p class="msg err" id="bvErrP"></p>
+    <div class="sw sv red" id="bvPermDel"><span class="swt">Delete permanent points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Delete permanent points"></div></div>
     <div id="bcClsMore">
       <h3 style="margin-top:24px">How the marks are counted</h3>
       <ul class="bcrule">
@@ -1048,6 +1102,19 @@ html.sitelocked #lockScr{display:flex}
     </div>
   </div>
 </main>
+
+<main id="v-att" class="view" hidden>
+  <div class="in">
+    <div class="etop"><button type="button" class="back" id="attBack">← Back</button></div>
+    <div class="vhead"><div><span class="eyebrow" id="atvMeta">Program attendance</span><h2 id="atvName"></h2></div></div>
+    <button type="button" class="btn solid scanbig" id="atvScan"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M7 12h10"/></svg>Scan ID card</button>
+    <div class="atcount"><div><b id="atvP">0</b><span>Present</span></div><div><b id="atvA">0</b><span>Absent</span></div><div><b id="atvT">0</b><span>Students</span></div></div>
+    <p class="note">You can also tap a name to mark or unmark.</p>
+    <input type="search" id="atvQ" placeholder="Search name or ID" autocomplete="off" style="width:100%;margin-top:8px">
+    <div class="atl" id="atvList"></div>
+  </div>
+</main>
+<div id="atScan" role="dialog" aria-label="Scan ID card"><video id="atVid" playsinline muted></video><div class="frame"></div><div class="flash" id="atFlash"></div><div class="sbar"><div id="atSmsg">Point the camera at the ID card barcode</div><button type="button" id="atSclose">Done</button></div></div>
 
 <main id="v-program" class="view" hidden>
   <div class="in">
@@ -1493,12 +1560,12 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function getCred(){try{return JSON.parse(sessionStorage.getItem('sada_cred')||'null')}catch(e){return null}}
   function setCred(c){try{c?sessionStorage.setItem('sada_cred',JSON.stringify(c)):sessionStorage.removeItem('sada_cred')}catch(e){} memCred=c; if(window.sadaLock)window.sadaLock()}
   var memCred=null; var _gc=getCred; getCred=function(){return _gc()||memCred};
-  var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),entries:$('v-entries'),elist:$('v-elist'),me:$('v-me'),admin:$('v-admin'),pres:$('v-pres'),deck:$('v-deck'),program:$('v-program'),best:$('v-best')};
+  var views={home:$('v-home'),students:$('v-students'),other:$('v-other'),entries:$('v-entries'),elist:$('v-elist'),me:$('v-me'),admin:$('v-admin'),pres:$('v-pres'),deck:$('v-deck'),program:$('v-program'),best:$('v-best'),att:$('v-att')};
   var tabs=[].slice.call(document.querySelectorAll('.dock [data-view]'));
   var pending=null;
   function show(name){
     Object.keys(views).forEach(function(k){views[k].hidden=(k!==name)});
-    tabs.forEach(function(b){b.classList.toggle('on',b.dataset.view===(['admin','entries','elist','me','pres','deck','best'].indexOf(name)>-1?'other':name))});
+    tabs.forEach(function(b){b.classList.toggle('on',b.dataset.view===(['admin','entries','elist','me','pres','deck','best','att'].indexOf(name)>-1?'other':name))});
     if(name!=='admin'){ $('addForm').hidden=true; $('adminList').hidden=true; }
     window.scrollTo(0,0);
   }
@@ -1904,7 +1971,8 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var lg=me.type==='union'&&uLogo(me.name); $('meAv').innerHTML=lg?'<img alt="" src="'+lg+'">':esc(initials(me.name)); $('meName').textContent=me.name;
     $('meType').textContent=TYPE_NAME[me.type]||''; $('meTitle').textContent=me.title||'';
     $('meStaff').hidden=me.type!=='staff'; $('meBC').hidden=me.type!=='staff'; if(me.type==='staff')loadMine();
-    $('meBest').hidden=true; $('meBU').hidden=true; restorePP(); call({action:'bc.view'}).then(function(j){bcSet(j);$('meBest').hidden=false}).catch(function(){});
+    $('meBest').hidden=true; $('meBU').hidden=true; $('meAtt').hidden=true; restorePP(); call({action:'bc.view'}).then(function(j){bcSet(j);$('meBest').hidden=false}).catch(function(){});
+    if(me.type!=='admin')call({action:'att.list'}).then(function(j){atSet(j);$('meAtt').hidden=false;renderMeAtt()}).catch(function(){});
     if(me.type!=='union'&&me.type!=='staff')loadProg();
     $('meUnion').hidden=$('meUProgs').hidden=me.type!=='union'; $('meSProg').hidden=me.type!=='staff';
     $('meSoon').hidden=me.type==='union'||me.type==='staff'||!!me.exp;
@@ -2030,10 +2098,10 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function setATab(k){
     atab=k; document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.classList.toggle('on',b.dataset.at===k);if(b.dataset.at===k)$('amenuCur').textContent=b.textContent.trim()});
     amClose();
-    var PANES={lock:'lockPane',progs:'progPane',pres:'presPane',hikma:'hkPane',sprog:'spPane',best:'bestPane'};
+    var PANES={lock:'lockPane',progs:'progPane',pres:'presPane',hikma:'hkPane',sprog:'spPane',best:'bestPane',att:'attPane'};
     var st=k==='students', sp=!!PANES[k]; $('adminList').hidden=!st; if(!st)$('addForm').hidden=true; $('accPane').hidden=st||sp;
     Object.keys(PANES).forEach(function(x){$(PANES[x]).hidden=x!==k});
-    if(k==='lock'){renderLock();return} if(k==='progs'){loadProg();return} if(k==='pres'){loadPresInfo();return} if(k==='sprog'){loadSP();return} if(k==='best'){loadBestAdm();return} if(sp)return;
+    if(k==='lock'){renderLock();return} if(k==='progs'){loadProg();return} if(k==='pres'){loadPresInfo();return} if(k==='sprog'){loadSP();return} if(k==='best'){loadBestAdm();return} if(k==='att'){loadAtt();return} if(sp)return;
     if(!st){ resetAccForm(); renderAcc(); loadAcc(); }
   }
   document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.addEventListener('click',function(){setATab(b.dataset.at)})});
@@ -2214,47 +2282,134 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   });
 
 
-  /* ===================== BEST CLASS (only for the logins the admin allows) ===================== */
-  var BCD=null, bcK='cls-month', bcFrom='me';
-  function bcSet(j){BCD=j;renderBC()}
-  function rangeTxt(r){return r?niceDate(r.from)+' – '+niceDate(r.to):''}
+  /* ===================== BEST CLASS + BEST UNION (only for the logins the admin allows) ===================== */
+  var BCD=null, bcK='cls', bcFrom='me';
+  function bcSet(j){BCD=j;renderBC();renderBestAdm()}
   function bcEntry(x,rm){return '<div class="pcard"><div class="ph1"><div><small>'+esc(niceDate(x.date))+' · '+esc(x.staff)+'</small><b>'+esc(x.cls)+'</b></div><span class="tag done">+'+x.mark+'</span></div><p class="note" style="margin:8px 0 0">'+esc(x.reason)+'</p>'+(rm?'<button type="button" class="rmv" data-bc="'+esc(x.id)+'">Remove</button>':'')+'</div>'}
+  function clsBoard(d){return d&&d.rows.length?d.rows.map(function(u,i){
+      return '<div class="brow'+(i===0&&u.total>0?' first':'')+'"><span class="rk">'+(i+1)+'</span><div class="bn"><b>'+esc(u.cls.toUpperCase())+'</b><span>Library '+u.lib+(d.libMax?' / '+d.libMax:'')+' · Talents Meet '+u.tm+(d.tmMax?' / '+d.tmMax:'')+' · Staff '+u.staff+'</span><small>'+u.books+' book'+(u.books===1?'':'s')+' taken</small></div><div class="pts"><b>'+u.total+'</b><span>marks</span></div></div>'}).join(''):'<div class="emptyl">No marks yet.</div>'}
   function renderBC(){
-    if(BCD){var okK=function(k){return k.indexOf('cls')===0?BCD.clsSee!==false:BCD.buSee!==false};if(!okK(bcK))bcK=BCD.clsSee!==false?'cls-month':'union-month';
-      $('bcOpts').querySelectorAll('button').forEach(function(b){b.hidden=!okK(b.dataset.k)})}
-    $('bcOpts').querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.k===bcK)});
-    $('bcHead').textContent=$('bcOpts').querySelector('[data-k="'+bcK+'"]').textContent;
-    if(!BCD){$('bcBoard').innerHTML='<div class="emptyl">Loading…</div>';return}
-    var kind=bcK.split('-')[0], per=bcK.split('-')[1], r=BCD.ranges[per], d=(kind==='cls'?BCD.cls:BCD.union)[per];
-    $('bcClsMore').hidden=kind!=='cls';
+    if(!BCD){$('bvCur').innerHTML='<div class="emptyl">Loading…</div>';$('bvPerm').innerHTML='';return}
+    var okK=function(k){return k==='cls'?!!BCD.clsSee:!!BCD.buSee}; if(!okK(bcK))bcK=BCD.clsSee?'cls':'union';
+    $('bcOpts').querySelectorAll('button').forEach(function(b){b.hidden=!okK(b.dataset.k);b.classList.toggle('on',b.dataset.k===bcK)});
+    $('bcOpts').hidden=!(BCD.clsSee&&BCD.buSee);
     $('bcWarn').hidden=!(BCD.warn||[]).length; $('bcWarn').textContent=(BCD.warn||[]).join(' ');
-    if(!r||!d){$('bcInfo').textContent='';$('bcBoard').innerHTML='<div class="emptyl">The admin has not set the semester dates yet.</div>';return}
-    $('bcInfo').textContent=(r.name?r.name+' · ':'')+rangeTxt(r)+(kind==='cls'?' · Library days: '+d.days+' · Talents Meets: '+d.meets:'')+'. Most marks on top.';
-    if(kind==='cls'){
-      $('bcBoard').innerHTML=d.rows.map(function(u,i){
-        return '<div class="brow'+(i===0&&u.total>0?' first':'')+'"><span class="rk">'+(i+1)+'</span><div class="bn"><b>'+esc(u.cls.toUpperCase())+'</b><span>Library '+u.lib+(d.libMax?' / '+d.libMax:'')+' · Talents Meet '+u.tm+(d.tmMax?' / '+d.tmMax:'')+' · Staff '+u.staff+'</span><small>'+u.books+' book'+(u.books===1?'':'s')+' taken</small></div><div class="pts"><b>'+u.total+'</b><span>marks</span></div></div>'}).join('');
-      var ent=(BCD.entries||[]).filter(function(x){return x.date>=r.from&&x.date<=r.to});
-      $('bcList').innerHTML=ent.length?ent.map(function(x){return bcEntry(x,false)}).join(''):'<div class="emptyl">No marks from the staff in this time.</div>';
-    } else $('bcBoard').innerHTML=boardHTML(d);
+    var cls=bcK==='cls';
+    $('bcClsMore').hidden=!cls;
+    if(cls){var c=BCD.cls||{};$('bcInfo').textContent='Current: library days '+(c.cur?c.cur.days:0)+' · Talents Meets '+(c.cur?c.cur.meets:0)+'. Most marks on top.';
+      $('bvCur').innerHTML=clsBoard(c.cur);$('bvPerm').innerHTML=clsBoard(c.perm);
+      var ent=BCD.entries||[];$('bcList').innerHTML=ent.length?ent.map(function(x){return bcEntry(x,false)}).join(''):'<div class="emptyl">No marks from the staff yet.</div>'}
+    else{var u=BCD.union||{};$('bcInfo').textContent='Union programs: each staff gives up to 5 marks. Most points on top.';
+      $('bvCur').innerHTML=boardHTML(u.cur||[]);$('bvPerm').innerHTML=boardHTML(u.perm||[])}
+    var ed=cls?!!BCD.clsEdit:!!BCD.buEdit; $('bvCurDel').hidden=$('bvPermDel').hidden=!ed;
   }
-  function openBest(from){bcFrom=from;show('best');renderBC();call({action:'bc.view'}).then(bcSet).catch(function(err){$('bcBoard').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}
+  function renderBestAdm(){
+    if(!BCD||!BCD.cls)return; var c=BCD.cls;
+    $('acInfo').textContent='Library days: '+c.cur.days+' · Talents Meets: '+c.cur.meets;
+    $('acCur').innerHTML=clsBoard(c.cur); $('acPerm').innerHTML=clsBoard(c.perm);
+    var ent=BCD.entries||[]; $('acList').innerHTML=ent.length?ent.map(function(x){return bcEntry(x,false)}).join(''):'<div class="emptyl">No marks from the staff yet.</div>';
+  }
+  function openBest(from){bcFrom=from;show('best');renderBC();call({action:'bc.view'}).then(bcSet).catch(function(err){$('bvCur').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}
   $('meBestOpen').addEventListener('click',function(){openBest('me')});
-  $('bcAdmOpen').addEventListener('click',function(){openBest('admin')});
   $('bestBack').addEventListener('click',function(){if(bcFrom==='admin')show('admin');else openMe()});
   $('bcOpts').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;bcK=b.dataset.k;renderBC()});
-  /* admin: semester dates and who can see */
-  var bcSee=['sada'],buSee=['staff'],buEd=[];
-  function paintSee(){[['bcSee',bcSee],['buSee',buSee],['buEdit',buEd]].forEach(function(x){$(x[0]).querySelectorAll('button').forEach(function(b){b.classList.toggle('on',x[1].indexOf(b.dataset.t)>-1)})})}
-  function fillCfg(c){if(!c)return;$('s1f').value=c.sem1.from||'';$('s1t').value=c.sem1.to||'';$('s2f').value=c.sem2.from||'';$('s2t').value=c.sem2.to||'';bcSee=c.see||[];buSee=c.buSee||[];buEd=c.buEdit||[];paintSee()}
-  function loadBestAdm(){paintSee();call({action:'bc.view'}).then(function(j){bcSet(j);fillCfg(j.cfg)}).catch(function(err){note($('bcCfgErr'),errText(err),1)})}
-  [['bcSee',function(){return bcSee}],['buSee',function(){return buSee}],['buEdit',function(){return buEd}]].forEach(function(x){$(x[0]).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var l=x[1](),t=b.dataset.t,i=l.indexOf(t);if(i>-1)l.splice(i,1);else l.push(t);paintSee()})});
-  slider($('bcCfgSave'),function(done,say){
-    var c={sem1:{from:$('s1f').value,to:$('s1t').value},sem2:{from:$('s2f').value,to:$('s2t').value},see:bcSee.slice(),buSee:buSee.slice(),buEdit:buEd.slice()};
-    var bad=[c.sem1,c.sem2].some(function(x){return (x.from||x.to)&&(!x.from||!x.to||x.from>x.to)});
-    if(bad){note($('bcCfgErr'),'Give both dates of a semester, and the “From” date first.',1);done();return}
-    say('Saving…');note($('bcCfgErr'),'',0);
-    call({action:'bc.cfg',cfg:c}).then(function(j){bcSet(j);fillCfg(j.cfg);note($('bcCfgErr'),'Saved ✓',0);done()}).catch(function(err){note($('bcCfgErr'),errText(err),1);done()});
+  function bestReset(kind,which,errId){return function(done,say){
+    var cls=which==='cls'||(which==='view'&&bcK==='cls'), E=$(errId); say('Deleting…'); note(E,'',0);
+    var p=cls?call({action:'bc.reset',kind:kind}):call({action:'pts.reset',kind:kind}).then(function(){return call({action:'bc.view'})});
+    p.then(function(j){bcSet(j);note(E,(kind==='perm'?'Permanent points deleted ✓ (current points too)':'Current points deleted ✓'),0);done()}).catch(function(err){note(E,errText(err),1);done()});
+  }}
+  slider($('acCurDel'),bestReset('cur','cls','acErrC')); slider($('acPermDel'),bestReset('perm','cls','acErrP'));
+  slider($('bvCurDel'),bestReset('cur','view','bvErrC')); slider($('bvPermDel'),bestReset('perm','view','bvErrP'));
+  /* admin: who can see and edit, who can take attendance */
+  var CFG={see:['sada'],bcEdit:[],buSee:['staff'],buEdit:[],att:[]};
+  var CHIPS={bcSee:'see',bcEdit:'bcEdit',buSee:'buSee',buEdit:'buEdit',atWho:'att'};
+  function paintSee(){Object.keys(CHIPS).forEach(function(id){var l=CFG[CHIPS[id]]||[];$(id).querySelectorAll('button').forEach(function(b){b.classList.toggle('on',l.indexOf(b.dataset.t)>-1)})})}
+  function fillCfg(c){if(!c)return;Object.keys(CHIPS).forEach(function(id){CFG[CHIPS[id]]=(c[CHIPS[id]]||[]).slice()});paintSee()}
+  function loadBestAdm(){paintSee();renderBestAdm();call({action:'bc.view'}).then(function(j){bcSet(j);fillCfg(j.cfg)}).catch(function(err){note($('bcCfgErr'),errText(err),1)})}
+  Object.keys(CHIPS).forEach(function(id){$(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var l=CFG[CHIPS[id]]=CFG[CHIPS[id]]||[],t=b.dataset.t,i=l.indexOf(t);if(i>-1)l.splice(i,1);else l.push(t);paintSee()})});
+  function saveCfg(errId){return function(done,say){say('Saving…');note($(errId),'',0);
+    call({action:'bc.cfg',cfg:CFG}).then(function(j){bcSet(j);fillCfg(j.cfg);note($(errId),'Saved ✓',0);done()}).catch(function(err){note($(errId),errText(err),1);done()})}}
+  slider($('bcCfgSave'),saveCfg('bcCfgErr')); slider($('atWhoSave'),saveCfg('atWhoErr'));
+
+  /* ===================== PROGRAM ATTENDANCE ===================== */
+  var AT={programs:[],marks:{},students:[]}, atPid='', atFrom='me', atStuCls='', atClsV='';
+  try{AT=Object.assign(AT,JSON.parse(localStorage.getItem('sada_att')||'{}'))}catch(e){}
+  function atSet(j){AT={programs:j.programs||[],marks:j.marks||{},students:j.students||[]};atPending();try{localStorage.setItem('sada_att',JSON.stringify(AT))}catch(e){}if(j.cfg)fillCfg(j.cfg);renderAtt()}
+  function atPending(){obLoad().forEach(function(it){var b=it.body;if(b.action!=='att.mark')return;var l=AT.marks[b.pid]=AT.marks[b.pid]||[],i=l.indexOf(b.sid);if(b.on===false){if(i>-1)l.splice(i,1)}else if(i<0)l.push(b.sid)})}
+  function atElig(p){return AT.students.filter(function(s){return p.cls==='All'||s.cls===p.cls})}
+  function atStat(p){var el=atElig(p),m=AT.marks[p.id]||[],ids={};el.forEach(function(s){ids[s.id]=1});var n=m.filter(function(x){return ids[x]}).length;return {present:n,total:el.length,pc:el.length?Math.round(n*100/el.length):0}}
+  function clsName(c){return c==='All'?'All classes':c==='Degree 1'?'Degree':c}
+  function atCard(p,adm){var st=atStat(p);return '<div class="pcard"><div class="ph1"><div><small>'+esc(niceDate(p.date))+' · '+esc(clsName(p.cls))+'</small><b>'+esc(p.name)+'</b></div><span class="tag done">'+st.present+' / '+st.total+'</span></div>'+
+    '<div class="row" style="margin-top:10px;gap:8px;display:flex;flex-wrap:wrap"><button type="button" class="btn small solid" data-take="'+esc(p.id)+'">Take attendance</button>'+(adm?'<button type="button" class="rmv" data-atrm="'+esc(p.id)+'" style="margin:0">Remove</button>':'')+'</div></div>'}
+  function renderMeAtt(){$('meAttList').innerHTML=AT.programs.length?AT.programs.slice(0,30).map(function(p){return atCard(p,false)}).join(''):'<div class="emptyl">No programs yet. The admin makes them.</div>'}
+  function renderAtt(){
+    if(!views.me.hidden)renderMeAtt();
+    if(!views.att.hidden)renderTake();
+    if(views.admin.hidden||atab!=='att')return;
+    $('atList').innerHTML=AT.programs.length?AT.programs.map(function(p){return atCard(p,true)}).join(''):'<div class="emptyl">No programs yet. Make one above.</div>';
+    $('atHist').innerHTML=AT.programs.length?AT.programs.slice().reverse().map(function(p){var st=atStat(p);return '<div class="hrow" title="'+esc(p.name)+'"><b>'+esc(p.name)+' <small style="color:var(--muted);font-weight:400">'+esc(niceDate(p.date))+'</small></b><div class="hbar"><i style="width:'+st.pc+'%"></i></div><span>'+st.pc+'%</span></div>'}).join(''):'<div class="emptyl">No programs yet.</div>';
+    var rows=AT.students.filter(function(s){return !atStuCls||s.cls===atStuCls}).map(function(s){
+      var el=AT.programs.filter(function(p){return p.cls==='All'||p.cls===s.cls}),n=el.filter(function(p){return (AT.marks[p.id]||[]).indexOf(s.id)>-1}).length;
+      return {s:s,n:n,t:el.length,pc:el.length?Math.round(n*100/el.length):0}}).sort(function(a,b){return b.pc-a.pc||b.n-a.n||a.s.id.localeCompare(b.s.id)});
+    $('atStu').innerHTML=rows.length?rows.map(function(r){return '<div class="astu"><b>'+esc(r.s.name)+'</b><span class="pc">'+r.pc+'%</span><small>'+esc(r.s.id)+' · '+esc(clsName(r.s.cls))+' · attended '+r.n+' of '+r.t+'</small></div>'}).join(''):'<div class="emptyl">No students.</div>';
+  }
+  function loadAtt(){if(!$('atDate').value)$('atDate').value=today();renderAtt();call({action:'att.list'}).then(atSet).catch(function(err){$('atList').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}
+  $('atStuCls').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;atStuCls=b.dataset.v;$('atStuCls').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});renderAtt()});
+  $('atCls').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;atClsV=b.dataset.v;$('atCls').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)})});
+  slider($('atSave'),function(done,say){
+    var p={id:'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:$('atName').value.trim(),date:$('atDate').value||today(),cls:atClsV};
+    var miss=p.name.length<2?'Enter the program name.':!p.cls?'Choose who takes part.':'';
+    if(miss){note($('atErr'),miss,1);done();return}
+    say('Saving…');note($('atErr'),'',0);
+    call({action:'att.add',prog:p}).then(function(j){atSet(j);$('atName').value='';atClsV='';$('atCls').querySelectorAll('button').forEach(function(x){x.classList.remove('on')});note($('atErr'),p.name+' saved ✓',0);done()}).catch(function(err){note($('atErr'),errText(err),1);done()});
   });
+  function atClick(from){return function(e){
+    var t=e.target.closest('[data-take]'); if(t){openTake(t.dataset.take,from);return}
+    var b=e.target.closest('[data-atrm]'); if(!b)return;
+    if(!b.classList.contains('sure')){b.classList.add('sure');b.textContent='Tap again to remove';setTimeout(function(){if(b.isConnected){b.classList.remove('sure');b.textContent='Remove'}},3000);return}
+    b.textContent='Removing…';b.disabled=true; call({action:'att.del',id:b.dataset.atrm}).then(atSet).catch(function(err){alert(errText(err));renderAtt()});
+  }}
+  $('atList').addEventListener('click',atClick('admin')); $('meAttList').addEventListener('click',atClick('me'));
+  /* take attendance */
+  function curP(){return AT.programs.find(function(p){return p.id===atPid})}
+  function openTake(pid,from){atPid=pid;atFrom=from;$('atvQ').value='';show('att');renderTake()}
+  function renderTake(){var p=curP(); if(!p){$('atvName').textContent='This program was removed.';$('atvList').innerHTML='';return}
+    var st=atStat(p),m=AT.marks[p.id]||[],q=$('atvQ').value.trim().toUpperCase();
+    $('atvName').textContent=p.name; $('atvMeta').textContent=niceDate(p.date)+' · '+clsName(p.cls);
+    $('atvP').textContent=st.present; $('atvA').textContent=st.total-st.present; $('atvT').textContent=st.total;
+    $('atvList').innerHTML=atElig(p).filter(function(s){return !q||s.name.toUpperCase().indexOf(q)>-1||s.id.indexOf(q)>-1}).map(function(s){var on=m.indexOf(s.id)>-1;
+      return '<button type="button" class="'+(on?'on':'')+'" data-sid="'+esc(s.id)+'" aria-pressed="'+on+'"><span class="ck">'+(on?'✓':'')+'</span><span><b>'+esc(s.name)+'</b><small>'+esc(s.id)+' · '+esc(clsName(s.cls))+'</small></span></button>'}).join('')||'<div class="emptyl">No students.</div>';
+  }
+  function atMark(sid,on){var p=curP();if(!p)return;var l=AT.marks[p.id]=AT.marks[p.id]||[],i=l.indexOf(sid);
+    if(on&&i<0)l.push(sid); if(!on&&i>-1)l.splice(i,1);
+    obAdd({action:'att.mark',pid:p.id,sid:sid,on:on},(on?'Present: ':'Absent: ')+sid+' · '+p.name); try{localStorage.setItem('sada_att',JSON.stringify(AT))}catch(e){} renderTake()}
+  $('atvList').addEventListener('click',function(e){var b=e.target.closest('[data-sid]');if(!b)return;atMark(b.dataset.sid,!b.classList.contains('on'))});
+  $('atvQ').addEventListener('input',renderTake);
+  $('attBack').addEventListener('click',function(){if(atFrom==='admin'){show('admin');setATab('att')}else openMe()});
+  /* scanner */
+  var aStream=null,aTimer=null,aZx=null,aLast='',aLastT=0,aFlashT=null;
+  function flash(t,bad){var f=$('atFlash');f.textContent=t;f.classList.toggle('bad',!!bad);f.classList.add('show');clearTimeout(aFlashT);aFlashT=setTimeout(function(){f.classList.remove('show')},1600)}
+  function cardOf(v){v=String(v||'').trim().toUpperCase().replace(/\s+/g,'');var c=cardNo(v);return c}
+  function onScan(txt){var now=Date.now();if(txt===aLast&&now-aLastT<2500)return;aLast=txt;aLastT=now;
+    var p=curP(),sid=cardOf(txt),s=AT.students.find(function(x){return x.id===sid});
+    if(!s){flash('Not a student ID: '+txt,1);return}
+    if(p.cls!=='All'&&s.cls!==p.cls){flash(s.name+' is not in '+clsName(p.cls),1);return}
+    if((AT.marks[p.id]||[]).indexOf(sid)>-1){flash('Already present: '+s.name);return}
+    atMark(sid,true); flash('✓ '+s.name); try{navigator.vibrate&&navigator.vibrate(80)}catch(e){}}
+  function loadZx(){return new Promise(function(ok,no){if(window.ZXing)return ok();var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js';sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)})}
+  async function startAScan(){
+    var v=$('atVid'),msg=$('atSmsg'); msg.textContent='Point the camera at the ID card barcode'; $('atScan').classList.add('on');
+    try{
+      if('BarcodeDetector' in window){
+        aStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false}); v.srcObject=aStream; await v.play();
+        var det=new BarcodeDetector();
+        var tick=async function(){if(!aStream)return;try{var r=await det.detect(v);if(r&&r.length)onScan(r[0].rawValue)}catch(e){}aTimer=setTimeout(tick,250)}; tick();
+      } else { await loadZx(); aZx=new ZXing.BrowserMultiFormatReader(); await aZx.decodeFromConstraints({video:{facingMode:'environment'}},v,function(res){if(res)onScan(res.getText())}); }
+    }catch(e){msg.textContent=(e&&e.name==='NotAllowedError')?'Camera permission was denied. Allow camera access in the browser settings and try again.':'Camera could not start. Please open the site in Google Chrome.'}
+  }
+  function stopAScan(){clearTimeout(aTimer);try{aZx&&aZx.reset()}catch(e){}aZx=null;if(aStream){aStream.getTracks().forEach(function(t){t.stop()});aStream=null}var v=$('atVid');try{v.pause();v.srcObject=null}catch(e){}$('atScan').classList.remove('on');renderTake()}
+  $('atvScan').addEventListener('click',startAScan); $('atSclose').addEventListener('click',stopAScan);
+
   /* staff: add marks */
   function renderMine(l){$('bcMine').innerHTML=l.length?l.map(function(x){return bcEntry(x,true)}).join(''):'<div class="emptyl">No marks given yet.</div>'}
   function loadMine(){call({action:'bc.mine'}).then(function(j){renderMine(j.mine||[])}).catch(function(){})}
