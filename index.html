@@ -384,6 +384,8 @@ footer small{opacity:.8;font-size:.85rem}
 
 
 /* ===== union programs ===== */
+.tprRes{margin:16px 0 4px;padding:16px;border-radius:16px;background:var(--surface2,rgba(127,127,127,.08));text-align:center}.tprRes b{display:block;font-size:2.2rem;line-height:1.1}.tprRes span{font-size:.85rem;color:var(--muted)}
+#tprAll table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.88rem}#tprAll th,#tprAll td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
 .flab{font-size:.82rem;font-weight:700;color:var(--muted);letter-spacing:.04em;margin:14px 0 6px}
 .mem{position:relative}
 .mem .stb{position:absolute;right:10px;bottom:7px;font-style:normal;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:999px}
@@ -403,6 +405,11 @@ footer small{opacity:.8;font-size:.85rem}
 #ptCur,#ptPerm{margin-top:20px}
 #ptCur .swt,#ptPerm .swt{font-size:16px;padding-left:70px}
 .plist2{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.msgl{display:grid;gap:10px;margin-top:10px}.msgl .pcard p{white-space:pre-wrap;overflow-wrap:anywhere}
+.pbppl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.pbppl button{all:unset;cursor:pointer;border:1.5px solid var(--line);border-radius:14px;padding:8px 12px;font-size:.88rem;line-height:1.25;background:var(--surface)}.pbppl button small{display:block;color:var(--muted);font-size:.74rem}.pbppl button.on{border-color:var(--accent,#0b6b41);box-shadow:0 0 0 2px var(--accent,#0b6b41) inset}
+.pbhide{display:flex;gap:8px;align-items:center;font-size:.88rem;margin:10px 0 4px}
+.rep{margin-top:10px;padding:8px 12px;border-left:3px solid var(--line);font-size:.9rem}.rep.me{border-left-color:var(--accent,#0b6b41)}.rep small{display:block;color:var(--muted);font-size:.74rem}
+.rbox{display:flex;gap:8px;margin-top:10px}.rbox textarea{flex:1;min-height:42px;font:inherit;padding:8px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:inherit}
 .pcard{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .pcard .ph1{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .pcard .ph1 b{font-family:var(--display);font-weight:400;font-size:1.2rem;color:var(--navy);display:block;line-height:1.25}
@@ -854,6 +861,37 @@ html.sitelocked #lockScr{display:flex}
       <p class="note">Each program: your mark out of 5. Tap a number. You can change it later.</p>
       <div class="plist2" id="sProgList"></div>
     </div>
+    <div class="card form" id="meNt" hidden>
+      <div class="vhead"><div><span class="eyebrow">Notifications</span><h3>Notifications</h3></div><span class="tag pending" id="ntBadge" hidden></span></div>
+      <div id="ntNew" hidden>
+        <p class="flab">Send to</p>
+        <div class="xcats" id="ntTo"><button type="button" data-v="all" class="on">All students</button><button type="button" data-v="PLUS ONE">Plus One</button><button type="button" data-v="PLUS TWO">Plus Two</button><button type="button" data-v="DEGREE 1">Degree 1</button><button type="button" data-v="one">One student</button></div>
+        <div class="f" id="ntIdF" hidden style="margin-top:12px"><label for="ntId">Student's SNEC UID or full name</label><input id="ntId" autocomplete="off"></div>
+        <div class="f" style="margin-top:12px"><label for="ntTitle">Title *</label><input id="ntTitle" maxlength="120" placeholder="e.g. Library closed tomorrow"></div>
+        <div class="f" style="margin-top:12px"><label for="ntText">Message *</label><textarea id="ntText" rows="4"></textarea></div>
+        <p class="msg err" id="ntErr" role="alert"></p>
+        <div class="sw sv" id="ntSend"><span class="swt">Send notification</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Send notification"></div></div>
+        <h3 style="margin-top:22px">Notifications you sent</h3>
+      </div>
+      <div class="msgl" id="ntList"></div>
+    </div>
+    <div class="card form" id="mePb" hidden>
+      <div class="vhead"><div><span class="eyebrow">Problems</span><h3 id="pbH">Problems</h3><p class="note" id="pbNote"></p></div><span class="tag pending" id="pbBadge" hidden></span></div>
+      <div id="pbNew" hidden>
+        <p class="flab">Send your problem to</p>
+        <div class="xcats" id="pbCat"><button type="button" data-t="union">Union</button><button type="button" data-t="staff">Staff</button><button type="button" data-t="sada">SADA</button></div>
+        <div class="pbppl" id="pbPpl"></div>
+        <div id="pbForm" hidden>
+          <p class="note" id="pbTo"></p>
+          <div class="f"><label for="pbText">Your problem *</label><textarea id="pbText" rows="4" placeholder="Write clearly what the problem is"></textarea></div>
+          <label class="pbhide"><input type="checkbox" id="pbHide"> Hide my name (only the admin will see it)</label>
+          <p class="msg err" id="pbErr" role="alert"></p>
+          <div class="sw sv" id="pbSend"><span class="swt">Send problem</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Send problem"></div></div>
+        </div>
+        <h3 style="margin-top:22px">My problems</h3>
+      </div>
+      <div class="msgl" id="pbList"></div>
+    </div>
     <div class="card" id="meAtt" hidden><h3>Program attendance</h3><p class="note">Choose a program, then scan the ID cards. Each scan saves at once.</p><div class="plist2" id="meAttList"></div></div>
     <div class="card" id="meBest" hidden><h3>Best Class</h3><p class="note">Best Class and Best Union: current and permanent points.</p><button type="button" class="btn solid" id="meBestOpen">Open Best Class</button></div>
     <div class="card" id="meBU" hidden><h3>Best Unions</h3><p class="note">Union points: most points on top.</p><div class="board" id="muBoard"></div><div id="muHost"></div></div>
@@ -880,7 +918,7 @@ html.sitelocked #lockScr{display:flex}
     <div class="amback" id="amBack" hidden></div>
     <div class="atabs" id="atabs" role="menu"><span class="amlab">ADMIN PANEL</span>
       <button type="button" class="on" data-at="students"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5"/></svg>Students data</button><button type="button" data-at="sada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .7 3.5 2.6 3.5 6"/></svg>SADA</button><button type="button" data-at="staff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7.5" r="3.5"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>Staff</button>
-      <button type="button" data-at="union"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Unions</button><button type="button" data-at="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg>Student logins</button><button type="button" data-at="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="M16 5l3.5-1 2.5 15.5-3.5 1z"/></svg>Library</button><button type="button" data-at="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg>Admin</button><button type="button" data-at="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Site lock</button><button type="button" data-at="sprog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>SADA Programs</button><button type="button" data-at="progs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Best Unions</button><button type="button" data-at="best"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg>Best Class</button><button type="button" data-at="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8.5 13l2.5 2.5 4.5-5"/><path d="M9 2.5v3M15 2.5v3"/></svg>Attendance</button><button type="button" data-at="hikma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Hikma</button>
+      <button type="button" data-at="union"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Unions</button><button type="button" data-at="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg>Student logins</button><button type="button" data-at="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4z"/><path d="M16 5l3.5-1 2.5 15.5-3.5 1z"/></svg>Library</button><button type="button" data-at="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg>Admin</button><button type="button" data-at="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Site lock</button><button type="button" data-at="sprog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>SADA Programs</button><button type="button" data-at="progs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Best Unions</button><button type="button" data-at="best"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg>Best Class</button><button type="button" data-at="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8.5 13l2.5 2.5 4.5-5"/><path d="M9 2.5v3M15 2.5v3"/></svg>Attendance</button><button type="button" data-at="msgs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>Messages</button><button type="button" data-at="hikma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Hikma</button>
     </div>
     <div id="bestPane" hidden>
     <div class="card">
@@ -895,6 +933,18 @@ html.sitelocked #lockScr{display:flex}
       <div class="board" id="acPerm"></div>
       <p class="msg err" id="acErrP"></p>
       <div class="sw sv red" id="acPermDel"><span class="swt">Delete permanent points</span><div class="swk" tabindex="0" role="button" aria-label="Slide right: Delete permanent points"></div></div>
+    </div>
+    <div class="card form" style="margin-top:16px" id="tprCard">
+      <div class="vhead"><div><span class="eyebrow">Progress report</span><h3>Total progress report</h3><p class="note">Marks the class got ÷ total marks × the number you choose.</p></div></div>
+      <p class="flab">Class</p>
+      <div class="xcats" id="tprCls"><button type="button" data-v="Plus One" class="on">Plus One</button><button type="button" data-v="Plus Two">Plus Two</button><button type="button" data-v="Degree 1">Degree 1</button></div>
+      <p class="flab">Take the marks from</p>
+      <div class="xcats" id="tprTbl"><button type="button" data-v="cur" class="on">Current table</button><button type="button" data-v="perm">Permanent table</button></div>
+      <div class="f" style="margin-top:14px"><label for="tprGot">Mark rewarded (marks the class got)</label><input id="tprGot" type="number" inputmode="decimal" step="any"></div>
+      <div class="f" style="margin-top:14px"><label for="tprTot">Total mark</label><input id="tprTot" type="number" inputmode="decimal" step="any" placeholder="e.g. 3000"></div>
+      <div class="f" style="margin-top:14px"><label for="tprTo">Convert to</label><input id="tprTo" type="number" inputmode="decimal" step="any" placeholder="e.g. 20"></div>
+      <div class="tprRes" id="tprRes" aria-live="polite"></div>
+      <div id="tprAll"></div>
     </div>
     <div class="card form" style="margin-top:16px">
       <div class="vhead"><div><h3>Who can see and edit</h3><p class="note">Tap to choose. The admin can always see and edit.</p></div></div>
@@ -913,6 +963,10 @@ html.sitelocked #lockScr{display:flex}
       <h3>Marks from the staff</h3>
       <div class="plist2" id="acList"></div>
     </div>
+    </div>
+    <div id="msgPane" hidden>
+      <div class="card"><div class="vhead"><div><span class="eyebrow">Problems</span><h3>All problems from students</h3><p class="note">You can see every problem, even the hidden names, and reply to any of them.</p></div></div><div class="msgl" id="amPb"></div></div>
+      <div class="card" style="margin-top:16px"><div class="vhead"><div><span class="eyebrow">Notifications</span><h3>All notifications</h3><p class="note">Sent by the SADA members.</p></div></div><div class="msgl" id="amNt"></div></div>
     </div>
     <div id="attPane" hidden>
     <div class="card form">
@@ -1231,6 +1285,111 @@ html.sitelocked #lockScr{display:flex}
 .hkw .hkask{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
 .hkw .hkask input{flex:1;min-width:0;padding:10px 14px;font:15px var(--body,system-ui,sans-serif);border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 45%,transparent);color:var(--hk-ink)}
 .hkw .hkask input:focus{outline:none;border-color:var(--teal)}
+.hkw .hkswitch{position:relative;width:46px;height:26px;flex:none;cursor:pointer}.hkw .hkswitch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.hkw .hkswitch span{position:absolute;inset:0;border-radius:999px;background:rgba(255,255,255,.35);transition:background .2s;pointer-events:none}
+.hkw .hkswitch span:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.hkw .hkswitch input:checked+span{background:#ffd166}.hkw .hkswitch input:checked+span:after{transform:translateX(20px)}
+.hkw .hkswitch input:focus-visible+span{outline:2px solid #fff;outline-offset:2px}
+.hkw .hkstage{flex:none;display:flex;flex-direction:column;align-items:center;padding:8px 12px 2px;background:radial-gradient(circle at 50% 45%,#eaf5f3,#c9e4e0 70%);border-bottom:1px solid var(--line)}
+.hkw .hkstage[hidden]{display:none}
+.hkw .hkboy{width:122px;height:229px;display:block}
+.hkw .hkrow{display:flex;align-items:center;justify-content:center;gap:10px;perspective:600px}
+.hkw .hkmanw{transform-style:preserve-3d}
+.hkw .hkmlogo{display:grid;place-items:center;background:#fff;border-radius:50%;box-shadow:0 2px 10px rgba(15,40,60,.18);flex:none;overflow:hidden}
+.hkw .hklogoS{width:50px;height:50px}.hkw .hklogoS img{width:88%;height:88%;object-fit:contain}
+.hkw .hklogoH{width:65px;height:65px}.hkw .hklogoH .hk{width:80%;height:80%;background-size:contain;background-repeat:no-repeat;background-position:center}
+.hkw .hkstage.enter .hkmanw{animation:hkSpinJump 1.15s cubic-bezier(.2,.8,.3,1) both}
+@keyframes hkSpinJump{0%{transform:translateY(70px) scale(.2) rotateY(0)}45%{transform:translateY(-34px) scale(1.04) rotateY(540deg)}70%{transform:translateY(0) scale(1) rotateY(720deg)}82%{transform:translateY(-10px)}100%{transform:translateY(0) rotateY(720deg)}}
+@keyframes hkLogoIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.hkw .hkpanel .hkglow{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:5;border-radius:inherit}
+.hkw .hkpanel.balling{animation:hkToBall .6s ease-in forwards}.hkw .hkpanel.balling .hkglow{animation:hkGlow .45s ease-in forwards}
+.hkw .hkpanel.burst{animation:hkBurst .38s ease-out forwards}.hkw .hkpanel.burst .hkglow{opacity:1}
+.hkw .hkpanel.popin{animation:hkPopIn .35s ease-out}
+@keyframes hkToBall{0%{transform:scale(1)}100%{transform:scale(.16);border-radius:50%;box-shadow:0 0 40px 22px rgba(255,255,255,.95),0 0 110px 50px rgba(255,236,170,.7)}}
+@keyframes hkGlow{to{opacity:1}}
+@keyframes hkBurst{0%{transform:scale(.16);border-radius:50%;opacity:1;box-shadow:0 0 40px 22px rgba(255,255,255,.95),0 0 110px 50px rgba(255,236,170,.7)}100%{transform:scale(.55);border-radius:50%;opacity:0;box-shadow:0 0 90px 60px rgba(255,255,255,0)}}
+@keyframes hkPopIn{from{opacity:0}to{opacity:1}}
+.hkdim{position:fixed;inset:0;background:radial-gradient(circle at 70% 60%,rgba(20,30,60,.35),rgba(8,14,30,.6));z-index:58;pointer-events:none;opacity:0}
+.hkorb{position:fixed;background:#fff;z-index:59;pointer-events:none}
+
+.hkw .hkboy g,.hkw .hkboy path,.hkw .hkboy ellipse{transform-box:view-box}
+.hkw .hkm1,.hkw .hkmBig,.hkw .hkmSad,.hkw .hkmO,.hkw .hkmFlat{opacity:0}
+.hkw .hkm1{transform-origin:80px 73px}
+.hkw .ex-happy .hkm0,.hkw .ex-sad .hkm0,.hkw .ex-surprised .hkm0,.hkw .ex-think .hkm0{opacity:0}
+.hkw .ex-happy .hkmBig,.hkw .ex-sad .hkmSad,.hkw .ex-surprised .hkmO,.hkw .ex-think .hkmFlat{opacity:1}
+.hkw .hkstage.talk .hkm0,.hkw .hkstage.talk .hkmBig,.hkw .hkstage.talk .hkmSad,.hkw .hkstage.talk .hkmO,.hkw .hkstage.talk .hkmFlat{opacity:0}
+.hkw .hkstage.talk .hkm1{opacity:1;animation:hkTalk .26s ease-in-out infinite alternate}
+.hkw .hkbrL,.hkw .hkbrR{transition:transform .3s}.hkw .hkbrL{transform-origin:71px 46px}.hkw .hkbrR{transform-origin:89px 46px}
+.hkw .ex-surprised .hkbrL,.hkw .ex-surprised .hkbrR{transform:translateY(-3.5px)}
+.hkw .ex-sad .hkbrL{transform:rotate(-14deg)}.hkw .ex-sad .hkbrR{transform:rotate(14deg)}
+.hkw .ex-think .hkbrR{transform:translateY(-3px) rotate(-6deg)}.hkw .ex-think .hkeyes{transform:translate(2px,-1.5px)}
+.hkw .ex-happy .hkcheek{opacity:.6}
+.hkw .hkarmL{transform-origin:40px 106px}.hkw .hkarmR{transform-origin:120px 106px}
+.hkw .hkarmL,.hkw .hkarmR{transition:transform .45s cubic-bezier(.3,.7,.3,1)}
+.hkw .hkfig{transform-origin:80px 290px}.hkw .hkskirt{transform-origin:80px 150px}.hkw .hkshadow{transform-origin:80px 292px}
+.hkw .hkfootL{transform-origin:66px 284px}.hkw .hkfootR{transform-origin:94px 284px}
+.hkw .hkstage.talk .hkfig{animation:hkSway 2.4s ease-in-out infinite}
+@keyframes hkSway{0%,100%{transform:rotate(0)}25%{transform:rotate(-1.2deg)}75%{transform:rotate(1.2deg)}}
+.hkw .hkstage.talk .hkfootR{animation:hkTap 1.2s ease-in-out infinite}
+@keyframes hkTap{0%,60%,100%{transform:rotate(0)}30%{transform:rotate(-12deg)}}
+/* exercises and actions */
+.hkw .act .hkarmL,.hkw .act .hkarmR{transition:none}
+.hkw .act-jj .hkfig{animation:jjBody .6s ease-in-out infinite}.hkw .act-jj .hkarmL{animation:jjArmL .6s ease-in-out infinite}.hkw .act-jj .hkarmR{animation:jjArmR .6s ease-in-out infinite}
+.hkw .act-jj .hkfootL{animation:jjFootL .6s ease-in-out infinite}.hkw .act-jj .hkfootR{animation:jjFootR .6s ease-in-out infinite}.hkw .act-jj .hkskirt{animation:jjSkirt .6s ease-in-out infinite}
+@keyframes jjBody{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes jjArmL{0%,100%{transform:rotate(0)}50%{transform:rotate(155deg)}}
+@keyframes jjArmR{0%,100%{transform:rotate(0)}50%{transform:rotate(-155deg)}}
+@keyframes jjFootL{0%,100%{transform:translateX(0)}50%{transform:translateX(-16px)}}
+@keyframes jjFootR{0%,100%{transform:translateX(0)}50%{transform:translateX(16px)}}
+@keyframes jjSkirt{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.15)}}
+.hkw .act-squat .hkfig{animation:sqBody 1.4s ease-in-out infinite}.hkw .act-squat .hkskirt{animation:sqSkirt 1.4s ease-in-out infinite}
+.hkw .act-squat .hkarmL{animation:sqArmL 1.4s ease-in-out infinite}.hkw .act-squat .hkarmR{animation:sqArmR 1.4s ease-in-out infinite}
+@keyframes sqBody{0%,100%{transform:translateY(0)}50%{transform:translateY(34px)}}
+@keyframes sqSkirt{0%,100%{transform:scale(1,1)}50%{transform:scale(1.14,.74)}}
+@keyframes sqArmL{0%,100%{transform:rotate(0)}50%{transform:rotate(80deg)}}
+@keyframes sqArmR{0%,100%{transform:rotate(0)}50%{transform:rotate(-80deg)}}
+.hkw .act-stretch .hkarmL{animation:stArmL 2.4s ease-in-out infinite}.hkw .act-stretch .hkarmR{animation:stArmR 2.4s ease-in-out infinite}.hkw .act-stretch .hkfig{animation:stBody 2.4s ease-in-out infinite}
+@keyframes stArmL{0%,100%{transform:rotate(0)}20%,80%{transform:rotate(170deg)}}
+@keyframes stArmR{0%,100%{transform:rotate(0)}20%,80%{transform:rotate(-170deg)}}
+@keyframes stBody{0%,20%,80%,100%{transform:rotate(0)}40%{transform:rotate(-8deg)}60%{transform:rotate(8deg)}}
+.hkw .act-march .hkfootL{animation:mFoot .7s ease-in-out infinite}.hkw .act-march .hkfootR{animation:mFoot .7s ease-in-out .35s infinite}
+.hkw .act-march .hkarmL{animation:mArm .7s ease-in-out infinite}.hkw .act-march .hkarmR{animation:mArm .7s ease-in-out .35s infinite}.hkw .act-march .hkfig{animation:mBody .35s ease-in-out infinite}
+.hkw .act-march .hkskirt{animation:mSkirt .7s ease-in-out infinite}
+@keyframes mFoot{0%,50%,100%{transform:translateY(0)}25%{transform:translateY(-14px)}}
+@keyframes mArm{0%,100%{transform:rotate(-22deg)}50%{transform:rotate(22deg)}}
+@keyframes mBody{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes mSkirt{0%,100%{transform:skewX(3deg)}50%{transform:skewX(-3deg)}}
+.hkw .act-jump .hkfig{animation:jpBody .9s cubic-bezier(.3,.6,.4,1) infinite}.hkw .act-jump .hkarmL{animation:jjArmL .9s ease-in-out infinite}.hkw .act-jump .hkarmR{animation:jjArmR .9s ease-in-out infinite}
+@keyframes jpBody{0%,100%{transform:translateY(0) scaleY(1)}15%{transform:translateY(6px) scaleY(.94)}50%{transform:translateY(-38px)}85%{transform:translateY(4px) scaleY(.96)}}
+.hkw .act-wave .hkarmR{animation:wvArm .9s ease-in-out infinite}
+@keyframes wvArm{0%,100%{transform:rotate(-150deg)}50%{transform:rotate(-120deg)}}
+.hkw .act-clap .hkarmL{animation:clL .45s ease-in-out infinite}.hkw .act-clap .hkarmR{animation:clR .45s ease-in-out infinite}
+@keyframes clL{0%,100%{transform:rotate(-35deg)}50%{transform:rotate(-52deg)}}
+@keyframes clR{0%,100%{transform:rotate(35deg)}50%{transform:rotate(52deg)}}
+.hkw .act-dance .hkfig{animation:dnBody .8s ease-in-out infinite}.hkw .act-dance .hkarmL{animation:dnArmL .8s ease-in-out infinite}.hkw .act-dance .hkarmR{animation:dnArmR .8s ease-in-out infinite}
+.hkw .act-dance .hkfootL{animation:mFoot .8s ease-in-out infinite}.hkw .act-dance .hkfootR{animation:mFoot .8s ease-in-out .4s infinite}
+@keyframes dnBody{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-6px)}}
+@keyframes dnArmL{0%,100%{transform:rotate(130deg)}50%{transform:rotate(40deg)}}
+@keyframes dnArmR{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(-130deg)}}
+.hkw .act-salam .hkarmR{transform:rotate(55deg)}
+.hkw .hkcount{position:absolute;top:10px;right:14px;font:800 22px var(--display,Georgia,serif);color:var(--teal);opacity:.9}
+.hkw .hkstage{position:relative}
+@media (prefers-reduced-motion:reduce){.hkw .act *{animation-duration:1.6s!important}}
+.hkspark{position:fixed;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 12px 4px rgba(255,238,170,.95);pointer-events:none;z-index:60}
+.hkw .hkvnote{margin:4px 0 0;font-size:12px;opacity:.75;text-align:center;min-height:0}
+.hkw .hkvnote:empty{display:none}
+
+
+@keyframes hkTalk{from{transform:scaleY(.25)}to{transform:scaleY(1.05)}}
+.hkw .hkeyes{transform-origin:80px 54px;animation:hkBlink 4.2s infinite}
+@keyframes hkBlink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.hkw .hkhead{transform-origin:80px 90px}.hkw .hkstage.talk .hkhead{animation:hkNod 1.6s ease-in-out infinite}
+@keyframes hkNod{0%,100%{transform:rotate(0)}30%{transform:rotate(-2deg)}70%{transform:rotate(2deg)}}
+.hkw .hkstage.listen .hkboy{filter:drop-shadow(0 0 10px rgba(255,209,102,.9))}
+@media (prefers-reduced-motion:reduce){.hkw .hkeyes,.hkw .hkstage.talk .hkhead{animation:none}}
+.hkw .hkask .hkmic{padding:10px 12px;background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.hkw .hkask .hkmic.on{background:#ffd166;color:#3a2a00;border-color:#ffd166}
+.hkw .hkpanel.human .hkchips{display:none}
 .hkw .hkask button{border:0;border-radius:999px;padding:10px 16px;font:700 14px var(--body,system-ui,sans-serif);background:var(--teal);color:var(--bg);cursor:pointer}
 .hkw .hkdots{display:inline-flex;gap:4px;padding:4px 0}
 .hkw .hkdots i{width:7px;height:7px;border-radius:50%;background:var(--teal);opacity:.35;animation:hkd 1s infinite}
@@ -1252,10 +1411,48 @@ html.sitelocked #lockScr{display:flex}
 <div class="hkw">
   <button type="button" class="hkfab" id="hkFab" aria-label="Ask Hikma" title="Ask Hikma"><span class="hk"></span></button>
   <div class="hkpanel" id="hkPanel" role="dialog" aria-label="Hikma, SADA assistant">
-    <div class="hktop"><span class="hk"></span><div style="flex:1"><b>Hikma</b><small>SADA · Talents Meet · Library · online</small></div><button type="button" class="hkx" id="hkX" aria-label="Close">✕</button></div>
+    <div class="hktop"><span class="hk"></span><div style="flex:1;min-width:0"><b>Hikma</b><small id="hkSub">SADA · Talents Meet · Library · online</small></div><label class="hkswitch" title="Talk with Hikma"><input type="checkbox" id="hkHuman" aria-label="Human mode: Hikma talks"><span></span></label><button type="button" class="hkx" id="hkX" aria-label="Close">✕</button></div>
+    <div class="hkstage" id="hkStage" hidden><div class="hkrow"><div class="hkmanw"><svg class="hkboy" viewBox="0 0 160 300" role="img" aria-label="Hikma as a man in a white kandura and turban">
+      <defs><linearGradient id="hkskin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dba57d"/><stop offset="1" stop-color="#c68963"/></linearGradient>
+      <linearGradient id="hkrobe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3e8ee"/><stop offset=".45" stop-color="#ffffff"/><stop offset="1" stop-color="#e0e6ec"/></linearGradient>
+      <linearGradient id="hkturb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8ecf1"/></linearGradient></defs>
+      <ellipse class="hkshadow" cx="80" cy="292" rx="46" ry="6" fill="rgba(15,40,60,.18)"/>
+      <g class="hkfig">
+        <g class="hkfootL"><path d="M58 280 h18 v8 h-20 z" fill="#6b4a33"/></g>
+        <g class="hkfootR"><path d="M84 280 h18 l2 8 h-20 z" fill="#6b4a33"/></g>
+        <g class="hkskirt"><path d="M41 150 L119 150 L132 282 L28 282 Z" fill="url(#hkrobe)" stroke="#d0d7df" stroke-width="1.5" stroke-linejoin="round"/><path d="M58 160 Q60 220 56 278M102 160 Q100 220 104 278" fill="none" stroke="#e1e6ec" stroke-width="1.6"/></g>
+        
+        <g class="hktorso"><path d="M40 102 Q80 88 120 102 L124 160 L36 160 Z" fill="url(#hkrobe)"/><path d="M40 102 Q80 88 120 102 M40 102 L36 160 M120 102 L124 160" fill="none" stroke="#d0d7df" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="71" y="78" width="18" height="22" rx="7" fill="#bf805b"/>
+        <path d="M68 99 Q80 110 92 99" fill="none" stroke="#cbd3dc" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M80 106 L80 158" stroke="#d0d7df" stroke-width="1.6"/><circle cx="80" cy="116" r="1.5" fill="#bfc8d2"/><circle cx="80" cy="128" r="1.5" fill="#bfc8d2"/><circle cx="80" cy="140" r="1.5" fill="#bfc8d2"/>
+        <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQBAMAAAB8P++eAAAAMFBMVEUdekgdekgdekgdekgdekgdekgdekgdekgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2YzldAAAAEHRSTlMA/dFvsI5QLwAAAAAAAAAADy0h5QAABdVJREFUeNqNl9+PG1cVxz93ftlJd7P3Npu20JCdVdTQQMqO6Q8lIOSJ1KJWqK230PJDpTHh5wsiFVD+Bt5W4gke2rxQXhAsqC9IRDgPlEW01ZDSZFvUZKI2G2eTrq/xrj2z4/HwMGvHSex058XjozPfe+4533vO98Ktj+2xvedFOcJojrBd6bZvNRojvtVp9VarGGGSZHo7iC7Y24nR6UEvuh3iz/OfZAsVKPgjHa/tAcDD8OgAFL4QjI6xO30C0EzWSAHnk0FhZIxCZ2d+uFRIqRfsLMK5V2NujNl19lt6GMQ+Hl/Ut0tPV6ZMwiLyOwGQjXR0USDmCMHmg0WQYxF3zUMogE3W4JEPxjq6L38XMg8soPyXcewqKQ8Mpe6CeaV8sNTdIxG9PF0y+dmXawINEI9EFDmirZRSXo44tB0LeBB46Nd998QLMAMVAkjNS6eAN3M+KgCx78xUefGZqdeuCkmmZ229ak2W7/u9BmjkJTyoAZr3RB8+V6/RKdhUl46eJd0bXXwrArA3ckQxCEVkiDUUDRTIQQ2nwnzXFgihJJbMkJlngW8j0MJFSGReIiOn6lNr51dIVjxc3BSCDDBfCFi70PgQgj7NjtTrmvTI1dZlezXjif/ONSLHD9eWSuttyIpWu59wjzZQ6xFLY90Lu7Vur4wJYQJ4+eEwAH5FFxDsh+69J0NPiHS2BsfxgBB/wPDeDn60hKRzTymMH3830sXkHCK+wGoHs0BwvdYui+ALWlJwmk41mwRrDimghzNEirfp8H1tuD1padhchMwlNMiew+PIcEtRfQa9rScBmGk2t86BWBumWb8IQXoMC9PH1P3z0hvmo+PDY40qwB8wqt2Q8wBO42sSY6i1mUqp3cAJLKXcuyzvmReV8ikAJaWU10+PuQvI7q+zRG8H0bp4NouXWSYFswM076+DCYW9EUbLaXVs97ED4e6k86V/NjY/UZ/4pvaXPT2jNP/rADCv1J1QUo8qpZRyOa7UpxFKKaWeVbthVqndYFIKYKZOw76MNX+OOHsfNn7yDux5JDzPC0u0CmT7PjKNCKaWQRQwm+8jjv3LAQ697tDORAQhWVykfdgwbkwXef50uvU3HJzrbgWaVbAhVetkfzIA8btdUBYaKmBKsGsGr3jwGnwLSeLCVOyBFWswQhSvwj6wVjFhxSGbii5Ylw7qNhwSZwp86jOlkBBj5cjKN0oBfHspn31KqaOqAr+gpJQ0nRPVklL7KYCt7twqjQEkLQisRfgl74Dcn+r1AJ4khsTPoDw4XL3k7ij7emDIvYfqxMlGOFOH/xzWh8Of/i0SM7UhPgoJZgrw0BvWROuB4NG/AngB/XG35TjbJ6Ro7sqJe3FArWtDfLS03d6PqFAxt/iqXRtbis8fc9PKkOMD7IzfcFm0ZFYGw4d1V3gJ4tRCwD+GBlLM4wExpM1G3e71/n3H0+fC7FwxyiLMQhoNEC3ESWhhaYm5Kj0hXgWR+cxBCpWB44+xgJSrhHwVN8h6HAf+SAC41AZL76hPaji62kEY08W4fWC9/d4+3eGJS224UjQ7fcQAHwhSSszVXD8JN+m2sgO4XcDKGSgAeyLXEcbnAqQu/3mKub9PmCnW3jDXFzPBza0ZoFHYybEFdcPQ1fnS14VT2c9jWcDDXr8uM7ZiDAHMAy3mFvENEvDBFEmT8vdkX2YI4Aek5s4FhJwJMOTafA3jIzVXw5qcCnnpFA/ym1EjzlFKKVTlphE3NDSreV6/wvzD7OFmIWddfw0AMmrWyxwN8kbojJEKLvYkfBZOw2nvNtostCeAWt4NLlbGO05PkM8Kh2k4/dQYEbdDXwbnzeLhkF7x4dIy4XiBhHnF4ixUkK/IG9XljY7m8xgkFGqc5NLYzXiYzy8QS/xNTNjcGCuQrGsLgORsBRPYXPHikY7TV7fyntQ4CBC/7t1ODDt35GrjY8Xwphwtum81NYsfI4aHTNXt3RVm92zzUiFGXSpGLI1VGWH8P435EByyCL5QAAAAAElFTkSuQmCC" x="92" y="115" width="20" height="20"/></g>
+        <g class="hkarmL"><path d="M40 102 Q30 108 27 130 L22 196 Q30 202 38 197 L42 140 Z" fill="url(#hkrobe)" stroke="#d0d7df" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="30" cy="203" rx="7" ry="8" fill="#c98e67"/></g><g class="hkarmR"><path d="M120 102 Q130 108 133 130 L138 196 Q130 202 122 197 L118 140 Z" fill="url(#hkrobe)" stroke="#d0d7df" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="130" cy="203" rx="7" ry="8" fill="#c98e67"/></g>
+        <g class="hkhead">
+          <ellipse cx="53" cy="55" rx="5" ry="8" fill="#c98e67"/><ellipse cx="107" cy="55" rx="5" ry="8" fill="#c98e67"/>
+          <ellipse cx="80" cy="54" rx="27" ry="31" fill="url(#hkskin)"/>
+          <path d="M51 46 C48 14 66 4 80 4 C94 4 112 14 109 46 C104 37 94 32 80 32 C66 32 56 37 51 46 Z" fill="url(#hkturb)" stroke="#d9dfe6" stroke-width="1.2"/>
+          <path d="M53 38 Q80 22 107 38M57 28 Q80 14 103 28M64 18 Q80 9 96 18" fill="none" stroke="#dee3e9" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M51 44 Q80 30 109 44" fill="none" stroke="#eef1f5" stroke-width="4" stroke-linecap="round"/>
+          <path d="M107 40 Q117 48 112 66 Q110 56 104 51 Z" fill="#f4f6f9" stroke="#d9dfe6" stroke-width="1"/>
+          <path class="hkbrL" d="M65 47 Q71 43 77 46" fill="none" stroke="#2a201c" stroke-width="2.3" stroke-linecap="round"/>
+          <path class="hkbrR" d="M83 46 Q89 43 95 47" fill="none" stroke="#2a201c" stroke-width="2.3" stroke-linecap="round"/>
+          <g class="hkeyes"><ellipse cx="71" cy="54" rx="3.2" ry="4" fill="#2a1a12"/><ellipse cx="89" cy="54" rx="3.2" ry="4" fill="#2a1a12"/>
+          <circle cx="72" cy="52.8" r="1" fill="#fff"/><circle cx="90" cy="52.8" r="1" fill="#fff"/></g>
+          <path d="M80 57 Q78 63 77 65 Q80 67 83 65" fill="none" stroke="#a86a46" stroke-width="1.7" stroke-linecap="round"/>
+          <ellipse class="hkcheek" cx="64" cy="64" rx="4.5" ry="2.6" fill="#e08a7a" opacity=".35"/><ellipse class="hkcheek" cx="96" cy="64" rx="4.5" ry="2.6" fill="#e08a7a" opacity=".35"/>
+          <path class="hkm0" d="M73 72 Q80 77 87 72" fill="none" stroke="#7a3a2a" stroke-width="2.2" stroke-linecap="round"/>
+          <path class="hkmBig" d="M72 70.5 Q80 81 88 70.5 Z" fill="#6b2626" stroke="#7a3a2a" stroke-width="1.4" stroke-linejoin="round"/>
+          <path class="hkmSad" d="M73 76 Q80 70.5 87 76" fill="none" stroke="#7a3a2a" stroke-width="2.2" stroke-linecap="round"/>
+          <ellipse class="hkmO" cx="80" cy="73.5" rx="3.6" ry="4.4" fill="#6b2626"/>
+          <path class="hkmFlat" d="M74 73.5 Q80 74.5 86 72.5" fill="none" stroke="#7a3a2a" stroke-width="2.2" stroke-linecap="round"/>
+          <g class="hkm1"><ellipse cx="80" cy="73" rx="6" ry="4" fill="#6b2626"/><path d="M75.5 71.4 Q80 70.4 84.5 71.4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+        </g>
+      </g>
+    </svg></div></div><p class="hkvnote" id="hkVNote"></p></div>
     <div class="hkchat" id="hkChat" aria-live="polite"></div>
     <div class="hkchips" id="hkChips"></div>
-    <form class="hkask" id="hkForm"><label for="hkIn" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label><input id="hkIn" autocomplete="off" placeholder="Ask me anything…"><button type="submit">Send</button></form>
+    <form class="hkask" id="hkForm"><label for="hkIn" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Message</label><input id="hkIn" autocomplete="off" placeholder="Ask me anything…"><button type="button" class="hkmic" id="hkMic" aria-label="Speak your question" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button type="submit">Send</button></form>
   </div>
 </div>
 <script>
@@ -1282,6 +1479,7 @@ html.sitelocked #lockScr{display:flex}
   }
   function aiAnswer(q){
     var ctx='';try{ctx=typeof window.HIKMA_CTX==='function'?String(window.HIKMA_CTX()||''):''}catch(x){}
+    if(HUMAN)ctx='VOICE MODE: the user is talking to Hikma as a talking student on screen and the answer will be spoken aloud. Reply in Malayalam script (use English only if the user clearly speaks English), in 1 to 4 short, warm, spoken-style sentences. No lists, no links, no emojis, no symbols. You are drawn as a young man in a white kandura and turban who can move: if the user asks you to do an action (exercise, jumping jacks, squats, stretching, marching or walking, jumping, dancing, clapping, waving), begin your reply with exactly one tag: [[exercise]], [[jj]], [[squat]], [[stretch]], [[march]], [[jump]], [[dance]], [[clap]] or [[wave]], then say a short cheerful line as you do it (you may count). Otherwise you may begin with one mood tag: [[happy]], [[sad]], [[surprised]] or [[think]].\n'+ctx;
     var ctl=window.AbortController?new AbortController():null; var tm=setTimeout(function(){ctl&&ctl.abort()},30000);
     return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},signal:ctl?ctl.signal:undefined,
       body:JSON.stringify({action:'hikma',q:q,page:pageName(),ctx:ctx,history:HIST.slice(-10)})})
@@ -1493,18 +1691,97 @@ html.sitelocked #lockScr{display:flex}
     if(has(q,['how many','count','total','number of','ethra','plus one','plus two','degree','student','member'])) return countReply(q);
     return nameReply(raw).then(function(r){return r||'I am not sure about that yet. I can tell you about:<ul><li>What SADA is</li><li>Our Chairman</li><li>Vision, mission and values</li><li>SADA wings</li><li>Class unions</li><li>Number of students</li><li>Talents Meet and the Library</li></ul>Try asking one of these!'});
   }
+  /* ---- human mode: Hikma becomes a talking student (Malayalam voice) ---- */
+  var HUMAN=false, SY=window.speechSynthesis||null, stage=g('hkStage'), vnote=g('hkVNote'), REC=null, VOICES=[];
+  function loadVoices(){try{VOICES=SY?SY.getVoices():[]}catch(x){VOICES=[]}}
+  if(SY){loadVoices();try{SY.addEventListener('voiceschanged',loadVoices)}catch(x){SY.onvoiceschanged=loadVoices}}
+  function plain(t){return String(t||'').replace(/<[^>]+>/g,' ').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/https?:\/\/\S+/g,'').replace(/[*_#`>|]/g,'').replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/gu,'').replace(/\s+/g,' ').trim()}
+  function voiceFor(text){var ml=/[\u0D00-\u0D7F]/.test(text);loadVoices();
+    if(ml){var v=VOICES.filter(function(x){return /^ml/i.test(x.lang)})[0];return v?{v:v,lang:'ml-IN'}:{v:null,lang:'ml-IN',missing:true}}
+    var en=VOICES.filter(function(x){return /^en-IN/i.test(x.lang)})[0]||VOICES.filter(function(x){return /^en/i.test(x.lang)})[0]||null;
+    return {v:en,lang:en?en.lang:'en-IN'}}
+  function hush(){if(SY)try{SY.cancel()}catch(x){}stage.classList.remove('talk');gestures(false)}
+  /* body language: arm gestures while talking, face moods, and actions such as exercise */
+  var GT=null,ACTT=null,CNT=null,MOODT=null,armL=stage.querySelector('.hkarmL'),armR=stage.querySelector('.hkarmR');
+  function gestures(on){clearInterval(GT);GT=null;if(!on){armL.style.transform=armR.style.transform='';return}
+    var P=[[0,0],[18,-10],[-8,-38],[30,-30],[8,-70],[-20,-12],[45,0],[0,-95],[25,-25]];
+    var tick=function(){if(stage.classList.contains('act'))return;var g=P[Math.floor(Math.random()*P.length)];armL.style.transform='rotate('+g[0]+'deg)';armR.style.transform='rotate('+g[1]+'deg)'};tick();GT=setInterval(tick,850)}
+  function mood(m,ms){clearTimeout(MOODT);['happy','sad','surprised','think'].forEach(function(x){stage.classList.remove('ex-'+x)});if(m)stage.classList.add('ex-'+m);if(m&&ms)MOODT=setTimeout(function(){mood('')},ms)}
+  function moodOf(t){t=String(t||'').toLowerCase();
+    if(/😢|😔|\bsorry\b|\bsad\b|unfortunately|ക്ഷമിക്ക|വിഷമ|ദുഃഖ|സങ്കട/.test(t))return 'sad';
+    if(/\bwow\b|amazing|😮|😲|അത്ഭുത|ഹോ!|ആഹാ/.test(t))return 'surprised';
+    if(/😄|😊|😂|🎉|haha|joke|great|congrat|well done|തമാശ|ചിരി|സന്തോഷ|മിടുക്ക|അടിപൊളി|നന്നായി/.test(t))return 'happy';
+    if(/\?\s*$|let me think|ആലോചി|നോക്കട്ടെ/.test(t))return 'think';return 'happy'}
+  var ACTS={jj:'Jumping jacks',squat:'Squats',stretch:'Stretching',march:'Marching',jump:'Jumping',wave:'Waving',clap:'Clapping',dance:'Dancing',salam:''};
+  var ACTMS={jj:600,squat:1400,stretch:2400,march:700,jump:900,dance:800,clap:450,wave:900};
+  function actStop(){clearTimeout(ACTT);clearInterval(CNT);Object.keys(ACTS).forEach(function(k){stage.classList.remove('act-'+k)});stage.classList.remove('act');var c=stage.querySelector('.hkcount');if(c)c.remove()}
+  function act(name,ms,then){actStop();if(!ACTS.hasOwnProperty(name))return;gestures(false);armL.style.transform=armR.style.transform='';stage.classList.add('act','act-'+name);mood(name==='salam'?'happy':'happy');
+    if(['jj','squat','jump','march'].indexOf(name)>-1){var n=0,c=document.createElement('div');c.className='hkcount';stage.appendChild(c);var step=ACTMS[name]*(name==='march'?1:1);c.textContent='';CNT=setInterval(function(){n++;c.textContent=n},step)}
+    ACTT=setTimeout(function(){actStop();mood('');if(then)then();else if(stage.classList.contains('talk'))gestures(true)},ms||4800)}
+  function routine(){act('jj',4800,function(){act('squat',4300,function(){act('stretch',4900,function(){act('march',4200)})})})}
+  function actionOf(t){t=' '+String(t||'').toLowerCase()+' ';
+    if(/exercise|work ?out|വ്യായാമ|എക്സർസൈസ്|എക്സസൈസ്|exersise|excercise|pt ചെയ്|ഡ്രിൽ|drill/.test(t))return 'routine';
+    if(/jumping ?jack|ജമ്പിങ്/.test(t))return 'jj';
+    if(/squat|sit ?up|ഇരുന്ന് എഴുന്നേ|സ്ക്വാട്ട്/.test(t))return 'squat';
+    if(/stretch|hands? up|കൈ (ഉയർത്ത|പൊക്ക)|സ്ട്രെച്ച്/.test(t))return 'stretch';
+    if(/march|walk|നടക്ക|നടന്ന്|മാർച്ച്/.test(t))return 'march';
+    if(/ jump|ചാട്|ചാടി/.test(t))return 'jump';
+    if(/dance|ഡാൻസ്|നൃത്ത|ആട്/.test(t))return 'dance';
+    if(/clap|കയ്യടി|കൈയടി/.test(t))return 'clap';
+    if(/ wave|bye|ടാറ്റ|കൈ വീശ|റ്റാറ്റ/.test(t))return 'wave';
+    return ''}
+  function doAction(a){if(!HUMAN||!a)return false;if(a==='routine')routine();else act(a,a==='wave'?3000:5200);return true}
+  function tagsOut(t){var a='';t=String(t||'').replace(/\[\[(\w+)\]\]/g,function(m,k){k=k.toLowerCase();if(k==='exercise')a='routine';else if(ACTS.hasOwnProperty(k))a=k;else if(['happy','sad','surprised','think'].indexOf(k)>-1)a=a||('mood:'+k);return ''});return {t:t.replace(/^\s+/,''),a:a}}
+  function speak(raw){if(!HUMAN)return;var t=plain(raw);if(!t)return;
+    if(!SY){vnote.textContent='This browser cannot speak. Please read the answer below.';return}
+    hush();if(!stage.classList.contains('act'))mood(moodOf(t));var pick=voiceFor(t);vnote.textContent=pick.missing?'No Malayalam voice on this phone. Install it: Settings → Text-to-speech → Google → Malayalam.':'';
+    var parts=t.match(/[^.!?।\n]+[.!?।]*/g)||[t],left=parts.length;
+    parts.forEach(function(ch){ch=ch.trim();if(!ch){left--;return}var u=new SpeechSynthesisUtterance(ch);u.lang=pick.lang;if(pick.v)try{u.voice=pick.v}catch(x){}u.rate=pick.lang==='ml-IN'?0.95:1;u.pitch=1.05;
+      u.onstart=function(){stage.classList.add('talk');if(!stage.classList.contains('act')&&!GT)gestures(true)};u.onend=u.onerror=function(){left--;if(left<=0){stage.classList.remove('talk');gestures(false);setTimeout(function(){if(!stage.classList.contains('talk'))mood('')},1500)}};SY.speak(u)})}
+  function calm(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches}
+  var morphing=false;
+  function morph(){if(morphing)return;if(calm()||!panel.classList.contains('show')||!document.body.animate){setHuman(true);return}
+    morphing=true;var r=panel.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,B=74;
+    var dim=document.createElement('div');dim.className='hkdim';document.body.appendChild(dim);dim.animate([{opacity:0},{opacity:1}],{duration:350,fill:'forwards'});
+    var orb=document.createElement('div');orb.className='hkorb';orb.style.cssText='left:'+r.left+'px;top:'+r.top+'px;width:'+r.width+'px;height:'+r.height+'px';document.body.appendChild(orb);
+    var glow='0 0 40px 22px rgba(255,255,255,.95),0 0 110px 50px rgba(255,236,170,.75)';
+    panel.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.6)'}],{duration:420,easing:'ease-in',fill:'forwards'});
+    orb.animate([{opacity:0,borderRadius:'18px',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',boxShadow:'0 0 0 0 rgba(255,255,255,0)'},
+      {opacity:1,borderRadius:'40px',left:(cx-r.width*.3)+'px',top:(cy-r.height*.3)+'px',width:(r.width*.6)+'px',height:(r.height*.6)+'px',offset:.35},
+      {opacity:1,borderRadius:'50%',left:(cx-B/2)+'px',top:(cy-B/2)+'px',width:B+'px',height:B+'px',boxShadow:glow}],{duration:700,easing:'cubic-bezier(.5,0,.7,1)',fill:'forwards'}).onfinish=function(){
+      orb.animate([{transform:'scale(1)',boxShadow:glow},{transform:'scale(1.25)',offset:.5},{transform:'scale(.9)'}],{duration:420,iterations:1,easing:'ease-in-out'}).onfinish=function(){
+        for(var k=0;k<18;k++){var sp=document.createElement('div');sp.className='hkspark';sp.style.left=(cx-4)+'px';sp.style.top=(cy-4)+'px';document.body.appendChild(sp);
+          var a=k/18*Math.PI*2,d=80+Math.random()*70;sp.animate([{transform:'translate(0,0) scale(1.2)',opacity:1},{transform:'translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px) scale(.2)',opacity:0}],{duration:560,easing:'ease-out'}).onfinish=(function(e){return function(){e.remove()}})(sp)}
+        orb.animate([{transform:'scale(.9)',opacity:1},{transform:'scale(2.6)',opacity:0}],{duration:360,easing:'ease-out',fill:'forwards'}).onfinish=function(){orb.remove()};
+        setTimeout(function(){panel.getAnimations().forEach(function(x){x.cancel()});setHuman(true,false,true);stage.classList.add('enter');panel.animate([{opacity:0},{opacity:1}],{duration:260});
+          dim.animate([{opacity:1},{opacity:0}],{duration:500,fill:'forwards'}).onfinish=function(){dim.remove()};
+          setTimeout(function(){stage.classList.remove('enter');morphing=false},1400)},160)}}}
+  function setHuman(on,quiet,entering){HUMAN=!!on;g('hkHuman').checked=HUMAN;panel.classList.toggle('human',HUMAN);stage.hidden=!HUMAN;
+    g('hkSub').textContent=HUMAN?'Talking mode · tap 🎤 to speak':'SADA · Talents Meet · Library · online';
+    g('hkMic').hidden=!(HUMAN&&RecCls);try{localStorage.setItem('hk_human',HUMAN?'1':'')}catch(x){}
+    if(!HUMAN){hush();stopRec();actStop();mood('');return}
+    if(!quiet)setTimeout(function(){speak('അസ്സലാമു അലൈക്കും! ഞാൻ ഹിക്മ. എന്ത് വേണമെങ്കിലും ചോദിച്ചോളൂ, ഞാൻ പറഞ്ഞുതരാം.')},entering?1100:0)}
+  var RecCls=window.SpeechRecognition||window.webkitSpeechRecognition||null;
+  function stopRec(){if(REC){try{REC.abort()}catch(x){}REC=null}g('hkMic').classList.remove('on');stage.classList.remove('listen')}
+  g('hkMic').addEventListener('click',function(){if(REC){stopRec();return}if(!RecCls)return;hush();
+    REC=new RecCls();REC.lang='ml-IN';REC.interimResults=true;REC.maxAlternatives=1;var said='';
+    REC.onresult=function(ev){said='';for(var i=0;i<ev.results.length;i++)said+=ev.results[i][0].transcript;inp.value=said};
+    REC.onerror=function(ev){vnote.textContent=ev.error==='not-allowed'?'Please allow the microphone to talk with Hikma.':'I could not hear that. Tap 🎤 and try again.';stopRec()};
+    REC.onend=function(){var t=said.trim();stopRec();if(t)ask(t)};
+    g('hkMic').classList.add('on');stage.classList.add('listen');vnote.textContent='Listening… speak now';try{REC.start()}catch(x){stopRec()}});
+  g('hkHuman').addEventListener('change',function(){if(this.checked){this.checked=false;morph()}else setHuman(false)});
   var busy=false;
   function ask(text){
     text=String(text||inp.value).trim(); if(!text||busy) return;
-    add(e(text),'me'); inp.value=''; busy=true;
+    add(e(text),'me'); inp.value=''; busy=true; var ACTED=doAction(actionOf(text));
     var w=add('<span class="hkdots"><i></i><i></i><i></i></span>','ai');
     var local=/talents?\s*meet\s*@\s*\d/i.test(text);
-    var done=function(html,raw){w.innerHTML=html;HIST.push({who:'me',text:text});HIST.push({who:'ai',text:raw||w.textContent});HIST=HIST.slice(-30);try{localStorage.setItem('hk_hist',JSON.stringify(HIST))}catch(x){}chat.scrollTop=chat.scrollHeight;busy=false};
+    var done=function(html,raw){w.innerHTML=html;speak(raw||w.textContent);if(vnote.textContent==='Listening… speak now')vnote.textContent='';HIST.push({who:'me',text:text});HIST.push({who:'ai',text:raw||w.textContent});HIST=HIST.slice(-30);try{localStorage.setItem('hk_hist',JSON.stringify(HIST))}catch(x){}chat.scrollTop=chat.scrollHeight;busy=false};
     var why=function(err){if(!err)return '';var m=String(err.message||err);var s=/NO_KEY/.test(m)?'AI key is not set yet':/BUSY/.test(m)?'AI is busy, try again in a minute':/AI_FAILED/.test(m)?'Gemini did not answer — check the key':/Wrong username|Unknown action|Bad request/.test(m)?'SADA code is not updated yet (Deploy → New version)':'could not reach the AI';return '<div class="hkwhy">('+s+')</div>'};
     var fallback=function(err){return Promise.resolve().then(function(){return answer(text)}).then(function(r){done(r+why(err))})
       .catch(function(){w.innerHTML='Sorry, I could not reach the internet just now. Please try again. 🙏';busy=false})};
     if(local){fallback();return}
-    aiAnswer(text).then(function(t){done(md(t),t)}).catch(fallback);
+    aiAnswer(text).then(function(t){var x=tagsOut(t);if(x.a&&!ACTED){if(x.a.indexOf('mood:')===0)mood(x.a.slice(5),6000);else doAction(x.a)}done(md(x.t),x.t)}).catch(fallback);
   }
   var CHIPS=TM_ON?['Talents meet@1','How do I evaluate?','Tell me a joke 😄','Who is the chairman?']:pageName()==='library'?['Which books are available?','Who has books now?','Tell me a joke 😄','What is SADA?']:['What is SADA?','How many students?','Tell me a joke 😄','How do I use this site?'];
   /* one Hikma on every page: the chat continues when you move between SADA, Talents Meet and the Library */
@@ -1519,7 +1796,7 @@ html.sitelocked #lockScr{display:flex}
   g('hkChips').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)ask(b.textContent)});
   g('hkForm').addEventListener('submit',function(ev){ev.preventDefault();ask()});
   add('Assalamu alaikum! I am <b>Hikma</b> 😊 Your friend on the SADA website. Ask me <i>anything</i> — about SADA, students, Talents Meet, the library, your studies… or just say hi. I speak Malayalam and English. 😄','ai');
-  function toggle(open){if(open===undefined)open=!panel.classList.contains('show');panel.classList.toggle('show',open);fab.classList.toggle('open',open);if(open){chat.scrollTop=chat.scrollHeight;inp.focus()}}
+  function toggle(open){if(open===undefined)open=!panel.classList.contains('show');panel.classList.toggle('show',open);fab.classList.toggle('open',open);if(!open){hush();stopRec()}if(open){chat.scrollTop=chat.scrollHeight;inp.focus()}}
   fab.addEventListener('click',function(){toggle()});
   if(TM_ON){
     var appEl=document.getElementById('app'), wrap=fab.closest('.hkw');
@@ -1528,6 +1805,7 @@ html.sitelocked #lockScr{display:flex}
     sync();
   }
   g('hkX').addEventListener('click',function(){toggle(false);fab.focus()});
+  try{if(localStorage.getItem('hk_human')==='1')setHuman(true,true)}catch(x){}
   document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&panel.classList.contains('show'))toggle(false)});
 })();
 </script>
@@ -1975,9 +2253,10 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     if(me.type!=='admin')call({action:'att.list'}).then(function(j){atSet(j);$('meAtt').hidden=false;renderMeAtt()}).catch(function(){});
     if(me.type!=='union'&&me.type!=='staff')loadProg();
     $('meUnion').hidden=$('meUProgs').hidden=me.type!=='union'; $('meSProg').hidden=me.type!=='staff';
-    $('meSoon').hidden=me.type==='union'||me.type==='staff'||!!me.exp;
+    $('meSoon').hidden=['union','staff','student','sada'].indexOf(me.type)>-1||!!me.exp;
     if(me.type==='union'||me.type==='staff')loadProg();
     if(me.type==='staff'){try{localStorage.setItem('tm_sess',JSON.stringify({role:'staff',u:c.u,p:c.p}))}catch(e){}}
+    loadMsgs(me);
     $('meExp').hidden=!me.exp; if(me.exp){ if(!$('xDate').value)$('xDate').value=today(); setPane(xPane); loadExp(); }
   }
   $('meBack').addEventListener('click',function(){showEntries()});
@@ -2098,10 +2377,10 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function setATab(k){
     atab=k; document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.classList.toggle('on',b.dataset.at===k);if(b.dataset.at===k)$('amenuCur').textContent=b.textContent.trim()});
     amClose();
-    var PANES={lock:'lockPane',progs:'progPane',pres:'presPane',hikma:'hkPane',sprog:'spPane',best:'bestPane',att:'attPane'};
+    var PANES={lock:'lockPane',progs:'progPane',pres:'presPane',hikma:'hkPane',sprog:'spPane',best:'bestPane',att:'attPane',msgs:'msgPane'};
     var st=k==='students', sp=!!PANES[k]; $('adminList').hidden=!st; if(!st)$('addForm').hidden=true; $('accPane').hidden=st||sp;
     Object.keys(PANES).forEach(function(x){$(PANES[x]).hidden=x!==k});
-    if(k==='lock'){renderLock();return} if(k==='progs'){loadProg();return} if(k==='pres'){loadPresInfo();return} if(k==='sprog'){loadSP();return} if(k==='best'){loadBestAdm();return} if(k==='att'){loadAtt();return} if(sp)return;
+    if(k==='lock'){renderLock();return} if(k==='progs'){loadProg();return} if(k==='pres'){loadPresInfo();return} if(k==='sprog'){loadSP();return} if(k==='best'){loadBestAdm();return} if(k==='msgs'){loadMsgAdm();return} if(k==='att'){loadAtt();return} if(sp)return;
     if(!st){ resetAccForm(); renderAcc(); loadAcc(); }
   }
   document.querySelectorAll('#atabs [data-at]').forEach(function(b){b.addEventListener('click',function(){setATab(b.dataset.at)})});
@@ -2307,6 +2586,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     if(!BCD||!BCD.cls)return; var c=BCD.cls;
     $('acInfo').textContent='Library days: '+c.cur.days+' · Talents Meets: '+c.cur.meets;
     $('acCur').innerHTML=clsBoard(c.cur); $('acPerm').innerHTML=clsBoard(c.perm);
+    tprFill();
     var ent=BCD.entries||[]; $('acList').innerHTML=ent.length?ent.map(function(x){return bcEntry(x,false)}).join(''):'<div class="emptyl">No marks from the staff yet.</div>';
   }
   function openBest(from){bcFrom=from;show('best');renderBC();call({action:'bc.view'}).then(bcSet).catch(function(err){$('bvCur').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}
@@ -2320,6 +2600,21 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   }}
   slider($('acCurDel'),bestReset('cur','cls','acErrC')); slider($('acPermDel'),bestReset('perm','cls','acErrP'));
   slider($('bvCurDel'),bestReset('cur','view','bvErrC')); slider($('bvPermDel'),bestReset('perm','view','bvErrP'));
+  /* admin: total progress report = marks got ÷ total marks × number */
+  var TPR={cls:'Plus One',tbl:'cur',v:{}};
+  try{TPR.v=JSON.parse(localStorage.getItem('sada_tpr')||'{}')||{}}catch(e){TPR.v={}}
+  function tprGot(cls,tbl){var t=BCD&&BCD.cls&&BCD.cls[tbl];if(!t)return 0;var r=(t.rows||[]).filter(function(x){return x.cls===cls})[0];return r?r.total:0}
+  function tprKey(){return TPR.cls+'|'+TPR.tbl}
+  function tprCalc(g,t,n){g=parseFloat(g);t=parseFloat(t);n=parseFloat(n);return (t>0&&!isNaN(g)&&n>0)?Math.round(g/t*n*100)/100:null}
+  function tprFill(){var v=TPR.v[tprKey()]||{};$('tprGot').value=v.got!=null&&v.own?v.got:tprGot(TPR.cls,TPR.tbl);$('tprTot').value=v.tot||'';$('tprTo').value=v.to||'';tprShow()}
+  function tprShow(){var r=tprCalc($('tprGot').value,$('tprTot').value,$('tprTo').value);
+    $('tprRes').innerHTML=r==null?'<span>Fill the total mark and the number to convert to.</span>':'<span>'+esc(TPR.cls)+' · '+esc($('tprGot').value)+' ÷ '+esc($('tprTot').value)+' × '+esc($('tprTo').value)+'</span><b>'+r+'</b><span>out of '+esc($('tprTo').value)+'</span>';
+    var rows=['Plus One','Plus Two','Degree 1'].map(function(c){var v=TPR.v[c+'|'+TPR.tbl]||{},g=v.own&&v.got!=null?v.got:tprGot(c,TPR.tbl),x=tprCalc(g,v.tot,v.to);return '<tr><td><b>'+c+'</b></td><td>'+g+'</td><td>'+(v.tot||'–')+'</td><td>'+(v.to||'–')+'</td><td><b>'+(x==null?'–':x)+'</b></td></tr>'}).join('');
+    $('tprAll').innerHTML='<table><thead><tr><th>Class</th><th>Got</th><th>Total</th><th>Convert to</th><th>Result</th></tr></thead><tbody>'+rows+'</tbody></table>'}
+  function tprSave(){var g=$('tprGot').value;TPR.v[tprKey()]={got:g,own:String(g)!==String(tprGot(TPR.cls,TPR.tbl)),tot:$('tprTot').value,to:$('tprTo').value};try{localStorage.setItem('sada_tpr',JSON.stringify(TPR.v))}catch(e){}tprShow()}
+  ['tprGot','tprTot','tprTo'].forEach(function(id){$(id).addEventListener('input',tprSave)});
+  function tprPick(id,k){$(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;TPR[k]=b.dataset.v;$(id).querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});tprFill()})}
+  tprPick('tprCls','cls');tprPick('tprTbl','tbl');
   /* admin: who can see and edit, who can take attendance */
   var CFG={see:['sada'],bcEdit:[],buSee:['staff'],buEdit:[],att:[]};
   var CHIPS={bcSee:'see',bcEdit:'bcEdit',buSee:'buSee',buEdit:'buEdit',atWho:'att'};
@@ -2330,6 +2625,68 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function saveCfg(errId){return function(done,say){say('Saving…');note($(errId),'',0);
     call({action:'bc.cfg',cfg:CFG}).then(function(j){bcSet(j);fillCfg(j.cfg);note($(errId),'Saved ✓',0);done()}).catch(function(err){note($(errId),errText(err),1);done()})}}
   slider($('bcCfgSave'),saveCfg('bcCfgErr')); slider($('atWhoSave'),saveCfg('atWhoErr'));
+
+  /* ===================== PROBLEMS AND NOTIFICATIONS ===================== */
+  var PB={problems:[],people:[]}, NT=[], pbCat='', pbTo='', ntTo='all', MSGME=null;
+  var TYPE_SHORT={union:'Union',staff:'Staff',sada:'SADA',admin:'Admin',student:'Student'};
+  function when(t){if(!t)return '';var d=new Date(t);return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})}
+  function seenKey(k){return 'sada_seen_'+k+'_'+(MSGME?MSGME.id:'')}
+  function seenGet(k){try{return Number(localStorage.getItem(seenKey(k))||0)}catch(e){return 0}}
+  function seenSet(k,v){try{localStorage.setItem(seenKey(k),String(v))}catch(e){}}
+  function pbItem(p,admin){
+    var head=admin?('<b>'+esc(p.from)+(p.hide?' <span class="tag soon">name hidden</span>':'')+'</b><small>'+esc(p.fromCls)+' → '+esc(TYPE_SHORT[p.toType]||p.toType)+': '+esc(p.toName)+'</small>')
+      :p.mine?('<b>To '+esc(p.toName)+'</b><small>'+esc(TYPE_SHORT[p.toType]||'')+(p.hide?' · your name is hidden':'')+'</small>')
+      :('<b>'+esc(p.from)+'</b><small>'+esc(p.fromCls||'Student')+'</small>');
+    var st=p.status==='solved'?'<span class="tag done">Solved</span>':p.status==='replied'?'<span class="tag soon">Replied</span>':'<span class="tag pending">New</span>';
+    return '<div class="pcard" data-pid="'+esc(p.id)+'"><div class="ph1"><div><small>'+when(p.at)+'</small>'+head+'</div>'+st+'</div><p style="margin:8px 0 0">'+esc(p.text)+'</p>'+
+      p.replies.map(function(r){return '<div class="rep'+(r.mineR?' me':'')+'"><small>'+esc(r.by)+(r.byType&&r.byType!=='student'?' · '+esc(TYPE_SHORT[r.byType]||r.byType):'')+' · '+when(r.at)+'</small>'+esc(r.text)+'</div>'}).join('')+
+      '<div class="rbox"><textarea rows="1" placeholder="Write a reply" data-rtext="'+esc(p.id)+'"></textarea><button type="button" class="btn small" data-reply="'+esc(p.id)+'">Reply</button></div>'+
+      '<button type="button" class="rmv" style="color:var(--muted)" data-solve="'+esc(p.id)+'" data-open="'+(p.status==='solved'?'1':'')+'">'+(p.status==='solved'?'Open again':'Mark as solved')+'</button></div>'}
+  function ntItem(n,canDel){return '<div class="pcard"><div class="ph1"><div><small>'+when(n.at)+' · '+esc(n.by)+' → '+esc(n.toLabel)+'</small><b>'+esc(n.title)+'</b></div></div><p style="margin:8px 0 0">'+esc(n.text)+'</p>'+(canDel?'<button type="button" class="rmv" data-ntdel="'+esc(n.id)+'">Remove</button>':'')+'</div>'}
+  function renderPb(){var me=MSGME;if(!me)return;var stu=me.type==='student';
+    $('pbNew').hidden=!stu; $('pbH').textContent=stu?'Send a problem':'Problems sent to you';
+    $('pbNote').textContent=stu?'Choose Union, Staff or SADA, tap the person and write. They can reply here.':'Students sent these problems to you. Reply below.';
+    if(stu){$('pbCat').querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.t===pbCat)});
+      var ppl=PB.people.filter(function(x){return x.type===pbCat});
+      $('pbPpl').innerHTML=pbCat?(ppl.length?ppl.map(function(x){return '<button type="button" data-to="'+esc(x.id)+'" class="'+(x.id===pbTo?'on':'')+'">'+esc(x.name)+(x.title?'<small>'+esc(x.title)+'</small>':'')+'</button>'}).join(''):'<p class="note">Nobody here yet.</p>'):'';
+      var t=PB.people.filter(function(x){return x.id===pbTo})[0]; $('pbForm').hidden=!t; if(t)$('pbTo').innerHTML='To: <b>'+esc(t.name)+'</b>'+(t.title?' ('+esc(t.title)+')':'')}
+    var list=PB.problems.filter(function(p){return stu?p.mine:p.toMe});
+    $('pbList').innerHTML=list.length?list.map(function(p){return pbItem(p,false)}).join(''):'<div class="emptyl">'+(stu?'You have not sent any problem.':'No problems sent to you.')+'</div>';
+    var last=seenGet('pb'),nw=list.filter(function(p){var t=p.replies.length?p.replies[p.replies.length-1]:null;return stu?(t&&!t.mineR&&t.at>last):(p.status==='new'&&p.at>last)}).length;
+    $('pbBadge').hidden=!nw;$('pbBadge').textContent=nw+' new'}
+  function renderNt(){var me=MSGME;if(!me)return;var sada=me.type==='sada';$('ntNew').hidden=!sada;
+    $('ntTo').querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===ntTo)});$('ntIdF').hidden=ntTo!=='one';
+    var list=sada?NT.filter(function(n){return n.mine}):NT;
+    $('ntList').innerHTML=list.length?list.map(function(n){return ntItem(n,sada&&n.mine)}).join(''):'<div class="emptyl">'+(sada?'You have not sent any notification.':'No notifications yet.')+'</div>';
+    var last=seenGet('nt'),nw=me.type==='student'?NT.filter(function(n){return n.at>last}).length:0;$('ntBadge').hidden=!nw;$('ntBadge').textContent=nw+' new'}
+  function loadMsgs(me){MSGME=me;var t=me.type;
+    $('mePb').hidden=['student','union','staff','sada'].indexOf(t)<0; $('meNt').hidden=['student','sada'].indexOf(t)<0;
+    if(!$('mePb').hidden){$('pbList').innerHTML='<div class="emptyl">Loading…</div>';call({action:'pb.list'}).then(function(j){PB=j;renderPb()}).catch(function(err){$('pbList').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}
+    if(!$('meNt').hidden){renderNt();$('ntList').innerHTML='<div class="emptyl">Loading…</div>';call({action:'nt.list'}).then(function(j){NT=j.notes||[];renderNt()}).catch(function(err){$('ntList').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}}
+  $('pbCat').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;pbCat=b.dataset.t;pbTo='';renderPb()});
+  $('pbPpl').addEventListener('click',function(e){var b=e.target.closest('[data-to]');if(!b)return;pbTo=b.dataset.to;renderPb();$('pbText').focus()});
+  slider($('pbSend'),function(done,say){var E=$('pbErr');note(E,'',0);if(!pbTo){note(E,'Choose who should get the problem.',1);done();return}
+    if($('pbText').value.trim().length<5){note(E,'Write the problem (at least a few words).',1);done();return}
+    say('Sending…');call({action:'pb.send',to:pbTo,text:$('pbText').value,hide:$('pbHide').checked}).then(function(j){PB=j;$('pbText').value='';$('pbHide').checked=false;pbTo='';renderPb();note(E,'Sent ✓ You will see the reply here.',0);done()}).catch(function(err){note(E,errText(err),1);done()})});
+  function msgClicks(root,admin){root.addEventListener('click',function(e){
+    var r=e.target.closest('[data-reply]');if(r){var id=r.dataset.reply,ta=root.querySelector('[data-rtext="'+id+'"]');if(!ta||!ta.value.trim()){if(ta)ta.focus();return}
+      r.disabled=true;r.textContent='Sending…';call({action:'pb.reply',id:id,text:ta.value}).then(function(j){PB=j;if(admin)renderMsgAdm();else renderPb();toastMsg('Reply sent ✓')}).catch(function(err){r.disabled=false;r.textContent='Reply';toastMsg(errText(err))});return}
+    var s=e.target.closest('[data-solve]');if(s){s.textContent='…';call({action:'pb.done',id:s.dataset.solve,open:!!s.dataset.open}).then(function(j){PB=j;if(admin)renderMsgAdm();else renderPb()}).catch(function(err){toastMsg(errText(err))});return}
+    var d=e.target.closest('[data-ntdel]');if(d){d.textContent='Removing…';call({action:'nt.del',id:d.dataset.ntdel}).then(function(j){NT=j.notes||[];if(admin)renderMsgAdm();else renderNt()}).catch(function(err){toastMsg(errText(err))})}
+  })}
+  msgClicks($('pbList'),false);msgClicks($('ntList'),false);msgClicks($('amPb'),true);msgClicks($('amNt'),true);
+  function toastMsg(t){var el=$('msgToast');if(!el){el=document.createElement('div');el.id='msgToast';el.setAttribute('role','status');el.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:12px;font-size:.9rem;z-index:99;max-width:90vw;transition:opacity .3s';document.body.appendChild(el)}el.textContent=t;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0'},2600)}
+  $('mePb').addEventListener('click',function(){var l=PB.problems;var mx=0;l.forEach(function(p){mx=Math.max(mx,p.at);p.replies.forEach(function(r){mx=Math.max(mx,r.at)})});if(mx){seenSet('pb',mx);setTimeout(function(){$('pbBadge').hidden=true},1500)}});
+  $('meNt').addEventListener('click',function(){var mx=0;NT.forEach(function(n){mx=Math.max(mx,n.at)});if(mx&&MSGME&&MSGME.type==='student'){seenSet('nt',mx);setTimeout(function(){$('ntBadge').hidden=true},1500)}});
+  $('ntTo').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;ntTo=b.dataset.v;renderNt()});
+  slider($('ntSend'),function(done,say){var E=$('ntErr');note(E,'',0);var to=ntTo==='one'?'id:'+$('ntId').value.trim():ntTo;
+    if(ntTo==='one'&&!$('ntId').value.trim()){note(E,"Type the student's SNEC UID or full name.",1);done();return}
+    if($('ntTitle').value.trim().length<2||$('ntText').value.trim().length<2){note(E,'Write the title and the message.',1);done();return}
+    say('Sending…');call({action:'nt.send',to:to,title:$('ntTitle').value,text:$('ntText').value}).then(function(j){NT=j.notes||[];$('ntTitle').value='';$('ntText').value='';$('ntId').value='';renderNt();note(E,'Sent ✓',0);done()}).catch(function(err){note(E,errText(err),1);done()})});
+  function renderMsgAdm(){$('amPb').innerHTML=PB.problems.length?PB.problems.map(function(p){return pbItem(p,true)}).join(''):'<div class="emptyl">No problems yet.</div>';
+    $('amNt').innerHTML=NT.length?NT.map(function(n){return ntItem(n,true)}).join(''):'<div class="emptyl">No notifications yet.</div>'}
+  function loadMsgAdm(){MSGME=(getCred()||{}).me||null;$('amPb').innerHTML=$('amNt').innerHTML='<div class="emptyl">Loading…</div>';
+    call({action:'pb.list'}).then(function(j){PB=j;return call({action:'nt.list'})}).then(function(j){NT=j.notes||[];renderMsgAdm()}).catch(function(err){$('amPb').innerHTML='<div class="emptyl">'+esc(errText(err))+'</div>'})}
 
   /* ===================== PROGRAM ATTENDANCE ===================== */
   var AT={programs:[],marks:{},students:[]}, atPid='', atFrom='me', atStuCls='', atClsV='';
