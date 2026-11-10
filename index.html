@@ -371,6 +371,9 @@ input,select,textarea{background:color-mix(in srgb,var(--surface) 70%,var(--bg))
 .sw.sv .swk{position:absolute;left:0;top:-7px;width:76px;height:70px;border-radius:12px 64px 12px 64px;background:linear-gradient(135deg,#0f9b5f,#3ddc84);box-shadow:0 6px 16px rgba(15,155,95,.35);cursor:grab;touch-action:none;z-index:1}
 .sw.sv .swk:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .sw.sv.red .swk{background:linear-gradient(135deg,#b3261e,#ef5350);box-shadow:0 6px 16px rgba(179,38,30,.35)}
+.sw.sv.ub{width:75%;height:42px;margin:10px 0 4px;border-radius:9px 33px 9px 33px}.sw.sv.ub .swk{width:57px;height:52px;top:-5px;border-radius:9px 48px 9px 48px}.sw.sv.ub .swt{font-size:16px;padding-left:42px}
+#v-me.ubl .card:not(.mecard):not(#uBlockAll){display:none!important}#uBlockAll{font-size:17px;text-align:center;padding:22px 18px}
+.scf input{letter-spacing:4px}
 .lkst{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;margin:6px 0 4px;font-weight:700;font-size:16px}
 .lkst svg{width:34px;height:34px;flex:none}
 .arow .cardt{color:var(--teal)}.arow .nocard{color:#b3261e;font-style:normal}
@@ -777,6 +780,7 @@ html.sitelocked #lockScr{display:flex}
       <p class="note" style="text-align:center">SADA members, staff, unions, students and librarians: enter your username and password.</p>
       <div class="f"><label for="eu">Username</label><input id="eu" autocomplete="username" autocapitalize="none"></div>
       <div class="f"><label for="ep">Password</label><div class="pwrow"><input id="ep" type="password" autocomplete="current-password"><button type="button" class="btn small" id="epShow" aria-label="Show password">👁</button></div></div>
+      <div class="f scf" id="escF" hidden><label for="esc">🔐 Admin secret code</label><input id="esc" type="password" inputmode="numeric" autocomplete="off"></div>
       <p class="msg err" id="eerr" role="alert"></p>
       <button type="submit" class="btn solid" id="eGo" style="width:100%">Login</button>
       <p class="note" style="margin-top:12px;text-align:center">Students: username is your SNEC UID, password is your date of birth (DDMMYYYY).</p>
@@ -796,6 +800,7 @@ html.sitelocked #lockScr{display:flex}
   <div class="in">
     <div class="etop"><button type="button" class="back" id="meBack">← Back</button><button type="button" class="btn small" id="meOut">Log out</button></div>
     <div class="card mecard"><div class="av big" id="meAv"></div><div class="who"><span class="eyebrow" id="meType"></span><h2 id="meName"></h2><p class="note" id="meTitle"></p></div></div>
+    <div class="card ublk" id="uBlockAll" hidden></div>
     <div class="card form" id="meExp" hidden>
       <div class="vhead"><div><span class="eyebrow">Treasurer</span><h3>Expense Manager</h3></div><a class="btn small" id="xSheet" target="_blank" rel="noopener">Open finance sheet</a></div>
       <div class="stats"><div class="stat"><b id="xIn">₹0</b><span>Income</span></div><div class="stat"><b id="xOut">₹0</b><span>Expense</span></div><div class="stat bal"><b id="xBal">₹0</b><span>Balance</span></div></div>
@@ -831,7 +836,7 @@ html.sitelocked #lockScr{display:flex}
     </div>
     <div class="card form" id="meUnion" hidden>
       <div class="vhead"><div><span class="eyebrow">Union program</span><h3>Register a program</h3></div></div>
-      <div class="ublk" id="uBlocked" hidden>⛔ Your union is blocked by the admin. You cannot register programs until the admin unblocks it.</div>
+      <div class="ublk" id="uBlocked" hidden>⛔ Your union is blocked by the admin. Please contact the admin.</div>
       <div class="fields">
         <div class="f"><label for="pDate">Date *</label><input id="pDate" type="date"><div class="dateclash" id="pClash" hidden>This day already registered by another union.</div></div>
         <div class="f"><label for="pName">Program name *</label><input id="pName" autocomplete="off"></div>
@@ -908,14 +913,14 @@ html.sitelocked #lockScr{display:flex}
       <h3 style="margin-top:22px">Marks you gave</h3>
       <div class="plist2" id="bcMine"></div>
     </div>
-    <div class="card" id="meStaff" hidden><h3>Talents Meet</h3><p class="note">Open the evaluation page. You are logged in there already.</p><a class="btn solid" id="meTm" href="talents.html#go">Open Talents Meet</a></div>
+    <div class="card" id="meStaff" hidden><h3>🎭 TALENTS MEET</h3><p class="note" id="meTmNote">Open Talents Meet. You will be logged in there already.</p><a class="btn solid" id="meTm" href="talents.html#go">Open Talents Meet</a></div>
     <div class="card" id="meSoon"><p class="note">More options for you will be added here soon.</p></div>
   </div>
 </main>
 
 <main id="v-admin" class="view" hidden>
   <div class="in">
-    <div class="etop"><button type="button" class="back" id="backOther">← Back</button><button type="button" class="btn small" id="logout2">Log out</button></div>
+    <div class="etop"><button type="button" class="back" id="backOther">← Back</button><span><a class="btn small" id="adTm" href="talents.html#go">🎭 Talents Meet</a> <button type="button" class="btn small" id="logout2">Log out</button></span></div>
     <div class="ahead"><button type="button" class="amenu" id="amenuBtn" aria-expanded="false" aria-controls="atabs" aria-label="Menu"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="x" aria-hidden="true">✕</span></button><div><span class="eyebrow">Admin panel</span><h2 id="amenuCur">Students data</h2></div></div>
     <div class="amback" id="amBack" hidden></div>
     <div class="atabs" id="atabs" role="menu"><span class="amlab">ADMIN PANEL</span>
@@ -1079,6 +1084,7 @@ html.sitelocked #lockScr{display:flex}
           <div class="f" id="aTitleF"><label for="aTitle">Position</label><input id="aTitle" placeholder="e.g. Secretary" autocomplete="off"></div>
           <div class="f"><label for="aUser">Username *</label><input id="aUser" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
           <div class="f"><label for="aPass">Password *</label><input id="aPass" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+          <div class="f scf" id="aScF" hidden><label for="aSc">🔐 Secret code *</label><input id="aSc" type="password" inputmode="numeric" autocomplete="off"></div>
         </div>
         <div class="f" id="aLogoF" hidden style="margin-top:14px"><label>Union logo</label><div class="ulogo-f"><img id="aLogoImg" alt="" hidden><button type="button" class="btn small" id="aLogoPick">Choose logo</button><button type="button" class="btn small" id="aLogoDel" hidden>Remove logo</button></div><input type="file" accept="image/*" id="aLogoFile" hidden></div>
         <label class="chk" id="aExpF"><input type="checkbox" id="aExp"> Can use the Expense Manager</label>
@@ -1263,6 +1269,7 @@ html.sitelocked #lockScr{display:flex}
     <p class="note" id="lNote">Enter the username and password to continue.</p>
     <div class="f"><label for="lu">Username</label><input id="lu" autocomplete="username"></div>
     <div class="f"><label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password"></div>
+    <div class="f scf" id="lscF" hidden><label for="lsc">🔐 Admin secret code</label><input id="lsc" type="password" inputmode="numeric" autocomplete="off"></div>
     <p class="msg err" id="lerr" role="alert"></p>
     <div class="row"><button type="button" class="btn" id="lcancel">Cancel</button><button type="submit" class="btn solid">Login</button></div>
   </form>
@@ -1878,7 +1885,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function fits(me,mode){if(!me||!mode)return false;return me.type===mode.type&&(!mode.id||me.id===mode.id)}
   function needLogin(mode,then){
     var c=getCred(); if(c&&fits(c.me,mode)){then();return}
-    pending=then; loginMode=mode; $('lerr').textContent=''; $('lu').value=''; $('lp').value='';
+    pending=then; loginMode=mode; $('lerr').textContent=''; $('lu').value=''; $('lp').value=''; $('lscF').hidden=true; $('lsc').value='';
     $('lTitle').textContent=mode.name||(mode.type==='admin'?'Admin login':TYPE_NAME[mode.type]+' login');
     var pw=mode.type==='pres'; $('lu').closest('.f').hidden=pw;
     $('lNote').textContent=pw?'Enter the presentation password.':mode.type==='student'?'Username: your SNEC UID · Password: your date of birth (DDMMYYYY)':mode.name?((mode.title||TYPE_NAME[mode.type])+' · enter your username and password'):'Enter the username and password to continue.';
@@ -1897,16 +1904,12 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       return;
     }
     if(!u||!p){$('lerr').textContent='Enter the username and password.';return}
-    btn.disabled=true; $('lerr').textContent=''; btn.textContent='Checking…';
-    call({action:'login'},{u:u,p:p}).then(function(j){
-        if(!fits(j.me,loginMode)){$('lerr').textContent='This username is not for '+(loginMode.name||TYPE_NAME[loginMode.type]+' login')+'.';return}
-        if(typeof j.locked==='boolean'&&window.sadaLock){window.sadaLock(j.locked,j.open||[]);lkOpen=(j.open||[]).slice()} setCred({u:u,p:p,me:j.me}); $('login').hidden=true; var f=pending; pending=null; f&&f();
-      })
-      .catch(function(err){$('lerr').textContent=/Wrong/.test(err.message)?'Wrong username or password. Please try again.':errText(err)})
-      .then(function(){btn.disabled=false;btn.textContent='Login'});
+    tryLogin({u:u,p:p,err:$('lerr'),btn:btn,label:'Login',scF:$('lscF'),sc:$('lsc'),
+      check:function(j){if(!fits(j.me,loginMode)){$('lerr').textContent='This username is not for '+(loginMode.name||TYPE_NAME[loginMode.type]+' login')+'.';return false}return true},
+      ok:function(){$('login').hidden=true; var f=pending; pending=null; f&&f();}});
   });
   $('lcancel').addEventListener('click',function(){$('login').hidden=true;pending=null});
-  $('logout2').addEventListener('click',function(){setCred(null);rows=[];accs=null;photoCache={};$('addForm').hidden=true;$('adminList').hidden=true;showEntries()});
+  $('logout2').addEventListener('click',function(){setCred(null);try{localStorage.removeItem('tm_sess')}catch(e){};rows=[];accs=null;photoCache={};$('addForm').hidden=true;$('adminList').hidden=true;showEntries()});
   $('backOther').addEventListener('click',function(){show('other')});
 
   /* district + constituency: searchable lists */
@@ -1972,16 +1975,38 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   var API='https://script.google.com/macros/s/AKfycby3WzCd27PRGqyH_v8l05cvq-7ZhP08n1CekzDU1gX66VEbHLUqallLhpudfSv_bkWE0A/exec';
   function netErr(){var e=new Error('No internet connection. Check the internet and try again.');e.net=true;return e}
   function call(body,cred){
-    var c=cred||getCred(); body=Object.assign({},body); if(c){body.user=c.u;body.pass=c.p;}
+    var c=cred||getCred(); body=Object.assign({},body); if(c){body.user=c.u;body.pass=c.p;if(c.sc)body.sc=c.sc;}
     return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
       .catch(function(){throw netErr()})
       .then(function(r){if(!r.ok)throw netErr();return r.json().catch(function(){throw netErr()})})
       .then(function(j){
-        if(!j.ok){ if(!cred&&/Wrong username/.test(j.error||'')){setCred(null);} throw new Error(j.error||'Request failed'); }
+        if(!j.ok){ if(!cred&&/Wrong username|Wrong secret|Enter the admin secret|Too many wrong/.test(j.error||'')){setCred(null);} var er=new Error(j.error||'Request failed'); er.j=j; throw er; }
         return j;
       });
   }
   function errText(err){return (err&&err.message)||'Please check the internet connection and try again.'}
+  /* login safety: wait after many wrong tries, admin secret code */
+  var WAIT_K='sada_wait';
+  function waitLeft(){try{return Math.max(0,Math.ceil(((+localStorage.getItem(WAIT_K)||0)-Date.now())/1000))}catch(e){return 0}}
+  function fmtS(s){var m=Math.floor(s/60),r=s%60;return m?m+':'+('0'+r).slice(-2)+' min':s+' sec'}
+  function runWait(o){if(o.btn._wt)return;var tick=function(){var s=waitLeft();if(!s){clearInterval(o.btn._wt);o.btn._wt=0;o.btn.disabled=false;o.btn.textContent=o.label;o.err.textContent='';return}o.btn.disabled=true;o.btn.textContent='⏳ Wait '+fmtS(s)};tick();if(waitLeft())o.btn._wt=setInterval(tick,500)}
+  function tryLogin(o){
+    if(waitLeft()){o.err.textContent='Too many wrong tries. Please wait.';runWait(o);return}
+    var sc=o.scF.hidden?'':o.sc.value.trim();
+    if(!o.scF.hidden&&!sc){o.err.textContent='Enter the admin secret code.';o.sc.focus();return}
+    o.btn.disabled=true;o.err.textContent='';o.btn.textContent='Checking…';
+    call({action:'login'},{u:o.u,p:o.p,sc:sc}).then(function(j){
+        if(o.check&&!o.check(j))return;
+        o.scF.hidden=true;o.sc.value='';
+        if(typeof j.locked==='boolean'&&window.sadaLock){window.sadaLock(j.locked,j.open||[]);lkOpen=(j.open||[]).slice()}
+        setCred({u:o.u,p:o.p,sc:sc,me:j.me});o.ok(j)})
+      .catch(function(err){var j=err.j||{},left=j.left&&j.left<5?' ('+j.left+' more wrong '+(j.left===1?'try':'tries')+' and you must wait)':'';
+        if(j.needSc){o.scF.hidden=false;o.err.textContent='🔐 Now enter the admin secret code.';setTimeout(function(){o.sc.focus()},30)}
+        else if(j.wait){try{localStorage.setItem(WAIT_K,String(Date.now()+j.wait*1000))}catch(x){}o.err.textContent=err.message;runWait(o)}
+        else if(/Wrong secret/.test(err.message)){o.sc.value='';o.err.textContent='Wrong secret code.'+left}
+        else if(/Wrong/.test(err.message))o.err.textContent='Wrong username or password.'+left;
+        else o.err.textContent=errText(err)})
+      .then(function(){if(!waitLeft()){o.btn.disabled=false;o.btn.textContent=o.label}})}
 
   /* ---------- helpers ---------- */
   var CLASSES=['PLUS ONE','PLUS TWO','DEGREE 1'];
@@ -2264,11 +2289,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   $('epShow').addEventListener('click',function(){var t=$('ep').type==='password';$('ep').type=t?'text':'password';this.textContent=t?'🙈':'👁'});
   $('eForm').addEventListener('submit',function(e){e.preventDefault();var u=$('eu').value.trim(),pw=$('ep').value,btn=$('eGo');
     if(!u||!pw){$('eerr').textContent='Enter the username and password.';return}
-    btn.disabled=true;$('eerr').textContent='';btn.textContent='Checking…';
-    call({action:'login'},{u:u,p:pw}).then(function(j){if(typeof j.locked==='boolean'&&window.sadaLock){window.sadaLock(j.locked,j.open||[]);lkOpen=(j.open||[]).slice()}
-        setCred({u:u,p:pw,me:j.me});$('eu').value='';$('ep').value='';goHome(j.me)})
-      .catch(function(err){$('eerr').textContent=/Wrong/.test(err.message)?'Wrong username or password. Please try again.':errText(err)})
-      .then(function(){btn.disabled=false;btn.textContent='Login'})});
+    tryLogin({u:u,p:pw,err:$('eerr'),btn:btn,label:'Login',scF:$('escF'),sc:$('esc'),ok:function(j){$('eu').value='';$('ep').value='';goHome(j.me)}})});
   $('elistBody').addEventListener('click',function(e){var b=e.target.closest('.mem');if(!b)return;var type=b.dataset.type,m=(ppl[SECS[type]]||[]).find(function(x){return x.id===b.dataset.id});if(m)needLogin({type:type,id:m.id,name:m.name,title:m.title},openMe)});
   $('openAdminPanel').addEventListener('click',function(){needLogin({type:'admin'},openAdmin)});
 
@@ -2278,19 +2299,22 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     show('me');
     var lg=me.type==='union'&&uLogo(me.name); $('meAv').innerHTML=lg?'<img alt="" src="'+lg+'">':esc(initials(me.name)); $('meName').textContent=me.name;
     $('meType').textContent=TYPE_NAME[me.type]||''; $('meTitle').textContent=me.title||'';
-    $('meStaff').hidden=me.type!=='staff'; $('meBC').hidden=me.type!=='staff'; if(me.type==='staff')loadMine();
+    $('meStaff').hidden=['staff','student'].indexOf(me.type)<0; $('meBC').hidden=me.type!=='staff'; if(me.type==='staff')loadMine();
     $('meBest').hidden=true; $('meBU').hidden=true; $('meAtt').hidden=true; restorePP(); call({action:'bc.view'}).then(function(j){bcSet(j);$('meBest').hidden=false}).catch(function(){});
     if(me.type!=='admin')call({action:'att.list'}).then(function(j){atSet(j);$('meAtt').hidden=false;renderMeAtt()}).catch(function(){});
     if(me.type!=='union'&&me.type!=='staff')loadProg();
     $('meUnion').hidden=$('meUProgs').hidden=me.type!=='union'; $('meSProg').hidden=me.type!=='staff';
     $('meSoon').hidden=['union','staff','student','sada'].indexOf(me.type)>-1||!!me.exp;
     if(me.type==='union'||me.type==='staff')loadProg();
-    if(me.type==='union'){$('meUnion').classList.remove('blocked');$('uBlocked').hidden=true;call({action:'pb.ublist'}).then(function(j){var b=(j.blocked||[]).length>0;$('meUnion').classList.toggle('blocked',b);$('uBlocked').hidden=!b}).catch(function(){})}
-    if(me.type==='staff'){try{localStorage.setItem('tm_sess',JSON.stringify({role:'staff',u:c.u,p:c.p}))}catch(e){}}
+    views.me.classList.remove('ubl');$('uBlockAll').hidden=true;
+    if(me.type==='union'){$('meUnion').classList.remove('blocked');$('uBlocked').hidden=true;call({action:'pb.ublist'}).then(function(j){var b=(j.blocked||[]).length>0;$('meUnion').classList.toggle('blocked',b);$('uBlocked').hidden=!b;
+      $('uBlockAll').textContent='⛔ The union ('+me.name+') is blocked by the admin. Please contact the admin.';$('uBlockAll').hidden=!b;views.me.classList.toggle('ubl',b)}).catch(function(){})}
     loadMsgs(me);
     $('meExp').hidden=!me.exp; if(me.exp){ if(!$('xDate').value)$('xDate').value=today(); setPane(xPane); loadExp(); }
   }
   $('meBack').addEventListener('click',function(){show('other')});
+  function tmGo(){var c=getCred(),t=c&&c.me&&c.me.type,role={admin:'admin',staff:'staff',student:'user'}[t];if(!role)return;try{localStorage.setItem('tm_sess',JSON.stringify(role==='admin'?{role:role,u:c.u,p:c.p,sc:c.sc}:{role:role,u:c.u,p:c.p}))}catch(e){}}
+  $('meTm').addEventListener('click',tmGo);$('adTm').addEventListener('click',tmGo);
   $('meOut').addEventListener('click',function(){setCred(null);try{localStorage.removeItem('tm_sess')}catch(e){};showEntries()});
 
   /* ---------- expense manager (SADA'S FINANCE sheet) ---------- */
@@ -2441,7 +2465,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function renderAcc(){
     var info=ACC_INFO[atab]; $('accTitle').textContent=info[0]; $('accNote').textContent=info[1];
     var isAdmin=atab==='admin';
-    $('aTitleF').hidden=atab!=='sada'; $('aExpF').hidden=atab!=='sada'; $('aLogoF').hidden=atab!=='union'; $('aName').closest('.f').hidden=isAdmin;
+    $('aTitleF').hidden=atab!=='sada'; $('aScF').hidden=!isAdmin; $('aExpF').hidden=atab!=='sada'; $('aLogoF').hidden=atab!=='union'; $('aName').closest('.f').hidden=isAdmin;
     if(!accs){$('accList').innerHTML='<div class="emptyl">Loading…</div>';return}
     if(isAdmin){ $('accList').innerHTML=''; var ad=accs.find(function(a){return a.type==='admin'}); if(ad&&(!aEdit||aEdit.id!==ad.id)){fillAcc(ad);} $('accFormTitle').textContent='Change admin login'; $('aCancel').hidden=true; return; }
     var list=accs.filter(function(a){return a.type===atab});
@@ -2465,7 +2489,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   $('accList').addEventListener('click',function(e){var b=e.target.closest('[data-aedit]');if(!b)return;var a=accs.find(function(x){return x.id===b.dataset.aedit});if(a){fillAcc(a);$('accForm').scrollIntoView({block:'start',behavior:'smooth'})}});
   function fillAcc(a){aEdit=a;setLogo(a.logo||'');$('aName').value=a.name;$('aTitle').value=a.title||'';$('aUser').value=a.u||'';$('aPass').value=a.p||'';$('aExp').checked=!!a.exp;
     $('accFormTitle').textContent='Edit '+a.name;$('aCancel').hidden=false;note($('aErr'),'',1)}
-  function resetAccForm(){aEdit=null;setLogo('');['aName','aTitle','aUser','aPass'].forEach(function(id){$(id).value=''});$('aExp').checked=false;$('accFormTitle').textContent='Add new';$('aCancel').hidden=true;note($('aErr'),'',1)}
+  function resetAccForm(){aEdit=null;setLogo('');['aName','aTitle','aUser','aPass','aSc'].forEach(function(id){$(id).value=''});$('aExp').checked=false;$('accFormTitle').textContent='Add new';$('aCancel').hidden=true;note($('aErr'),'',1)}
   $('aCancel').addEventListener('click',function(){resetAccForm();renderAcc()});
   slider($('aSave'),function(done,say){
     var acc={id:aEdit?aEdit.id:'',type:atab==='admin'?'admin':atab,name:atab==='admin'?'Admin':$('aName').value.trim(),title:$('aTitle').value.trim(),u:$('aUser').value.trim(),p:$('aPass').value,exp:$('aExp').checked};
@@ -2474,10 +2498,12 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
     var needCred=acc.type!=='sada'||acc.u||acc.p;
     if(needCred&&acc.u.length<3){note($('aErr'),'Username must have at least 3 characters.',1);done();return}
     if(needCred&&acc.p.length<4){note($('aErr'),'Password must have at least 4 characters.',1);done();return}
+    var sc2=$('aSc').value.trim();
+    if(acc.type==='admin'&&!sc2){note($('aErr'),'Enter the secret code to change the admin login.',1);$('aSc').focus();done();return}
     say('Saving…'); note($('aErr'),'',1);
-    call({action:'acc.save',acc:acc}).then(function(j){
-      accs=j.accounts||[];
-      if(acc.type==='admin'){var c=getCred();setCred({u:acc.u,p:acc.p,me:c.me});}
+    call({action:'acc.save',acc:acc,sc2:sc2}).then(function(j){
+      accs=j.accounts||[]; $('aSc').value='';
+      if(acc.type==='admin'){var c=getCred();setCred({u:acc.u,p:acc.p,sc:c.sc,me:c.me});}
       var wasEdit=!!aEdit; resetAccForm(); renderAcc(); note($('aErr'),acc.name+(wasEdit?' updated ✓':' added ✓'),0); done();
     }).catch(function(err){note($('aErr'),errText(err),1);done()});
   });
