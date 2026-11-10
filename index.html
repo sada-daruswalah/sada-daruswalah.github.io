@@ -449,6 +449,11 @@ footer small{opacity:.8;font-size:.85rem}
 .ptot{margin-top:10px;font-size:.86rem;color:var(--muted)}
 .ptot b{color:var(--navy)}
 .mbreak{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.marks.mk2 input{width:92px;height:42px;border-radius:12px;border:1.5px solid var(--line);font-weight:800;font-size:1.1rem;text-align:center;color:var(--navy);background:var(--bg);padding:0 6px}
+.marks.mk2 .mout{font-weight:700;color:var(--muted,#667)}
+.marks.mk2 button.msv{width:auto;padding:0 16px;background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.marks.mk2 select{flex-basis:100%;max-width:100%;height:44px;border-radius:12px;border:1.5px solid var(--line);font-weight:700;font-size:.95rem;padding:0 10px;background:var(--bg);color:var(--navy)}
+.marks .merr{flex-basis:100%;color:#b3261e;font-size:.9rem;font-weight:600}
 .mbreak span{font-size:.78rem;padding:3px 9px;border-radius:999px;background:var(--band);color:var(--ink)}
 .mbreak span.no{color:var(--muted)}
 .rmv{all:unset;cursor:pointer;font-size:.8rem;font-weight:700;color:#b3261e;margin-top:10px;display:inline-block}
@@ -2518,7 +2523,7 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
   function pgPending(list){
     list.forEach(function(p){p.due=pgDone(p)});
     obLoad().forEach(function(it){var b=it.body;
-      if(b.action==='prog.mark'){var p=list.find(function(x){return x.id===b.id});if(p){p.mine=b.mark;p.pendingSave=true}}});
+      if(b.action==='prog.mark'||b.action==='pb.mark'){var p=list.find(function(x){return x.id===b.id});if(p){p.mine=b.mark;if(b.max)p.lvl=b.max;p.pendingSave=true}}});
     return list;
   }
   function restorePP(){var pp=$('progPane');if(pp.parentNode.id==='muHost'){$('bestPane').parentNode.insertBefore(pp,$('bestPane'));pp.hidden=true}}
@@ -2554,10 +2559,11 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       $('sBoard').innerHTML=boardHTML(PG.board||[]);
       $('sProgList').innerHTML=list.length?list.map(function(p){
         var tag=!p.due?'<span class="tag soon">Upcoming</span>':(p.mine==null?'<span class="tag pending">Pending</span>':'<span class="tag done">Completed</span>');
-        var marks=p.due?'<div class="marks" data-pid="'+esc(p.id)+'"><span class="ml">Your mark</span>'+[0,1,2,3,4,5].map(function(n){return '<button type="button" data-m="'+n+'" class="'+(p.mine===n?'on':'')+'" aria-label="'+n+' out of 5">'+n+'</button>'}).join('')+'</div>'
+        var lv=p._lvl||p.lvl||0; if(LVLS.indexOf(lv)<0)lv=0;
+        var marks=p.due?'<div class="marks mk2" data-pid="'+esc(p.id)+'"><select class="mlv" aria-label="Kind of program"><option value="">Choose the kind of program</option>'+LVLS.map(function(n){return '<option value="'+n+'"'+(lv===n?' selected':'')+'>'+LVL_NAME[n]+'</option>'}).join('')+'</select><span class="ml">Your mark</span><input type="number" inputmode="decimal" min="0"'+(lv?' max="'+lv+'"':'')+' step="0.5" value="'+(p.mine==null?'':p.mine)+'" aria-label="Your mark"><span class="mout">/ '+(lv||(p.mine!=null&&p.lvl===5?5:'—'))+'</span><button type="button" class="msv">Save</button><span class="merr" role="alert"></span></div>'
           :'<p class="ptot">Marks open on '+esc(niceDate(p.date))+'.</p>';
         return '<div class="pcard"><div class="ph1"><div><small>'+esc(p.union)+' · '+esc(niceDate(p.date))+'</small><b>'+esc(p.name)+'</b></div>'+tag+'</div>'+detailsHTML(p)+marks+
-          (p.due?'<p class="ptot">Total: <b>'+(p.total||0)+'</b> / '+(nStaff*5)+' · marked by '+(p.marked||0)+' of '+nStaff+' staff</p>':'')+'</div>'}).join(''):'<div class="emptyl">No union programs yet.</div>';
+          (p.due?'<p class="ptot">Total: <b>'+(p.total||0)+'</b> · marked by '+(p.marked||0)+' of '+nStaff+' staff</p>':'')+'</div>'}).join(''):'<div class="emptyl">No union programs yet.</div>';
     }
     var c2=getCred(),m2=c2&&c2.me;
     if(m2&&m2.type!=='admin'&&!views.me.hidden){
@@ -2572,19 +2578,27 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       var upc=list.filter(function(p){return !p.due}).reverse(); list=list.filter(function(p){return p.due});
       $('aUpList').innerHTML=upc.length?upc.map(function(p){return '<div class="pcard"><div class="ph1"><div><small>'+esc(p.union)+' · '+esc(niceDate(p.date))+'</small><b>'+esc(p.name)+'</b></div><span class="tag soon">Upcoming</span></div>'+detailsHTML(p)+(PG.edit?'<div class="pacts"><button type="button" class="btn small" data-pedit="'+esc(p.id)+'">✏️ Edit</button><button type="button" class="rmv" data-rm="'+esc(p.id)+'">Remove</button></div>':'<button type="button" class="rmv" data-rm="'+esc(p.id)+'">Remove</button>')+'</div>'}).join(''):'<div class="emptyl">No upcoming programs.</div>';
       $('aProgList').innerHTML=list.length?list.map(function(p){
-        var got={}; (p.marks||[]).forEach(function(m){got[m.sid]=m.mark});
-        var br=(PG.staff||[]).map(function(s){return got[s.id]==null?'<span class="no">'+esc(s.name)+': —</span>':'<span>'+esc(s.name)+': <b>'+got[s.id]+'</b></span>'}).join('');
-        return '<div class="pcard"><div class="ph1"><div><small>'+esc(p.union)+' · '+esc(niceDate(p.date))+'</small><b>'+esc(p.name)+'</b></div><span class="tag '+(!p.due?'soon':'done')+'">'+(p.total||0)+' / '+(nStaff*5)+'</span></div>'+detailsHTML(p)+
+        var got={},gmx={}; (p.marks||[]).forEach(function(m){got[m.sid]=m.mark;gmx[m.sid]=m.max});
+        var br=(PG.staff||[]).map(function(s){return got[s.id]==null?'<span class="no">'+esc(s.name)+': —</span>':'<span>'+esc(s.name)+': <b>'+got[s.id]+'</b>'+(gmx[s.id]?' / '+gmx[s.id]+(LVL_SHORT[gmx[s.id]]?' · '+LVL_SHORT[gmx[s.id]]:''):'')+'</span>'}).join('');
+        return '<div class="pcard"><div class="ph1"><div><small>'+esc(p.union)+' · '+esc(niceDate(p.date))+'</small><b>'+esc(p.name)+'</b></div><span class="tag '+(!p.due?'soon':'done')+'">'+(p.total||0)+' pts</span></div>'+detailsHTML(p)+
           '<div class="mbreak">'+br+'</div><div class="pacts">'+(PG.edit?'<button type="button" class="btn small" data-pedit="'+esc(p.id)+'">✏️ Edit</button>':'')+'<button type="button" class="rmv" data-rm="'+esc(p.id)+'">Remove</button></div></div>'}).join(''):'<div class="emptyl">No finished programs yet.</div>';
     }
   }
+  var LVLS=[30,60,100], LVL_NAME={30:'Normal · 1–30 (essay, poem, story…)',60:'Excellent · 1–60 (reverse quiz, moulid, stage…)',100:'Epic · 1–100 (magazine, mini arts fest…)'}, LVL_SHORT={30:'Normal',60:'Excellent',100:'Epic'};
   /* staff marks: instant (saved in the background) */
   $('sProgList').addEventListener('click',function(e){
-    var b=e.target.closest('.marks button'); if(!b)return;
-    var pid=b.parentNode.dataset.pid, m=+b.dataset.m, p=(PG.programs||[]).find(function(x){return x.id===pid}); if(!p)return;
+    var b=e.target.closest('.marks button.msv'); if(!b)return;
+    var box=b.parentNode, pid=box.dataset.pid, p=(PG.programs||[]).find(function(x){return x.id===pid}); if(!p)return;
+    var mx=+box.querySelector('.mlv').value||0, raw=box.querySelector('input').value.trim(), m=Number(raw);
+    if(!mx){box.querySelector('.merr').textContent='Choose the kind of program first.';box.querySelector('.mlv').focus();return}
+    if(raw===''||!(m>=0&&m<=mx)||Math.round(m*2)!==m*2){box.querySelector('.merr').textContent='Enter a mark from 0 to '+mx+'.';return}
+    p.lvl=mx; p._lvl=0;
     if(p.mine!==m){ if(p.mine==null)p.marked=(p.marked||0)+1; p.total=(p.total||0)-(p.mine||0)+m; p.mine=m; }
-    obAdd({action:'prog.mark',id:pid,mark:m},'Mark for '+p.name); renderProg();
+    obAdd({action:'pb.mark',id:pid,mark:m,max:mx},'Mark for '+p.name); renderProg();
   });
+  $('sProgList').addEventListener('change',function(e){var sl=e.target.closest('.marks.mk2 .mlv');if(!sl)return;var box=sl.parentNode,v=+sl.value||0,p=(PG.programs||[]).find(function(x){return x.id===box.dataset.pid});if(p)p._lvl=v;
+    box.querySelector('.mout').textContent='/ '+(v||'—');if(v)box.querySelector('input').max=v;box.querySelector('.merr').textContent='';if(v)box.querySelector('input').focus()});
+  $('sProgList').addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.closest('.marks.mk2 input')){e.preventDefault();e.target.parentNode.querySelector('.msv').click()}});
   /* edit a registered program (union or admin) */
   var pgEd=null;
   function pgModes(t,v){var m=t==='Sports'?['Indoor','Outdoor']:['Stage','Off stage'];$('pgmMode').innerHTML=m.map(function(x){return '<option'+(x===v?' selected':'')+'>'+x+'</option>'}).join('');$('pgmModeL').textContent=(t==='Sports'?'Indoor / Outdoor':'Stage / Off stage')+' *';$('pgmVenueL').textContent=(t==='Sports'?'Place':'Venue')+' *'}

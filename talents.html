@@ -342,7 +342,7 @@ document.querySelectorAll("[data-role]").forEach(b=>b.onclick=async()=>{
   pendingRole=b.dataset.role;
   $("#roleName").textContent={admin:"Admin Entry",staff:"Staff Entry",user:"User Entry"}[pendingRole];
   $("#roleHint").textContent=pendingRole==="user"?"Use your SADA student login: username is your SNEC UID, password is your date of birth (DDMMYYYY).":"Only recognised evaluators can enter student records.";
-  $("#u").value="";$("#p").value="";$("#sc").value="";$("#scBox").hidden=pendingRole!=="admin";$("#lerr").textContent="";
+  $("#u").value="";$("#p").value="";$("#sc").value="";$("#scBox").hidden=true;$("#lerr").textContent="";
   $("#u").inputMode="text";
   show("login");
 });
@@ -350,10 +350,10 @@ $("#back").onclick=()=>show("splash");
 (async()=>{if(location.hash!=="#go")return;history.replaceState(null,"",location.pathname);const s=loadSess();if(!s)return;try{cred=s;enterApp(await api("login",s));}catch(e){cred=null;}})();
 setTimeout(obFlush,1500);
 $("#doLogin").onclick=async()=>{
-  const c={role:pendingRole,u:$("#u").value.trim(),p:$("#p").value};if(pendingRole==="admin"){c.sc=$("#sc").value.trim();if(!c.sc){$("#lerr").textContent="Enter the admin secret code.";return}}
+  const c={role:pendingRole,u:$("#u").value.trim(),p:$("#p").value};if(!$("#scBox").hidden){c.sc=$("#sc").value.trim();if(!c.sc){$("#lerr").textContent="Enter the admin secret code.";$("#sc").focus();return}}
   const btn=$("#doLogin");btn.disabled=true;btn.textContent="Checking…";$("#lerr").textContent="";
   try{const r=await api("login",c);cred=c;saveSess();$("#p").value="";enterApp(r);}
-  catch(e){const m=String((e&&e.message)||"");$("#lerr").textContent=(e&&e.net)||/secret code|wait|blocked/i.test(m)?m:"Wrong username or password.";}
+  catch(e){const m=String((e&&e.message)||"");if(/Enter the admin secret code/i.test(m)){$("#scBox").hidden=false;$("#lerr").textContent="🔐 Now enter the admin secret code.";setTimeout(()=>$("#sc").focus(),30)}else $("#lerr").textContent=(e&&e.net)||/secret code|wait|blocked/i.test(m)?m:"Wrong username or password.";}
   btn.disabled=false;btn.textContent="Log in";
 };
 $("#p").addEventListener("keydown",e=>{if(e.key==="Enter")$("#doLogin").click()});$("#sc").addEventListener("keydown",e=>{if(e.key==="Enter")$("#doLogin").click()});
