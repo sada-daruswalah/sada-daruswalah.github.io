@@ -453,6 +453,7 @@ footer small{opacity:.8;font-size:.85rem}
 .marks.mk2 .mout{font-weight:700;color:var(--muted,#667)}
 .marks.mk2 button.msv{width:auto;padding:0 16px;background:var(--navy);color:var(--bg);border-color:var(--navy)}
 .marks.mk2 select{flex-basis:100%;max-width:100%;height:44px;border-radius:12px;border:1.5px solid var(--line);font-weight:700;font-size:.95rem;padding:0 10px;background:var(--bg);color:var(--navy)}
+.upd{border:2px solid var(--navy)}.upd .btn{margin:6px 0 12px}.upd .err{color:#b3261e;font-weight:600;margin:8px 0 0}
 .marks .merr{flex-basis:100%;color:#b3261e;font-size:.9rem;font-weight:600}
 .mbreak span{font-size:.78rem;padding:3px 9px;border-radius:999px;background:var(--band);color:var(--ink)}
 .mbreak span.no{color:var(--muted)}
@@ -926,6 +927,7 @@ html.sitelocked #lockScr{display:flex}
 <main id="v-admin" class="view" hidden>
   <div class="in">
     <div class="etop"><button type="button" class="back" id="backOther">← Back</button><span><a class="btn small" id="adTm" href="talents.html#go">🎭 Talents Meet</a> <button type="button" class="btn small" id="logout2">Log out</button></span></div>
+    <div class="card upd" id="upCard" hidden><h3>🚀 New site update</h3><p class="note" id="upNote"></p><a class="btn small" id="upPrev" href="next/index.html" target="_blank" rel="noopener">👀 See the new design first</a><div class="sw sv" id="upGo"><span class="swt">Update the site</span><div class="swk" tabindex="0" role="button" aria-label="Slide right to update the site for everyone"></div></div><p class="err" id="upErr" role="alert"></p></div>
     <div class="ahead"><button type="button" class="amenu" id="amenuBtn" aria-expanded="false" aria-controls="atabs" aria-label="Menu"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="x" aria-hidden="true">✕</span></button><div><span class="eyebrow">Admin panel</span><h2 id="amenuCur">Students data</h2></div></div>
     <div class="amback" id="amBack" hidden></div>
     <div class="atabs" id="atabs" role="menu"><span class="amlab">ADMIN PANEL</span>
@@ -2077,7 +2079,23 @@ Thiruvananthapuram:["Varkala","Attingal","Chirayinkeezhu","Nedumangad","Vamanapu
       $('linkOut').textContent='Linked now: '+j.linked.length+(j.linked.length?'\n'+j.linked.map(function(x){return x.id+' → '+x.full+' ('+x.short+')'}).join('\n'):'')+
         (j.left.length?'\n\nNot linked ('+j.left.length+'), please use View → Edit and type the ID card number:\n'+j.left.join('\n'):'\n\nAll ID cards are linked ✓');loadAdmin()})
       .catch(function(err){b.disabled=false;b.textContent='Link ID cards automatically';$('linkOut').textContent=errText(err)})});
-  function openAdmin(){show('admin');setATab('students');loadAdmin()}
+  function openAdmin(){show('admin');setATab('students');loadAdmin();updCheck()}
+  /* site update: new files wait in the "next" folder; the admin slides to put them live */
+  function updCheck(){
+    $('upCard').hidden=true;$('upErr').textContent='';
+    call({action:'pb.updchk'}).then(function(j){
+      if(!(j.pending||[]).length)return;
+      var d=j.date?new Date(j.date):null;
+      $('upNote').textContent='A new design is waiting'+(d&&!isNaN(d)?' (uploaded '+d.toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})+')':'')+'. Nobody sees it yet. Files: '+j.pending.join(', ')+'.';
+      $('upPrev').hidden=j.pending.indexOf('index.html')<0;$('upGo').hidden=false;$('upCard').hidden=false})
+    .catch(function(err){if(/GitHub|GH_TOKEN/.test(err.message||'')){$('upNote').textContent='';$('upPrev').hidden=true;$('upGo').hidden=true;$('upErr').textContent='Site update: '+err.message;$('upCard').hidden=false}});
+  }
+  slider($('upGo'),function(done,say){
+    $('upErr').textContent='';say('Updating…');
+    call({action:'pb.updgo'}).then(function(j){done();$('upGo').hidden=true;$('upPrev').hidden=true;
+        $('upNote').textContent='✅ Done! '+((j.done||[]).length?(j.done.join(', ')+' updated. '):'')+'Everyone will see the new design in about 2 minutes.'})
+      .catch(function(err){done();$('upErr').textContent=errText(err)});
+  });
 
   function getPhoto(uid){
     if(photoCache[uid]) return Promise.resolve(photoCache[uid]);
