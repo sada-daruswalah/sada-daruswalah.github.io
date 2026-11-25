@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>My books · LIBRARY SOFTWARE</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2048%2048%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22lg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%237cb0ff%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%239b8cff%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2244%22%20height%3D%2244%22%20rx%3D%2213%22%20fill%3D%22url%28%23lg%29%22/%3E%3Cpath%20d%3D%22M11%2015.5c4.2-1.6%208.6-1.4%2013%201.2%204.4-2.6%208.8-2.8%2013-1.2v18.2c-4.2-1.6-8.6-1.4-13%201.2-4.4-2.6-8.8-2.8-13-1.2z%22%20fill%3D%22none%22%20stroke%3D%22%230a1124%22%20stroke-width%3D%222.6%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M24%2016.7v18.2%22%20stroke%3D%22%230a1124%22%20stroke-width%3D%222.6%22/%3E%3Cpath%20d%3D%22M15%2021h5M15%2025h5M28%2021h5M28%2025h5%22%20stroke%3D%22%230a1124%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a1124;--bg2:#0f1832;--surface:#121c3a;--surface2:#18244a;--line:#24325c;--ink:#e9eefc;--muted:#9aa8cc;--accent:#7cb0ff;--accent2:#9b8cff;--ok:#34d399;--warn:#fbbf24;--err:#f87171;
+  --grad:linear-gradient(135deg,#7cb0ff,#9b8cff);--r:18px;--font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--display:"Outfit","Inter",system-ui,sans-serif}
+:root[data-theme=light]{--bg:#f4f6fc;--bg2:#eef2fb;--surface:#ffffff;--surface2:#f1f4fb;--line:#dbe2f2;--ink:#0f1a36;--muted:#5b6788;--accent:#3d7bea;--accent2:#6b5ce7}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;min-height:100vh}
+body.bgdeco{background:radial-gradient(900px 500px at 85% -10%,rgba(124,176,255,.16),transparent 60%),radial-gradient(700px 500px at -10% 30%,rgba(155,140,255,.12),transparent 60%),var(--bg)}
+a{color:var(--accent)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0 0 .4em;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{width:100%;background:var(--bg2);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+label{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin:0 0 6px}
+.f{margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:12px 22px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .12s,filter .15s,background .15s;white-space:nowrap}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.98)}
+.btn:focus-visible,.tab:focus-visible,.chip:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn.pri{background:var(--grad);border:0;color:#0a1124;box-shadow:0 8px 24px rgba(124,176,255,.25)}
+.btn.sm{padding:8px 14px;font-size:.88rem}
+.btn.red{color:var(--err);border-color:color-mix(in srgb,var(--err) 45%,transparent)}
+.btn.block{width:100%}
+.btn[disabled]{opacity:.55;pointer-events:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.muted{color:var(--muted)}.small{font-size:.86rem}
+.msg{min-height:1.2em;font-size:.9rem;margin:8px 0}.msg.err{color:var(--err)}.msg.ok{color:var(--ok)}
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:800;letter-spacing:.14em;font-size:1rem}
+.logo svg{width:34px;height:34px;flex:none}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:700;background:var(--surface2);border:1px solid var(--line)}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.err{color:var(--err)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--surface2);border-radius:999px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:.9rem}
+.chip.on{background:var(--grad);color:#0a1124;border-color:transparent}
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(5,9,22,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:6vh 16px;overflow-y:auto}
+.overlay.on{display:flex}
+.modal{width:100%;max-width:460px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.modal h2{font-size:1.5rem}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.x{border:0;background:var(--surface2);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1rem;flex:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--surface2);border:1px solid var(--line);color:var(--ink);padding:12px 20px;border-radius:999px;font-weight:600;z-index:80;transition:.25s;max-width:calc(100vw - 32px);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}.toast.bad{color:var(--err)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+.scroll{overflow-x:auto}
+#scan{position:fixed;inset:0;background:#000;z-index:90;display:none;flex-direction:column}#scan.on{display:flex}
+#scan video{flex:1;width:100%;object-fit:cover;min-height:0}
+#scan .frame{position:absolute;left:10%;right:10%;top:32%;height:22%;border:3px solid #7cb0ff;border-radius:14px;box-shadow:0 0 0 9999px rgba(0,0,0,.45);pointer-events:none}
+#scan .sbar{display:flex;align-items:center;gap:10px;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#0a1124;color:#fff}
+#scan .sbar div{flex:1}
+
+.wrap{max-width:560px;margin:0 auto;padding:20px 16px 60px}
+.inrow{display:flex;gap:8px}.inrow input{flex:1;font-size:1.15rem;letter-spacing:.05em}
+.scanb{width:56px;flex:none;border-radius:12px;border:1.5px solid var(--line);background:var(--surface2);cursor:pointer;display:grid;place-items:center;color:var(--accent)}
+.scanb svg{width:26px;height:26px}
+.item{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.item .main{flex:1}.item small{display:block;color:var(--muted)}
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.74rem;font-weight:700;background:var(--surface2);border:1px solid var(--line)}
+.tag.av{color:var(--ok)}.tag.is{color:var(--accent)}.tag.od{color:var(--err)}
+</style>
+</head>
+<body class="bgdeco">
+<div class="wrap">
+  <a class="logo" href="index.html"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7cb0ff"/><stop offset="1" stop-color="#9b8cff"/></linearGradient></defs><rect x="2" y="2" width="44" height="44" rx="13" fill="url(#lg)"/><path d="M11 15.5c4.2-1.6 8.6-1.4 13 1.2 4.4-2.6 8.8-2.8 13-1.2v18.2c-4.2-1.6-8.6-1.4-13 1.2-4.4-2.6-8.8-2.8-13-1.2z" fill="none" stroke="#0a1124" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 16.7v18.2" stroke="#0a1124" stroke-width="2.6"/><path d="M15 21h5M15 25h5M28 21h5M28 25h5" stroke="#0a1124" stroke-width="2" stroke-linecap="round"/></svg>LIBRARY SOFTWARE</a>
+  <div class="card" style="margin-top:20px">
+    <span class="muted small">Student self-check</span>
+    <h1 style="font-size:1.6rem" id="libT">My library books</h1>
+    <div id="libPick" hidden>
+      <div class="f"><label for="libCode">Library code</label><input id="libCode" autocapitalize="off" placeholder="Ask your librarian for the link"></div>
+    </div>
+    <label for="mid">Your ID card number</label>
+    <div class="inrow"><input id="mid" autocapitalize="characters" autocomplete="off" placeholder="Scan or type"><button class="scanb" id="scanBtn" aria-label="Scan your ID card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M7 12h10"/></svg></button></div>
+    <p class="msg err" id="msg"></p>
+    <button class="btn pri block" id="go">Show my books</button>
+  </div>
+  <div id="out" style="margin-top:18px"></div>
+  <p style="text-align:center;margin-top:26px"><a class="btn sm" href="app.html">📚 Librarian? Log in</a></p>
+</div>
+<div id="scan" role="dialog" aria-label="Scan barcode"><video id="scanVid" playsinline muted></video><div class="frame"></div><div class="sbar"><div id="scanMsg">Point the camera at your ID card</div><button class="btn sm" id="scanClose">Close</button></div></div>
+<div class="toast" id="toast"></div>
+<script>
+var API='https://script.google.com/macros/s/AKfycbwI_NSl5d6Y2yZ3lJAR6V1Acwo0iFqK0xFgqnc4RdK79ieFS9V_YKa6E7-WLYYBV17JUg/exec';
+var CONTACT='';
+function api(body){
+  return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
+    .catch(function(){throw new Error('No internet. Please check the connection and try again.')})
+    .then(function(r){return r.json().catch(function(){throw new Error('The server did not answer. Try again.')})})
+    .then(function(j){if(!j.ok){var e=new Error(String(j.error||'Something went wrong').replace(/^(SESSION|EXPIRED): /,''));e.session=/^SESSION:/.test(j.error||'');e.expired=/^EXPIRED:/.test(j.error||'');throw e}return j});
+}
+function getTok(){try{return localStorage.getItem('ls_tok')||sessionStorage.getItem('ls_tok')||''}catch(e){return ''}}
+function setTok(t,temp){try{localStorage.removeItem('ls_tok');sessionStorage.removeItem('ls_tok');if(t)(temp?sessionStorage:localStorage).setItem('ls_tok',t)}catch(e){}}
+var _tt=null;
+function toast(t,bad){var el=document.getElementById('toast');if(!el)return;el.textContent=t;el.classList.toggle('bad',!!bad);el.classList.add('on');clearTimeout(_tt);_tt=setTimeout(function(){el.classList.remove('on')},2800)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function dstr(v){if(!v)return '';var d=typeof v==='number'?new Date(v):new Date(String(v)+'T00:00:00');if(isNaN(d))return String(v);return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear()}
+function today(){var d=new Date(Date.now()+(330+new Date().getTimezoneOffset())*60000);return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN')}
+/* camera barcode scanner: calls onCode(text) for every code; keep=true keeps scanning */
+var SCAN={stream:null,timer:null,zx:null,last:'',lastT:0};
+function loadZx(){return new Promise(function(ok,no){if(window.ZXing)return ok();var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js';s.onload=ok;s.onerror=function(){no(new Error('Scanner could not load. Check the internet.'))};document.head.appendChild(s)})}
+async function startScan(onCode,keep,msg){
+  var box=document.getElementById('scan'),v=document.getElementById('scanVid'),m=document.getElementById('scanMsg');
+  m.textContent=msg||'Point the camera at the barcode'; box.classList.add('on');
+  var hit=function(t){t=String(t||'').trim();var now=Date.now();if(!t||(t===SCAN.last&&now-SCAN.lastT<2500))return;SCAN.last=t;SCAN.lastT=now;try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}if(!keep)stopScan();onCode(t)};
+  try{
+    if('BarcodeDetector' in window){
+      SCAN.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false}); v.srcObject=SCAN.stream; await v.play();
+      var det=new BarcodeDetector();
+      var tick=async function(){if(!SCAN.stream)return;try{var r=await det.detect(v);if(r&&r.length)hit(r[0].rawValue)}catch(e){}SCAN.timer=setTimeout(tick,220)}; tick();
+    }else{await loadZx();SCAN.zx=new ZXing.BrowserMultiFormatReader();await SCAN.zx.decodeFromConstraints({video:{facingMode:'environment'}},v,function(res){if(res)hit(res.getText())})}
+  }catch(e){m.textContent=(e&&e.name==='NotAllowedError')?'Camera permission was denied. Allow the camera in the browser settings.':'Camera could not start. Use Google Chrome, or type the ID.'}
+}
+function stopScan(){clearTimeout(SCAN.timer);try{SCAN.zx&&SCAN.zx.reset()}catch(e){}SCAN.zx=null;if(SCAN.stream){SCAN.stream.getTracks().forEach(function(t){t.stop()});SCAN.stream=null}var v=document.getElementById('scanVid');if(v){try{v.pause();v.srcObject=null}catch(e){}}var b=document.getElementById('scan');b&&b.classList.remove('on')}
+
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var lib=(new URLSearchParams(location.search)).get('lib')||'';
+  if(!lib)$('libPick').hidden=false;
+  else api({a:'lib',lib:lib}).then(function(j){$('libT').textContent=j.name}).catch(function(e){$('msg').textContent=e.message});
+  $('scanBtn').onclick=function(){startScan(function(t){$('mid').value=t.toUpperCase();show()},false,'Point the camera at your ID card')};
+  $('scanClose').onclick=stopScan;
+  $('mid').onkeydown=function(e){if(e.key==='Enter')show()};
+  $('go').onclick=show;
+  function show(){var l=lib||$('libCode').value.trim(),id=$('mid').value.trim();$('msg').textContent='';if(!l){$('msg').textContent='Open the link your librarian gave you.';return}if(!id){$('msg').textContent='Scan or type your ID.';return}
+    $('go').disabled=true;$('go').textContent='Looking…';
+    api({a:'self',lib:l,member:id}).then(function(j){var now=j.loans.filter(function(x){return !x.back}),old=j.loans.filter(function(x){return x.back});
+      $('out').innerHTML='<h2>'+esc(j.name)+'</h2><p class="muted">'+esc(j.group||'')+' · '+j.loans.length+' books read</p>'+
+        '<h3 style="margin-top:16px">With me now</h3>'+(now.length?now.map(function(x){var od=x.due<today();return '<div class="item"><div class="main"><b>'+esc(x.book)+'</b><small>Taken '+dstr(x.at)+'</small></div><span class="tag '+(od?'od':'is')+'">'+(od?'Late · was due '+dstr(x.due):'Return by '+dstr(x.due))+'</span></div>'}).join(''):'<p class="muted">No books with you now.</p>')+
+        '<h3 style="margin-top:16px">Books I read</h3>'+(old.length?old.map(function(x){return '<div class="item"><div class="main"><b>'+esc(x.book)+'</b><small>'+dstr(x.at)+' → '+dstr(x.back)+'</small></div><span class="tag av">Returned</span></div>'}).join(''):'<p class="muted">None yet. Visit the library! 📚</p>');
+      $('out').scrollIntoView({behavior:'smooth'})}).catch(function(e){$('msg').textContent=e.message}).then(function(){$('go').disabled=false;$('go').textContent='Show my books'})}
+})();
+</script>
+</body>
+</html>
